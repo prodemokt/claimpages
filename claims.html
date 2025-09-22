@@ -260,6 +260,16 @@
             justify-content: flex-end;
         }
 
+        .totals-container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .dealer-totals, .authorized-totals {
+            flex: 1;
+        }
+
         .totals-table {
             border-collapse: collapse;
             font-size: 11px;
@@ -527,32 +537,44 @@
                 </div>
 
                 <div class="totals-section">
-                    <div class="totals-content">
-                        <div class="totals-item">
-                            <span>Parts Amount</span>
-                            <span>$950.00</span>
-                        </div>
-                        <div class="totals-item">
-                            <span>Labor Amount</span>
-                            <span>$150.00</span>
-                        </div>
-                        <div class="totals-item">
-                            <span>Sales Tax Rate</span>
-                            <span>10.00%</span>
-                        </div>
-                        <div class="totals-item">
-                            <span>Sales Tax Amount</span>
-                            <span>$110.00</span>
-                        </div>
-                        <div class="totals-item">
-                            <span>Deductible</span>
-                            <span style="color: red;">-$100.00</span>
-                        </div>
-                        <div class="totals-item">
-                            <span>Claim Total</span>
-                            <span>$1,110.00</span>
-                        </div>
-                    </div>
+                    <table class="totals-table">
+                        <thead>
+                            <tr>
+                                <th>Dealer Total Claim</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <th>Totals</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="description-col">Parts Amount</td>
+                                <td class="amount-col">$950.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Labor Amount</td>
+                                <td class="amount-col">$150.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Sales Tax Rate</td>
+                                <td class="amount-col">10.00%</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Sales Tax Amount</td>
+                                <td class="amount-col">$110.00</td>
+                            </tr>
+                            <tr class="deductible-row">
+                                <td class="description-col">Deductible</td>
+                                <td class="amount-col">-$100.00</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td class="description-col">Claim Total</td>
+                                <td class="amount-col">$1,110.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -660,44 +682,88 @@
         </div>
 
         <div class="totals-section">
-            <table class="totals-table">
-                <thead>
-                    <tr>
-                        <th>Authorized Total Claim</th>
-                        <th></th>
-                    </tr>
-                    <tr>
-                        <th>Description</th>
-                        <th>Totals</th>
-                    </tr>
-                </thead>
-                <tbody id="claims-totals">
-                    <tr>
-                        <td class="description-col">Parts Amount</td>
-                        <td class="amount-col">$900.00</td>
-                    </tr>
-                    <tr>
-                        <td class="description-col">Labor Amount</td>
-                        <td class="amount-col">$150.00</td>
-                    </tr>
-                    <tr>
-                        <td class="description-col">Sales Tax Rate</td>
-                        <td class="amount-col">10.00%</td>
-                    </tr>
-                    <tr>
-                        <td class="description-col">Sales Tax Amount</td>
-                        <td class="amount-col">$105.00</td>
-                    </tr>
-                    <tr class="deductible-row">
-                        <td class="description-col">Deductible</td>
-                        <td class="amount-col">-$100.00</td>
-                    </tr>
-                    <tr class="total-row">
-                        <td class="description-col">Authorized Total</td>
-                        <td class="amount-col">$1,055.00</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="totals-container">
+                <div class="dealer-totals">
+                    <table class="totals-table">
+                        <thead>
+                            <tr>
+                                <th>Dealer Total Claim</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <th>Totals</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="description-col">Parts Amount</td>
+                                <td class="amount-col">$950.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Labor Amount</td>
+                                <td class="amount-col">$150.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Sales Tax Rate</td>
+                                <td class="amount-col">10.00%</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Sales Tax Amount</td>
+                                <td class="amount-col">$110.00</td>
+                            </tr>
+                            <tr class="deductible-row">
+                                <td class="description-col">Deductible</td>
+                                <td class="amount-col">-$100.00</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td class="description-col">Dealer Total</td>
+                                <td class="amount-col">$1110.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="authorized-totals">
+                    <table class="totals-table">
+                        <thead>
+                            <tr>
+                                <th>Authorized Total Claim</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <th>Totals</th>
+                            </tr>
+                        </thead>
+                        <tbody id="claims-totals">
+                            <tr>
+                                <td class="description-col">Parts Amount</td>
+                                <td class="amount-col">$900.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Labor Amount</td>
+                                <td class="amount-col">$150.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Sales Tax Rate</td>
+                                <td class="amount-col">10.00%</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Sales Tax Amount</td>
+                                <td class="amount-col">$105.00</td>
+                            </tr>
+                            <tr class="deductible-row">
+                                <td class="description-col">Deductible</td>
+                                <td class="amount-col">-$100.00</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td class="description-col">Authorized Total</td>
+                                <td class="amount-col">$1,055.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <div class="notes-section">

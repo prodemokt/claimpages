@@ -264,27 +264,57 @@
             justify-content: flex-end;
         }
 
-        .totals-content {
-            background-color: #f8f8f8;
-            padding: 15px;
-            border-radius: 3px;
-            min-width: 300px;
+        .totals-table {
+            border-collapse: collapse;
+            font-size: 11px;
+            width: 280px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            overflow: hidden;
         }
 
-        .totals-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            padding: 2px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .totals-item:last-child {
-            border-bottom: none;
-            border-top: 2px solid #333;
-            padding-top: 8px;
-            margin-top: 8px;
+        .totals-table th {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 8px 12px;
+            text-align: center;
+            border: 1px solid #dee2e6;
             font-weight: bold;
+            font-size: 12px;
+        }
+
+        .totals-table td {
+            padding: 6px 12px;
+            border: 1px solid #dee2e6;
+            background-color: #fff;
+        }
+
+        .totals-table .description-col {
+            text-align: left;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .totals-table .amount-col {
+            text-align: right;
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .totals-table .deductible-row td {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .totals-table .total-row td {
+            background-color: #e3f2fd;
+            font-weight: bold;
+            color: #1976d2;
+            border-top: 2px solid #1976d2;
+        }
+
+        .totals-table tbody tr:hover {
+            background-color: #f8f9fa;
         }
 
         .notes-section {
@@ -497,32 +527,44 @@
         </div>
 
         <div class="totals-section">
-            <div class="totals-content">
-                <div class="totals-item">
-                    <span>Parts Amount</span>
-                    <span>$950.00</span>
-                </div>
-                <div class="totals-item">
-                    <span>Labor Amount</span>
-                    <span>$150.00</span>
-                </div>
-                <div class="totals-item">
-                    <span>Sales Tax Rate</span>
-                    <span>10.00%</span>
-                </div>
-                <div class="totals-item">
-                    <span>Sales Tax Amount</span>
-                    <span>$110.00</span>
-                </div>
-                <div class="totals-item">
-                    <span>Deductible</span>
-                    <span style="color: red;">-$100.00</span>
-                </div>
-                <div class="totals-item">
-                    <span>Claim Total</span>
-                    <span>$1,060.00</span>
-                </div>
-            </div>
+            <table class="totals-table">
+                <thead>
+                    <tr>
+                        <th>Dealer Total Claim</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <th>Totals</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="description-col">Parts Amount</td>
+                        <td class="amount-col">$950.00</td>
+                    </tr>
+                    <tr>
+                        <td class="description-col">Labor Amount</td>
+                        <td class="amount-col">$150.00</td>
+                    </tr>
+                    <tr>
+                        <td class="description-col">Sales Tax Rate</td>
+                        <td class="amount-col">10.00%</td>
+                    </tr>
+                    <tr>
+                        <td class="description-col">Sales Tax Amount</td>
+                        <td class="amount-col">$110.00</td>
+                    </tr>
+                    <tr class="deductible-row">
+                        <td class="description-col">Deductible</td>
+                        <td class="amount-col">-$100.00</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td class="description-col">Claim Total</td>
+                        <td class="amount-col">$1,110.00</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div class="notes-section">
