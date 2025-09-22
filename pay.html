@@ -207,16 +207,16 @@
             font-weight: bold;
         }
 
-        .edit-btn { 
-            background-color: #d9534f; 
+        .edit-btn {
+            background-color: #d9534f;
             color: white;
         }
-        .copy-btn { 
-            background-color: #5cb85c; 
+        .copy-btn {
+            background-color: #5cb85c;
             color: white;
         }
-        .delete-btn { 
-            background-color: #f0ad4e; 
+        .delete-btn {
+            background-color: #f0ad4e;
             color: white;
         }
 
@@ -329,7 +329,7 @@
     <div class="qbe-header">
         <h1>QBE Users</h1>
     </div>
-    
+
     <div class="header-tabs">
         <div class="tab">View Customer</div>
         <div class="tab">View Warranty</div>
@@ -342,19 +342,23 @@
     <div class="container">
         <div class="form-section">
             <div class="form-group">
-                <label>Causal Part:</label>
-                <input type="text" value="B7">
+                <label>Payment Reference:</label>
+                <input type="text" value="PAY001">
             </div>
             <div class="form-group">
-                <label></label>
+                <label>Payment Method:</label>
                 <select>
-                    <option>BRAKE SYSTEM</option>
+                    <option>Bank Transfer</option>
+                    <option>Check</option>
+                    <option>Credit Card</option>
                 </select>
             </div>
             <div class="form-group">
-                <label></label>
+                <label>Status:</label>
                 <select>
-                    <option>Caliper Near side rear</option>
+                    <option>Pending</option>
+                    <option>Approved</option>
+                    <option>Paid</option>
                 </select>
             </div>
             <div class="form-group">
@@ -364,62 +368,48 @@
 
         <div class="claim-info">
             <div class="claim-info-item">
-                <label>Claim No.:</label>
+                <label>Payment ID:</label>
+                <span>PAY001</span>
+            </div>
+            <div class="claim-info-item">
+                <label>Claim Reference:</label>
                 <span>1</span>
             </div>
             <div class="claim-info-item">
-                <label>Causal Code:</label>
-                <span>B7</span>
-            </div>
-            <div class="claim-info-item">
-                <label>Causal Part:</label>
-                <span>BRAKE SYSTEM - Caliper Near side rear</span>
+                <label>Payment Date:</label>
+                <span>2024-01-15</span>
             </div>
         </div>
 
         <div class="table-container">
-            <table>
+            <table id="pay-table">
                 <thead>
                     <tr>
-                        <th>Part Number</th>
+                        <th>Item</th>
                         <th>Description</th>
-                        <th>Quantity</th>
-                        <th>Auth Price</th>
-                        <th>Auth Subtotal</th>
-                        <th>Parts Match</th>
-                        <th>Parts Quantity</th>
-                        <th>Billed Price</th>
-                        <th>Billed Total Parts</th>
-                        <th>Auth Labour Time</th>
-                        <th>Auth Labour Rate</th>
-                        <th>Auth Labour Total</th>
-                        <th>Labour Match</th>
-                        <th>Billed Labour Time</th>
-                        <th>Billed Labour Rate</th>
-                        <th>Billed Total Labour</th>
-                        <th>Tax</th>
+                        <th>Amount</th>
+                        <th>Tax Rate</th>
+                        <th>Tax Amount</th>
+                        <th>Total</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="text" class="editable-input" value="188972"></td>
-                        <td><input type="text" class="editable-input" value="Sensor"></td>
-                        <td><input type="number" class="editable-input" value="2"></td>
-                        <td><input type="number" class="editable-input" value="250"></td>
-                        <td><input type="number" class="editable-input" value="500"></td>
-                        <td><input type="checkbox"></td>
-                        <td><input type="number" class="editable-input" value="2"></td>
-                        <td><input type="number" class="editable-input" value="490"></td>
-                        <td><input type="number" class="editable-input" value="490"></td>
-                        <td><input type="number" class="editable-input" value="2"></td>
-                        <td><input type="number" class="editable-input" value="50"></td>
-                        <td><input type="number" class="editable-input" value="100"></td>
-                        <td><input type="checkbox"></td>
-                        <td><input type="number" class="editable-input" value="2"></td>
-                        <td><input type="number" class="editable-input" value="45"></td>
-                        <td><input type="number" class="editable-input" value="90"></td>
+                        <td><input type="text" class="editable-input" value="Parts"></td>
+                        <td><input type="text" class="editable-input" value="Vehicle Parts"></td>
+                        <td><input type="number" class="editable-input" value="890"></td>
                         <td><input type="number" class="editable-input" value="10"></td>
+                        <td><input type="number" class="editable-input" value="89" readonly></td>
+                        <td><input type="number" class="editable-input" value="979" readonly></td>
+                        <td>
+                            <select class="editable-select">
+                                <option>Approved</option>
+                                <option>Pending</option>
+                                <option>Rejected</option>
+                            </select>
+                        </td>
                         <td>
                             <div class="action-buttons">
                                 <button class="action-btn delete-btn">D</button>
@@ -427,63 +417,48 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><input type="text" class="editable-input" value="188973"></td>
-                        <td><input type="text" class="editable-input" value="Clutch"></td>
-                        <td><input type="number" class="editable-input" value="1"></td>
-                        <td><input type="number" class="editable-input" value="400"></td>
-                        <td><input type="number" class="editable-input" value="400"></td>
-                        <td><input type="checkbox" checked></td>
-                        <td><input type="number" class="editable-input" value="1"></td>
-                        <td><input type="number" class="editable-input" value="400"></td>
-                        <td><input type="number" class="editable-input" value="400"></td>
-                        <td><input type="number" class="editable-input" value="1"></td>
-                        <td><input type="number" class="editable-input" value="50"></td>
-                        <td><input type="number" class="editable-input" value="50"></td>
-                        <td><input type="checkbox" checked></td>
-                        <td><input type="number" class="editable-input" value="1"></td>
-                        <td><input type="number" class="editable-input" value="50"></td>
-                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="text" class="editable-input" value="Labor"></td>
+                        <td><input type="text" class="editable-input" value="Labor Costs"></td>
+                        <td><input type="number" class="editable-input" value="140"></td>
                         <td><input type="number" class="editable-input" value="10"></td>
+                        <td><input type="number" class="editable-input" value="14" readonly></td>
+                        <td><input type="number" class="editable-input" value="154" readonly></td>
+                        <td>
+                            <select class="editable-select">
+                                <option>Approved</option>
+                                <option>Pending</option>
+                                <option>Rejected</option>
+                            </select>
+                        </td>
                         <td>
                             <div class="action-buttons">
                                 <button class="action-btn delete-btn">D</button>
                             </div>
                         </td>
                     </tr>
-
                 </tbody>
             </table>
         </div>
-
-
 
         <div class="totals-section">
             <table class="totals-table">
                 <thead>
                     <tr>
-                        <th>Billed Total Claim</th>
+                        <th>Payment Summary</th>
                         <th></th>
                     </tr>
                     <tr>
                         <th>Description</th>
-                        <th>Totals</th>
+                        <th>Amount</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="pay-totals">
                     <tr>
-                        <td class="description-col">Parts Amount</td>
-                        <td class="amount-col">$890.00</td>
+                        <td class="description-col">Subtotal</td>
+                        <td class="amount-col">$1,030.00</td>
                     </tr>
                     <tr>
-                        <td class="description-col">Labor Amount</td>
-                        <td class="amount-col">$140.00</td>
-                    </tr>
-                    <tr>
-                        <td class="description-col">Sales Tax Rate</td>
-                        <td class="amount-col">10.00%</td>
-                    </tr>
-                    <tr>
-                        <td class="description-col">Sales Tax Amount</td>
+                        <td class="description-col">Tax Total</td>
                         <td class="amount-col">$103.00</td>
                     </tr>
                     <tr class="deductible-row">
@@ -491,7 +466,7 @@
                         <td class="amount-col">-$100.00</td>
                     </tr>
                     <tr class="total-row">
-                        <td class="description-col">Billed Total</td>
+                        <td class="description-col">Payment Total</td>
                         <td class="amount-col">$1,033.00</td>
                     </tr>
                 </tbody>
@@ -499,216 +474,96 @@
         </div>
 
         <div class="notes-section">
-            <label>Claim Notes:</label>
+            <label>Payment Notes:</label>
             <div class="notes-form">
                 <label>Add Notes:</label>
-                <textarea class="notes-textarea" placeholder="Enter claim notes here..."></textarea>
+                <textarea class="notes-textarea" placeholder="Enter payment notes here..."></textarea>
             </div>
         </div>
     </div>
 
     <script>
-        // Add functionality to the Add To Claim button
-        document.querySelector('.add-btn').addEventListener('click', function() {
-            // Collect all table data
-            const rows = document.querySelectorAll('tbody tr');
-            const claimData = [];
-            
-            rows.forEach(row => {
-                const inputs = row.querySelectorAll('input, select');
-                const rowData = {
-                    partNumber: inputs[0].value,
-                    description: inputs[1].value,
-                    quantity: inputs[2].value,
-                    requestedPrice: inputs[3].value,
-                    verifiedPrice: inputs[4].value,
-                    authPrice: inputs[5].value,
-                    authSubtotal: inputs[6].value,
-                    taxPercent: inputs[7].value,
-                    authTaxTotal: inputs[8].value,
-                    authLineTotal: inputs[9].value,
-                    requestedLabor: inputs[10].value,
-                    verifiedLabor: inputs[11].value,
-                    laborRate: inputs[12].value,
-                    laborTaxPercent: inputs[13].value,
-                    authorizedLaborTotal: inputs[14].value
-                };
-                claimData.push(rowData);
-            });
-            
-            // Show confirmation
-            alert('Claim data has been processed:\n' + claimData.length + ' parts added to claim');
-            
-            // Here you would typically send the data to a server
-            console.log('Claim Data:', claimData);
-        });
-
         // Function to add event listeners to row buttons
         function addRowEventListeners(row) {
             const deleteBtn = row.querySelector('.delete-btn');
-            
-            deleteBtn.addEventListener('click', function() {
-                if (confirm('Are you sure you want to delete this part?')) {
-                    row.remove();
-                    calculateTotals(); // Recalculate after deletion
+
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', function() {
+                    if (confirm('Are you sure you want to delete this item?')) {
+                        row.remove();
+                        calculatePayTotals();
+                    }
+                });
+            }
+        }
+
+        // Pay table functionality
+        function calculatePayRowTotal(row) {
+            const inputs = row.querySelectorAll('input');
+            if (inputs.length >= 6) {
+                const amount = parseFloat(inputs[2].value) || 0;
+                const taxRate = parseFloat(inputs[3].value) || 0;
+
+                const taxAmount = amount * (taxRate / 100);
+                inputs[4].value = taxAmount.toFixed(2);
+
+                const total = amount + taxAmount;
+                inputs[5].value = total.toFixed(2);
+            }
+        }
+
+        function calculatePayTotals() {
+            let subtotal = 0;
+            let taxTotal = 0;
+
+            const rows = document.querySelectorAll('#pay-table tbody tr');
+
+            rows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs.length >= 6) {
+                    const amount = parseFloat(inputs[2].value) || 0;
+                    const tax = parseFloat(inputs[4].value) || 0;
+
+                    subtotal += amount;
+                    taxTotal += tax;
                 }
             });
+
+            const deductible = 100;
+            const paymentTotal = subtotal + taxTotal - deductible;
+
+            const totalsRows = document.querySelectorAll('#pay-totals tr');
+            if (totalsRows.length >= 4) {
+                totalsRows[0].querySelector('.amount-col').textContent = `$${subtotal.toFixed(2)}`;
+                totalsRows[1].querySelector('.amount-col').textContent = `$${taxTotal.toFixed(2)}`;
+                totalsRows[3].querySelector('.amount-col').textContent = `$${paymentTotal.toFixed(2)}`;
+            }
         }
 
-        // Function to calculate totals
-        function calculateTotals() {
-            let totalParts = 0;
-            let totalLabour = 0;
-            let totalTax = 0;
-            
-            const rows = document.querySelectorAll('tbody tr');
-            
-            rows.forEach(row => {
-                const inputs = row.querySelectorAll('input, select');
-                const authSubtotal = parseFloat(inputs[6].value) || 0;
-                const authTaxTotal = parseFloat(inputs[8].value) || 0;
-                const authorizedLaborTotal = parseFloat(inputs[14].value) || 0;
-                
-                totalParts += authSubtotal;
-                totalLabour += authorizedLaborTotal;
-                totalTax += authTaxTotal;
-            });
-            
-            // Update the totals display with currency formatting
-            const totalsItems = document.querySelectorAll('.totals-item span:last-child');
-            totalsItems[0].textContent = '
-
-        // Function to add calculation listeners to inputs
-        function addCalculationListeners(row) {
-            const inputs = row.querySelectorAll('input');
-            inputs.forEach(input => {
-                input.addEventListener('input', calculateTotals);
-                input.addEventListener('change', calculateTotals);
+        // Add calculation listeners for pay table
+        function addPayCalculationListeners() {
+            document.querySelectorAll('#pay-table tbody tr').forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                inputs.forEach((input, index) => {
+                    if (index === 2 || index === 3) { // amount, tax rate
+                        input.addEventListener('input', function() {
+                            calculatePayRowTotal(row);
+                            calculatePayTotals();
+                        });
+                    }
+                });
             });
         }
 
-        // Initialize event listeners for existing rows
-        document.querySelectorAll('tbody tr').forEach(row => {
-            addRowEventListeners(row);
-            addCalculationListeners(row);
+        // Initialize functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('tbody tr').forEach(row => {
+                addRowEventListeners(row);
+            });
+
+            addPayCalculationListeners();
+            calculatePayTotals();
         });
-        
-        // Initial calculation
-        calculateTotals();
-    </script>
-</body>
-</html> + totalParts.toFixed(2);
-            totalsItems[1].textContent = '
-
-        // Function to add calculation listeners to inputs
-        function addCalculationListeners(row) {
-            const inputs = row.querySelectorAll('input');
-            inputs.forEach(input => {
-                input.addEventListener('input', calculateTotals);
-                input.addEventListener('change', calculateTotals);
-            });
-        }
-
-        // Initialize event listeners for existing rows
-        document.querySelectorAll('tbody tr').forEach(row => {
-            addRowEventListeners(row);
-            addCalculationListeners(row);
-        });
-        
-        // Initial calculation
-        calculateTotals();
-    </script>
-</body>
-</html> + totalLabour.toFixed(2);
-            totalsItems[2].textContent = '
-
-        // Function to add calculation listeners to inputs
-        function addCalculationListeners(row) {
-            const inputs = row.querySelectorAll('input');
-            inputs.forEach(input => {
-                input.addEventListener('input', calculateTotals);
-                input.addEventListener('change', calculateTotals);
-            });
-        }
-
-        // Initialize event listeners for existing rows
-        document.querySelectorAll('tbody tr').forEach(row => {
-            addRowEventListeners(row);
-            addCalculationListeners(row);
-        });
-        
-        // Initial calculation
-        calculateTotals();
-    </script>
-</body>
-</html> + totalTax.toFixed(2);
-            
-            // Calculate final total (Parts + Labour + Tax - Deductible)
-            const deductible = 100; // Fixed deductible amount
-            totalsItems[3].textContent = '-
-
-        // Function to add calculation listeners to inputs
-        function addCalculationListeners(row) {
-            const inputs = row.querySelectorAll('input');
-            inputs.forEach(input => {
-                input.addEventListener('input', calculateTotals);
-                input.addEventListener('change', calculateTotals);
-            });
-        }
-
-        // Initialize event listeners for existing rows
-        document.querySelectorAll('tbody tr').forEach(row => {
-            addRowEventListeners(row);
-            addCalculationListeners(row);
-        });
-        
-        // Initial calculation
-        calculateTotals();
-    </script>
-</body>
-</html> + deductible.toFixed(2);
-            const finalTotal = totalParts + totalLabour + totalTax - deductible;
-            totalsItems[4].textContent = '
-
-        // Function to add calculation listeners to inputs
-        function addCalculationListeners(row) {
-            const inputs = row.querySelectorAll('input');
-            inputs.forEach(input => {
-                input.addEventListener('input', calculateTotals);
-                input.addEventListener('change', calculateTotals);
-            });
-        }
-
-        // Initialize event listeners for existing rows
-        document.querySelectorAll('tbody tr').forEach(row => {
-            addRowEventListeners(row);
-            addCalculationListeners(row);
-        });
-        
-        // Initial calculation
-        calculateTotals();
-    </script>
-</body>
-</html> + finalTotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-        }
-
-        // Function to add calculation listeners to inputs
-        function addCalculationListeners(row) {
-            const inputs = row.querySelectorAll('input');
-            inputs.forEach(input => {
-                input.addEventListener('input', calculateTotals);
-                input.addEventListener('change', calculateTotals);
-            });
-        }
-
-        // Initialize event listeners for existing rows
-        document.querySelectorAll('tbody tr').forEach(row => {
-            addRowEventListeners(row);
-            addCalculationListeners(row);
-        });
-        
-        // Initial calculation
-        calculateTotals();
     </script>
 </body>
 </html>
