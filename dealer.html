@@ -289,6 +289,7 @@
 
         .notes-section {
             margin-top: 20px;
+            position: relative;
         }
 
         .notes-section > label {
@@ -298,16 +299,43 @@
             display: block;
         }
 
-        .notes-form {
+        .notes-grid {
+            display: grid;
+            grid-template-columns: 30% 70%;
+            gap: 20px;
             background-color: #f8f8f8;
             padding: 15px;
             border-radius: 3px;
         }
 
-        .notes-form label {
+        .notes-type-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notes-type-section label {
             font-weight: bold;
             margin-bottom: 5px;
-            display: block;
+            color: #333;
+        }
+
+        .notes-type-dropdown {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 12px;
+            background-color: white;
+        }
+
+        .notes-content-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notes-content-section label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
         }
 
         .notes-textarea {
@@ -319,6 +347,26 @@
             resize: vertical;
             font-family: Arial, sans-serif;
             font-size: 12px;
+        }
+
+        .save-claim-btn {
+            background-color: #5bc0de;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            position: absolute;
+            bottom: -60px;
+            right: 0;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .save-claim-btn:hover {
+            background-color: #31b0d5;
         }
 
         .add-part-btn {
@@ -339,8 +387,6 @@
     <div class="tab-container">
         <div class="tabs">
             <div class="tab active" data-tab="dealer">Dealer View</div>
-            <div class="tab disabled" data-tab="claims">Claims Team View</div>
-            <div class="tab disabled" data-tab="pay">Pay View</div>
         </div>
 
         <div class="container">
@@ -481,9 +527,22 @@
 
         <div class="notes-section">
             <label>Claim Notes:</label>
-            <div class="notes-form">
-                <label>Add Notes:</label>
-                <textarea class="notes-textarea" placeholder="Enter claim notes here..."></textarea>
+            <div class="notes-grid">
+                <div class="notes-type-section">
+                    <label>Notes Type:</label>
+                    <select class="notes-type-dropdown">
+                        <option value="new-claim">New Claim</option>
+                        <option value="update-claim">Update Claim</option>
+                    </select>
+                </div>
+                <div class="notes-content-section">
+                    <label>Add Notes:</label>
+                    <textarea class="notes-textarea" placeholder="Enter claim notes here..."></textarea>
+                </div>
+            </div>
+            <div class="" style="margin-bottom: 50px;">
+            <button class="save-claim-btn" style="">Save Claim Report</button>
+
             </div>
         </div>
         </div>

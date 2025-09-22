@@ -324,6 +324,7 @@
 
         .notes-section {
             margin-top: 20px;
+            position: relative;
         }
 
         .notes-section > label {
@@ -333,16 +334,43 @@
             display: block;
         }
 
-        .notes-form {
+        .notes-grid {
+            display: grid;
+            grid-template-columns: 30% 70%;
+            gap: 20px;
             background-color: #f8f8f8;
             padding: 15px;
             border-radius: 3px;
         }
 
-        .notes-form label {
+        .notes-type-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notes-type-section label {
             font-weight: bold;
             margin-bottom: 5px;
-            display: block;
+            color: #333;
+        }
+
+        .notes-type-dropdown {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 12px;
+            background-color: white;
+        }
+
+        .notes-content-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notes-content-section label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
         }
 
         .notes-textarea {
@@ -356,6 +384,26 @@
             font-size: 12px;
         }
 
+        .save-claim-btn {
+            background-color: #5bc0de;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            position: absolute;
+            bottom: -60px;
+            right: 0;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .save-claim-btn:hover {
+            background-color: #31b0d5;
+        }
+
         .add-part-btn {
             background-color: #5bc0de;
             color: white;
@@ -366,6 +414,38 @@
             font-size: 12px;
             margin-bottom: 20px;
         }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .totals-content {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 3px;
+            min-width: 300px;
+        }
+
+        .totals-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            padding: 2px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .totals-item:last-child {
+            border-bottom: none;
+            border-top: 2px solid #333;
+            padding-top: 8px;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
@@ -373,13 +453,256 @@
 
     <div class="tab-container">
         <div class="tabs">
-            <div class="tab disabled" data-tab="dealer">Dealer View</div>
-            <div class="tab disabled" data-tab="claims">Claims Team View</div>
+            <div class="tab" data-tab="dealer">Dealer View</div>
+            <div class="tab" data-tab="claims">Claims Team View</div>
             <div class="tab active" data-tab="pay">Pay View</div>
         </div>
 
-        <div class="container">
-        <div class="form-section">
+        <!-- Dealer Tab Content -->
+        <div id="dealer-content" class="tab-content" style="display: none;">
+            <div class="container">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>Causal Part:</label>
+                        <input type="text" value="B7" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label></label>
+                        <select disabled>
+                            <option>BRAKE SYSTEM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label></label>
+                        <select disabled>
+                            <option>Caliper Near side rear</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="claim-info">
+                    <div class="claim-info-item">
+                        <label>Claim No.:</label>
+                        <span>1</span>
+                    </div>
+                    <div class="claim-info-item">
+                        <label>Causal Code:</label>
+                        <span>B7</span>
+                    </div>
+                    <div class="claim-info-item">
+                        <label>Causal Part:</label>
+                        <span>BRAKE SYSTEM - Caliper Near side rear</span>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Part Number</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Parts Total</th>
+                                <th>Time</th>
+                                <th>Rate</th>
+                                <th>Labour Total</th>
+                                <th>Grand Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div>188972</div></td>
+                                <td><div>Sensor</div></td>
+                                <td><div>2</div></td>
+                                <td><div>275</div></td>
+                                <td><div>550</div></td>
+                                <td><div>2</div></td>
+                                <td><div>50</div></td>
+                                <td><div>100</div></td>
+                                <td><div>650</div></td>
+                            </tr>
+                            <tr>
+                                <td><div>188973</div></td>
+                                <td><div>Clutch</div></td>
+                                <td><div>1</div></td>
+                                <td><div>400</div></td>
+                                <td><div>400</div></td>
+                                <td><div>1</div></td>
+                                <td><div>50</div></td>
+                                <td><div>50</div></td>
+                                <td><div>450</div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="totals-section">
+                    <div class="totals-content">
+                        <div class="totals-item">
+                            <span>Parts Amount</span>
+                            <span>$950.00</span>
+                        </div>
+                        <div class="totals-item">
+                            <span>Labor Amount</span>
+                            <span>$150.00</span>
+                        </div>
+                        <div class="totals-item">
+                            <span>Sales Tax Rate</span>
+                            <span>10.00%</span>
+                        </div>
+                        <div class="totals-item">
+                            <span>Sales Tax Amount</span>
+                            <span>$110.00</span>
+                        </div>
+                        <div class="totals-item">
+                            <span>Deductible</span>
+                            <span style="color: red;">-$100.00</span>
+                        </div>
+                        <div class="totals-item">
+                            <span>Claim Total</span>
+                            <span>$1,110.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Claims Tab Content -->
+        <div id="claims-content" class="tab-content" style="display: none;">
+            <div class="container">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>Causal Part:</label>
+                        <input type="text" value="B7" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label></label>
+                        <select disabled>
+                            <option>BRAKE SYSTEM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label></label>
+                        <select disabled>
+                            <option>Caliper Near side rear</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="claim-info">
+                    <div class="claim-info-item">
+                        <label>Claim No.:</label>
+                        <span>1</span>
+                    </div>
+                    <div class="claim-info-item">
+                        <label>Causal Code:</label>
+                        <span>B7</span>
+                    </div>
+                    <div class="claim-info-item">
+                        <label>Causal Part:</label>
+                        <span>BRAKE SYSTEM - Caliper Near side rear</span>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Part Number</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Requested Price</th>
+                                <th>Verified Price</th>
+                                <th>Auth Price</th>
+                                <th>Auth Total</th>
+                                <th>Requested Labour</th>
+                                <th>Verified Labour</th>
+                                <th>Labour Rate</th>
+                                <th>Auth Labour Total</th>
+                                <th>Tax %</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div>188972</div></td>
+                                <td><div>Sensor</div></td>
+                                <td><div>2</div></td>
+                                <td><div>275</div></td>
+                                <td><div>250</div></td>
+                                <td><div>250</div></td>
+                                <td><div>500</div></td>
+                                <td><div>2.5</div></td>
+                                <td><div>2</div></td>
+                                <td><div>50</div></td>
+                                <td><div>100</div></td>
+                                <td><div>10</div></td>
+                            </tr>
+                            <tr>
+                                <td><div>188973</div></td>
+                                <td><div>Clutch</div></td>
+                                <td><div>1</div></td>
+                                <td><div>420</div></td>
+                                <td><div>400</div></td>
+                                <td><div>400</div></td>
+                                <td><div>400</div></td>
+                                <td><div>1.5</div></td>
+                                <td><div>1</div></td>
+                                <td><div>50</div></td>
+                                <td><div>50</div></td>
+                                <td><div>10</div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="totals-section">
+                    <table class="totals-table">
+                        <thead>
+                            <tr>
+                                <th>Authorized Total Claim</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <th>Totals</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="description-col">Parts Amount</td>
+                                <td class="amount-col">$900.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Labor Amount</td>
+                                <td class="amount-col">$150.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Sales Tax Rate</td>
+                                <td class="amount-col">10.00%</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Sales Tax Amount</td>
+                                <td class="amount-col">$105.00</td>
+                            </tr>
+                            <tr class="deductible-row">
+                                <td class="description-col">Deductible</td>
+                                <td class="amount-col">-$100.00</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td class="description-col">Authorized Total</td>
+                                <td class="amount-col">$1,055.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pay Tab Content -->
+        <div id="pay-content" class="tab-content">
+            <div class="container">
+        <div class="form-section" style="display: none;">
             <div class="form-group">
                 <label>Causal Part:</label>
                 <input type="text" value="B7">
@@ -581,15 +904,61 @@
 
         <div class="notes-section">
             <label>Claim Notes:</label>
-            <div class="notes-form">
-                <label>Add Notes:</label>
-                <textarea class="notes-textarea" placeholder="Enter claim notes here..."></textarea>
+            <div class="notes-grid">
+                <div class="notes-type-section">
+                    <label>Notes Type:</label>
+                    <select class="notes-type-dropdown">
+                        <option value="process-payment">Process Payment</option>
+                        <option value="update-claim">Update Claim</option>
+                    </select>
+                </div>
+                <div class="notes-content-section">
+                    <label>Add Notes:</label>
+                    <textarea class="notes-textarea" placeholder="Enter claim notes here..."></textarea>
+                </div>
+            </div>
+             <div class="" style="margin-bottom: 50px;">
+            <button class="save-claim-btn" >Pay Claim</button>
             </div>
         </div>
         </div>
     </div>
 
     <script>
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            // Set pay tab as active by default
+            document.getElementById('pay-content').classList.add('active');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+
+                    // Hide all tab content
+                    tabContents.forEach(content => {
+                        content.style.display = 'none';
+                        content.classList.remove('active');
+                    });
+
+                    // Show selected tab content
+                    const targetContent = document.getElementById(targetTab + '-content');
+                    if (targetContent) {
+                        targetContent.style.display = 'block';
+                        targetContent.classList.add('active');
+                    }
+                });
+            });
+        });
+
         // Add functionality to the Add To Claim button (if it exists)
         const addBtn = document.querySelector('.add-btn');
         if (addBtn) {
