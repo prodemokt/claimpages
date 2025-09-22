@@ -378,26 +378,21 @@
         </div>
 
         <div class="table-container">
-            <table>
+            <table id="claims-table">
                 <thead>
                     <tr>
                         <th>Part Number</th>
                         <th>Description</th>
                         <th>Quantity</th>
+                        <th>Requested Price</th>
+                        <th>Verified Price</th>
                         <th>Auth Price</th>
-                        <th>Auth Subtotal</th>
-                        <th>Parts Match</th>
-                        <th>Parts Quantity</th>
-                        <th>Billed Price</th>
-                        <th>Billed Total Parts</th>
-                        <th>Auth Labour Time</th>
-                        <th>Auth Labour Rate</th>
-                        <th>Auth Labour Total</th>
-                        <th>Labour Match</th>
-                        <th>Billed Labour Time</th>
-                        <th>Billed Labour Rate</th>
-                        <th>Billed Total Labour</th>
-                        <th>Tax</th>
+                        <th>Auth total</th>
+                        <th>Requested Labour</th>
+                        <th>Verified labour</th>
+                        <th>Labour rate</th>
+                        <th>Auth labour Total</th>
+                        <th>Tax %</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -406,19 +401,14 @@
                         <td><input type="text" class="editable-input" value="188972"></td>
                         <td><input type="text" class="editable-input" value="Sensor"></td>
                         <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="275"></td>
+                        <td><input type="number" class="editable-input" value="250"></td>
                         <td><input type="number" class="editable-input" value="250"></td>
                         <td><input type="number" class="editable-input" value="500"></td>
-                        <td><input type="checkbox"></td>
-                        <td><input type="number" class="editable-input" value="2"></td>
-                        <td><input type="number" class="editable-input" value="490"></td>
-                        <td><input type="number" class="editable-input" value="490"></td>
+                        <td><input type="number" class="editable-input" value="2.5"></td>
                         <td><input type="number" class="editable-input" value="2"></td>
                         <td><input type="number" class="editable-input" value="50"></td>
                         <td><input type="number" class="editable-input" value="100"></td>
-                        <td><input type="checkbox"></td>
-                        <td><input type="number" class="editable-input" value="2"></td>
-                        <td><input type="number" class="editable-input" value="45"></td>
-                        <td><input type="number" class="editable-input" value="90"></td>
                         <td><input type="number" class="editable-input" value="10"></td>
                         <td>
                             <div class="action-buttons">
@@ -430,16 +420,11 @@
                         <td><input type="text" class="editable-input" value="188973"></td>
                         <td><input type="text" class="editable-input" value="Clutch"></td>
                         <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="420"></td>
                         <td><input type="number" class="editable-input" value="400"></td>
                         <td><input type="number" class="editable-input" value="400"></td>
-                        <td><input type="checkbox" checked></td>
-                        <td><input type="number" class="editable-input" value="1"></td>
                         <td><input type="number" class="editable-input" value="400"></td>
-                        <td><input type="number" class="editable-input" value="400"></td>
-                        <td><input type="number" class="editable-input" value="1"></td>
-                        <td><input type="number" class="editable-input" value="50"></td>
-                        <td><input type="number" class="editable-input" value="50"></td>
-                        <td><input type="checkbox" checked></td>
+                        <td><input type="number" class="editable-input" value="1.5"></td>
                         <td><input type="number" class="editable-input" value="1"></td>
                         <td><input type="number" class="editable-input" value="50"></td>
                         <td><input type="number" class="editable-input" value="50"></td>
@@ -450,7 +435,6 @@
                             </div>
                         </td>
                     </tr>
-
                 </tbody>
             </table>
         </div>
@@ -459,7 +443,7 @@
             <table class="totals-table">
                 <thead>
                     <tr>
-                        <th>Billed Total Claim</th>
+                        <th>Authorized Total Claim</th>
                         <th></th>
                     </tr>
                     <tr>
@@ -470,11 +454,11 @@
                 <tbody id="claims-totals">
                     <tr>
                         <td class="description-col">Parts Amount</td>
-                        <td class="amount-col">$890.00</td>
+                        <td class="amount-col">$900.00</td>
                     </tr>
                     <tr>
                         <td class="description-col">Labor Amount</td>
-                        <td class="amount-col">$140.00</td>
+                        <td class="amount-col">$150.00</td>
                     </tr>
                     <tr>
                         <td class="description-col">Sales Tax Rate</td>
@@ -482,15 +466,15 @@
                     </tr>
                     <tr>
                         <td class="description-col">Sales Tax Amount</td>
-                        <td class="amount-col">$103.00</td>
+                        <td class="amount-col">$105.00</td>
                     </tr>
                     <tr class="deductible-row">
                         <td class="description-col">Deductible</td>
                         <td class="amount-col">-$100.00</td>
                     </tr>
                     <tr class="total-row">
-                        <td class="description-col">Billed Total</td>
-                        <td class="amount-col">$1,033.00</td>
+                        <td class="description-col">Authorized Total</td>
+                        <td class="amount-col">$1,055.00</td>
                     </tr>
                 </tbody>
             </table>
@@ -506,6 +490,43 @@
     </div>
 
     <script>
+        // Add functionality to the Add To Claim button (if it exists)
+        const addBtn = document.querySelector('.add-btn');
+        if (addBtn) {
+            addBtn.addEventListener('click', function() {
+                // Collect all table data
+                const rows = document.querySelectorAll('tbody tr');
+                const claimData = [];
+
+                rows.forEach(row => {
+                    const inputs = row.querySelectorAll('input');
+                    if (inputs.length >= 12) {
+                        const rowData = {
+                            partNumber: inputs[0].value,
+                            description: inputs[1].value,
+                            quantity: inputs[2].value,
+                            requestedPrice: inputs[3].value,
+                            verifiedPrice: inputs[4].value,
+                            authPrice: inputs[5].value,
+                            authTotal: inputs[6].value,
+                            requestedLabour: inputs[7].value,
+                            verifiedLabour: inputs[8].value,
+                            labourRate: inputs[9].value,
+                            authLabourTotal: inputs[10].value,
+                            taxPercent: inputs[11].value
+                        };
+                        claimData.push(rowData);
+                    }
+                });
+
+                // Show confirmation
+                alert('Claim data has been processed:\n' + claimData.length + ' parts added to claim');
+
+                // Here you would typically send the data to a server
+                console.log('Claim Data:', claimData);
+            });
+        }
+
         // Function to add event listeners to row buttons
         function addRowEventListeners(row) {
             const deleteBtn = row.querySelector('.delete-btn');
@@ -524,31 +545,33 @@
         function calculateTotals() {
             let totalParts = 0;
             let totalLabour = 0;
-            let totalTax = 0;
 
-            const rows = document.querySelectorAll('tbody tr');
+            const rows = document.querySelectorAll('#claims-table tbody tr');
 
             rows.forEach(row => {
                 const inputs = row.querySelectorAll('input');
-                if (inputs.length >= 17) {
-                    const billedParts = parseFloat(inputs[8].value) || 0;
-                    const billedLabour = parseFloat(inputs[15].value) || 0;
-                    const tax = parseFloat(inputs[16].value) || 0;
+                if (inputs.length >= 12) {
+                    const authTotal = parseFloat(inputs[6].value) || 0; // Auth total (parts)
+                    const authLabourTotal = parseFloat(inputs[10].value) || 0; // Auth labour Total
 
-                    totalParts += billedParts;
-                    totalLabour += billedLabour;
-                    totalTax += tax;
+                    totalParts += authTotal;
+                    totalLabour += authLabourTotal;
                 }
             });
 
-            const deductible = 100;
-            const finalTotal = totalParts + totalLabour + totalTax - deductible;
+            // Calculate sales tax as 10% of parts + labour
+            const salesTaxRate = 0.10;
+            const salesTaxAmount = (totalParts + totalLabour) * salesTaxRate;
 
+            const deductible = 100;
+            const finalTotal = totalParts + totalLabour + salesTaxAmount - deductible;
+
+            // Update the totals display in the table
             const totalsRows = document.querySelectorAll('#claims-totals tr');
             if (totalsRows.length >= 6) {
                 totalsRows[0].querySelector('.amount-col').textContent = `$${totalParts.toFixed(2)}`;
                 totalsRows[1].querySelector('.amount-col').textContent = `$${totalLabour.toFixed(2)}`;
-                totalsRows[3].querySelector('.amount-col').textContent = `$${totalTax.toFixed(2)}`;
+                totalsRows[3].querySelector('.amount-col').textContent = `$${salesTaxAmount.toFixed(2)}`;
                 totalsRows[5].querySelector('.amount-col').textContent = `$${finalTotal.toFixed(2)}`;
             }
         }

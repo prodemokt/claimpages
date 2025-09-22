@@ -357,13 +357,143 @@
 <body>
     <div class="tab-container">
         <div class="tabs">
-            <div class="tab active" data-tab="claims">Claims View</div>
-            <div class="tab" data-tab="dealer">Dealer View</div>
+            <div class="tab active" data-tab="dealer">Dealer View</div>
+            <div class="tab" data-tab="claims">Claims View</div>
             <div class="tab" data-tab="pay">Pay View</div>
         </div>
 
+        <!-- Dealer Tab Content -->
+        <div id="dealer" class="tab-content active">
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Causal Part:</label>
+                    <input type="text" value="B7">
+                </div>
+                <div class="form-group">
+                    <label></label>
+                    <select>
+                        <option>BRAKE SYSTEM</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label></label>
+                    <select>
+                        <option>Caliper Near side rear</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="clear-btn">Clear</button>
+                </div>
+            </div>
+
+            <div class="claim-info">
+                <div class="claim-info-item">
+                    <label>Claim No.:</label>
+                    <span>1</span>
+                </div>
+                <div class="claim-info-item">
+                    <label>Causal Code:</label>
+                    <span>B7</span>
+                </div>
+                <div class="claim-info-item">
+                    <label>Causal Part:</label>
+                    <span>BRAKE SYSTEM - Caliper Near side rear</span>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table id="dealer-table">
+                    <thead>
+                        <tr>
+                            <th>Part Number</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Parts Total</th>
+                            <th>Time</th>
+                            <th>Rate</th>
+                            <th>Labour Total</th>
+                            <th>Grand Total</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="editable-input" value="188972"></td>
+                            <td><input type="text" class="editable-input" value="Sensor"></td>
+                            <td><input type="number" class="editable-input" value="2"></td>
+                            <td><input type="number" class="editable-input" value="275"></td>
+                            <td><input type="number" class="editable-input" value="550" readonly></td>
+                            <td><input type="number" class="editable-input" value="2"></td>
+                            <td><input type="number" class="editable-input" value="50"></td>
+                            <td><input type="number" class="editable-input" value="100" readonly></td>
+                            <td><input type="number" class="editable-input" value="650" readonly></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn delete-btn">✕</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="editable-input" value="188973"></td>
+                            <td><input type="text" class="editable-input" value="Clutch"></td>
+                            <td><input type="number" class="editable-input" value="1"></td>
+                            <td><input type="number" class="editable-input" value="400"></td>
+                            <td><input type="number" class="editable-input" value="400" readonly></td>
+                            <td><input type="number" class="editable-input" value="1"></td>
+                            <td><input type="number" class="editable-input" value="50"></td>
+                            <td><input type="number" class="editable-input" value="50" readonly></td>
+                            <td><input type="number" class="editable-input" value="450" readonly></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn delete-btn">✕</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="totals-section">
+                <div class="totals-content">
+                    <div class="totals-item">
+                        <span>Parts Amount</span>
+                        <span id="dealer-parts-total">$950.00</span>
+                    </div>
+                    <div class="totals-item">
+                        <span>Labor Amount</span>
+                        <span id="dealer-labor-total">$150.00</span>
+                    </div>
+                    <div class="totals-item">
+                        <span>Sales Tax Rate</span>
+                        <span>10.00%</span>
+                    </div>
+                    <div class="totals-item">
+                        <span>Sales Tax Amount</span>
+                        <span id="dealer-tax-total">$110.00</span>
+                    </div>
+                    <div class="totals-item">
+                        <span>Deductible</span>
+                        <span style="color: red;">-$100.00</span>
+                    </div>
+                    <div class="totals-item">
+                        <span>Claim Total</span>
+                        <span id="dealer-claim-total">$1,110.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notes-section">
+                <label>Claim Notes:</label>
+                <div class="notes-form">
+                    <label>Add Notes:</label>
+                    <textarea class="notes-textarea" placeholder="Enter claim notes here..."></textarea>
+                </div>
+            </div>
+        </div>
+
         <!-- Claims Tab Content -->
-        <div id="claims" class="tab-content active">
+        <div id="claims" class="tab-content">
             <div class="form-section">
                 <div class="form-group">
                     <label>Causal Part:</label>
@@ -403,6 +533,161 @@
 
             <div class="table-container">
                 <table id="claims-table">
+                    <thead>
+                        <tr>
+                            <th>Part Number</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Requested Price</th>
+                            <th>Verified Price</th>
+                            <th>Auth Price</th>
+                            <th>Auth total</th>
+                            <th>Requested Labour</th>
+                            <th>Verified labour</th>
+                            <th>Labour rate</th>
+                            <th>Auth labour Total</th>
+                            <th>Tax %</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="editable-input" value="188972"></td>
+                            <td><input type="text" class="editable-input" value="Sensor"></td>
+                            <td><input type="number" class="editable-input" value="2"></td>
+                            <td><input type="number" class="editable-input" value="275"></td>
+                            <td><input type="number" class="editable-input" value="250"></td>
+                            <td><input type="number" class="editable-input" value="250"></td>
+                            <td><input type="number" class="editable-input" value="500"></td>
+                            <td><input type="number" class="editable-input" value="2.5"></td>
+                            <td><input type="number" class="editable-input" value="2"></td>
+                            <td><input type="number" class="editable-input" value="50"></td>
+                            <td><input type="number" class="editable-input" value="100"></td>
+                            <td><input type="number" class="editable-input" value="10"></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn delete-btn">D</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="editable-input" value="188973"></td>
+                            <td><input type="text" class="editable-input" value="Clutch"></td>
+                            <td><input type="number" class="editable-input" value="1"></td>
+                            <td><input type="number" class="editable-input" value="420"></td>
+                            <td><input type="number" class="editable-input" value="400"></td>
+                            <td><input type="number" class="editable-input" value="400"></td>
+                            <td><input type="number" class="editable-input" value="400"></td>
+                            <td><input type="number" class="editable-input" value="1.5"></td>
+                            <td><input type="number" class="editable-input" value="1"></td>
+                            <td><input type="number" class="editable-input" value="50"></td>
+                            <td><input type="number" class="editable-input" value="50"></td>
+                            <td><input type="number" class="editable-input" value="10"></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn delete-btn">D</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="totals-section">
+                <table class="totals-table">
+                    <thead>
+                        <tr>
+                            <th>Authorized Total Claim</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <th>Totals</th>
+                        </tr>
+                    </thead>
+                    <tbody id="claims-totals">
+                        <tr>
+                            <td class="description-col">Parts Amount</td>
+                            <td class="amount-col">$900.00</td>
+                        </tr>
+                        <tr>
+                            <td class="description-col">Labor Amount</td>
+                            <td class="amount-col">$150.00</td>
+                        </tr>
+                        <tr>
+                            <td class="description-col">Sales Tax Rate</td>
+                            <td class="amount-col">10.00%</td>
+                        </tr>
+                        <tr>
+                            <td class="description-col">Sales Tax Amount</td>
+                            <td class="amount-col">$105.00</td>
+                        </tr>
+                        <tr class="deductible-row">
+                            <td class="description-col">Deductible</td>
+                            <td class="amount-col">-$100.00</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td class="description-col">Authorized Total</td>
+                            <td class="amount-col">$1,055.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="notes-section">
+                <label>Claim Notes:</label>
+                <div class="notes-form">
+                    <label>Add Notes:</label>
+                    <textarea class="notes-textarea" placeholder="Enter claim notes here..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pay Tab Content -->
+        <div id="pay" class="tab-content">
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Payment Reference:</label>
+                    <input type="text" value="PAY001">
+                </div>
+                <div class="form-group">
+                    <label>Payment Method:</label>
+                    <select>
+                        <option>Bank Transfer</option>
+                        <option>Check</option>
+                        <option>Credit Card</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select>
+                        <option>Pending</option>
+                        <option>Approved</option>
+                        <option>Paid</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="clear-btn">Clear</button>
+                </div>
+            </div>
+
+            <div class="claim-info">
+                <div class="claim-info-item">
+                    <label>Payment ID:</label>
+                    <span>PAY001</span>
+                </div>
+                <div class="claim-info-item">
+                    <label>Claim Reference:</label>
+                    <span>1</span>
+                </div>
+                <div class="claim-info-item">
+                    <label>Payment Date:</label>
+                    <span>2024-01-15</span>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table id="pay-table">
                     <thead>
                         <tr>
                             <th>Part Number</th>
@@ -490,7 +775,7 @@
                             <th>Totals</th>
                         </tr>
                     </thead>
-                    <tbody id="claims-totals">
+                    <tbody id="pay-totals">
                         <tr>
                             <td class="description-col">Parts Amount</td>
                             <td class="amount-col">$890.00</td>
@@ -513,296 +798,6 @@
                         </tr>
                         <tr class="total-row">
                             <td class="description-col">Billed Total</td>
-                            <td class="amount-col">$1,033.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="notes-section">
-                <label>Claim Notes:</label>
-                <div class="notes-form">
-                    <label>Add Notes:</label>
-                    <textarea class="notes-textarea" placeholder="Enter claim notes here..."></textarea>
-                </div>
-            </div>
-        </div>
-
-        <!-- Dealer Tab Content -->
-        <div id="dealer" class="tab-content">
-            <div class="form-section">
-                <div class="form-group">
-                    <label>Causal Part:</label>
-                    <input type="text" value="B7">
-                </div>
-                <div class="form-group">
-                    <label></label>
-                    <select>
-                        <option>BRAKE SYSTEM</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label></label>
-                    <select>
-                        <option>Caliper Near side rear</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <button class="clear-btn">Clear</button>
-                </div>
-            </div>
-
-            <div class="claim-info">
-                <div class="claim-info-item">
-                    <label>Claim No.:</label>
-                    <span>1</span>
-                </div>
-                <div class="claim-info-item">
-                    <label>Causal Code:</label>
-                    <span>B7</span>
-                </div>
-                <div class="claim-info-item">
-                    <label>Causal Part:</label>
-                    <span>BRAKE SYSTEM - Caliper Near side rear</span>
-                </div>
-            </div>
-
-            <div class="table-container">
-                <table id="dealer-table">
-                    <thead>
-                        <tr>
-                            <th>Part Number</th>
-                            <th>Description</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Parts Total</th>
-                            <th>Time</th>
-                            <th>Rate</th>
-                            <th>Labour Total</th>
-                            <th>Grand Total</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><input type="text" class="editable-input" value="188972"></td>
-                            <td><input type="text" class="editable-input" value="Sensor"></td>
-                            <td><input type="number" class="editable-input" value="2"></td>
-                            <td><input type="number" class="editable-input" value="275"></td>
-                            <td><input type="number" class="editable-input" value="550" readonly></td>
-                            <td><input type="number" class="editable-input" value="2"></td>
-                            <td><input type="number" class="editable-input" value="50"></td>
-                            <td><input type="number" class="editable-input" value="100" readonly></td>
-                            <td><input type="number" class="editable-input" value="650" readonly></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn delete-btn"></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="editable-input" value="188973"></td>
-                            <td><input type="text" class="editable-input" value="Clutch"></td>
-                            <td><input type="number" class="editable-input" value="1"></td>
-                            <td><input type="number" class="editable-input" value="400"></td>
-                            <td><input type="number" class="editable-input" value="400" readonly></td>
-                            <td><input type="number" class="editable-input" value="1"></td>
-                            <td><input type="number" class="editable-input" value="50"></td>
-                            <td><input type="number" class="editable-input" value="50" readonly></td>
-                            <td><input type="number" class="editable-input" value="450" readonly></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn delete-btn"></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="editable-input" value=""></td>
-                            <td><input type="text" class="editable-input" value=""></td>
-                            <td><input type="number" class="editable-input" value=""></td>
-                            <td><input type="number" class="editable-input" value=""></td>
-                            <td><input type="number" class="editable-input" value="0.00" readonly></td>
-                            <td><input type="number" class="editable-input" value=""></td>
-                            <td><input type="number" class="editable-input" value=""></td>
-                            <td><input type="number" class="editable-input" value="0.00" readonly></td>
-                            <td><input type="number" class="editable-input" value="0.00" readonly></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn delete-btn"></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="totals-section">
-                <div class="totals-content">
-                    <div class="totals-item">
-                        <span>Parts Amount</span>
-                        <span id="dealer-parts-total">$950.00</span>
-                    </div>
-                    <div class="totals-item">
-                        <span>Labor Amount</span>
-                        <span id="dealer-labor-total">$150.00</span>
-                    </div>
-                    <div class="totals-item">
-                        <span>Sales Tax Rate</span>
-                        <span>10.00%</span>
-                    </div>
-                    <div class="totals-item">
-                        <span>Sales Tax Amount</span>
-                        <span id="dealer-tax-total">$110.00</span>
-                    </div>
-                    <div class="totals-item">
-                        <span>Deductible</span>
-                        <span style="color: red;">-$100.00</span>
-                    </div>
-                    <div class="totals-item">
-                        <span>Claim Total</span>
-                        <span id="dealer-claim-total">$1,110.00</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="notes-section">
-                <label>Claim Notes:</label>
-                <div class="notes-form">
-                    <label>Add Notes:</label>
-                    <textarea class="notes-textarea" placeholder="Enter claim notes here..."></textarea>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pay Tab Content -->
-        <div id="pay" class="tab-content">
-            <div class="form-section">
-                <div class="form-group">
-                    <label>Payment Reference:</label>
-                    <input type="text" value="PAY001">
-                </div>
-                <div class="form-group">
-                    <label>Payment Method:</label>
-                    <select>
-                        <option>Bank Transfer</option>
-                        <option>Check</option>
-                        <option>Credit Card</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Status:</label>
-                    <select>
-                        <option>Pending</option>
-                        <option>Approved</option>
-                        <option>Paid</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <button class="clear-btn">Clear</button>
-                </div>
-            </div>
-
-            <div class="claim-info">
-                <div class="claim-info-item">
-                    <label>Payment ID:</label>
-                    <span>PAY001</span>
-                </div>
-                <div class="claim-info-item">
-                    <label>Claim Reference:</label>
-                    <span>1</span>
-                </div>
-                <div class="claim-info-item">
-                    <label>Payment Date:</label>
-                    <span>2024-01-15</span>
-                </div>
-            </div>
-
-            <div class="table-container">
-                <table id="pay-table">
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th>Description</th>
-                            <th>Amount</th>
-                            <th>Tax Rate</th>
-                            <th>Tax Amount</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><input type="text" class="editable-input" value="Parts"></td>
-                            <td><input type="text" class="editable-input" value="Vehicle Parts"></td>
-                            <td><input type="number" class="editable-input" value="890"></td>
-                            <td><input type="number" class="editable-input" value="10"></td>
-                            <td><input type="number" class="editable-input" value="89" readonly></td>
-                            <td><input type="number" class="editable-input" value="979" readonly></td>
-                            <td>
-                                <select class="editable-select">
-                                    <option>Approved</option>
-                                    <option>Pending</option>
-                                    <option>Rejected</option>
-                                </select>
-                            </td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn delete-btn">D</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="editable-input" value="Labor"></td>
-                            <td><input type="text" class="editable-input" value="Labor Costs"></td>
-                            <td><input type="number" class="editable-input" value="140"></td>
-                            <td><input type="number" class="editable-input" value="10"></td>
-                            <td><input type="number" class="editable-input" value="14" readonly></td>
-                            <td><input type="number" class="editable-input" value="154" readonly></td>
-                            <td>
-                                <select class="editable-select">
-                                    <option>Approved</option>
-                                    <option>Pending</option>
-                                    <option>Rejected</option>
-                                </select>
-                            </td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn delete-btn">D</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="totals-section">
-                <table class="totals-table">
-                    <thead>
-                        <tr>
-                            <th>Payment Summary</th>
-                            <th></th>
-                        </tr>
-                        <tr>
-                            <th>Description</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody id="pay-totals">
-                        <tr>
-                            <td class="description-col">Subtotal</td>
-                            <td class="amount-col">$1,030.00</td>
-                        </tr>
-                        <tr>
-                            <td class="description-col">Tax Total</td>
-                            <td class="amount-col">$103.00</td>
-                        </tr>
-                        <tr class="deductible-row">
-                            <td class="description-col">Deductible</td>
-                            <td class="amount-col">-$100.00</td>
-                        </tr>
-                        <tr class="total-row">
-                            <td class="description-col">Payment Total</td>
                             <td class="amount-col">$1,033.00</td>
                         </tr>
                     </tbody>
@@ -844,39 +839,6 @@
                 }
             });
         });
-
-        // Claims table functionality
-        function calculateClaimsTotals() {
-            let totalParts = 0;
-            let totalLabour = 0;
-            let totalTax = 0;
-
-            const rows = document.querySelectorAll('#claims-table tbody tr');
-
-            rows.forEach(row => {
-                const inputs = row.querySelectorAll('input');
-                if (inputs.length >= 17) {
-                    const billedParts = parseFloat(inputs[8].value) || 0;
-                    const billedLabour = parseFloat(inputs[15].value) || 0;
-                    const tax = parseFloat(inputs[16].value) || 0;
-
-                    totalParts += billedParts;
-                    totalLabour += billedLabour;
-                    totalTax += tax;
-                }
-            });
-
-            const deductible = 100;
-            const finalTotal = totalParts + totalLabour + totalTax - deductible;
-
-            const totalsRows = document.querySelectorAll('#claims-totals tr');
-            if (totalsRows.length >= 6) {
-                totalsRows[0].querySelector('.amount-col').textContent = `$${totalParts.toFixed(2)}`;
-                totalsRows[1].querySelector('.amount-col').textContent = `$${totalLabour.toFixed(2)}`;
-                totalsRows[3].querySelector('.amount-col').textContent = `$${totalTax.toFixed(2)}`;
-                totalsRows[5].querySelector('.amount-col').textContent = `$${finalTotal.toFixed(2)}`;
-            }
-        }
 
         // Dealer table functionality
         function calculateDealerRowTotal(row) {
@@ -926,46 +888,73 @@
             document.getElementById('dealer-claim-total').textContent = `$${claimTotal.toFixed(2)}`;
         }
 
-        // Pay table functionality
-        function calculatePayRowTotal(row) {
-            const inputs = row.querySelectorAll('input');
-            if (inputs.length >= 6) {
-                const amount = parseFloat(inputs[2].value) || 0;
-                const taxRate = parseFloat(inputs[3].value) || 0;
+        // Claims table functionality
+        function calculateClaimsTotals() {
+            let totalParts = 0;
+            let totalLabour = 0;
 
-                const taxAmount = amount * (taxRate / 100);
-                inputs[4].value = taxAmount.toFixed(2);
+            const rows = document.querySelectorAll('#claims-table tbody tr');
 
-                const total = amount + taxAmount;
-                inputs[5].value = total.toFixed(2);
+            rows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs.length >= 12) {
+                    const authTotal = parseFloat(inputs[6].value) || 0; // Auth total (parts)
+                    const authLabourTotal = parseFloat(inputs[10].value) || 0; // Auth labour Total
+
+                    totalParts += authTotal;
+                    totalLabour += authLabourTotal;
+                }
+            });
+
+            // Calculate sales tax as 10% of parts + labour
+            const salesTaxRate = 0.10;
+            const salesTaxAmount = (totalParts + totalLabour) * salesTaxRate;
+
+            const deductible = 100;
+            const finalTotal = totalParts + totalLabour + salesTaxAmount - deductible;
+
+            // Update the totals display in the table
+            const totalsRows = document.querySelectorAll('#claims-totals tr');
+            if (totalsRows.length >= 6) {
+                totalsRows[0].querySelector('.amount-col').textContent = `$${totalParts.toFixed(2)}`;
+                totalsRows[1].querySelector('.amount-col').textContent = `$${totalLabour.toFixed(2)}`;
+                totalsRows[3].querySelector('.amount-col').textContent = `$${salesTaxAmount.toFixed(2)}`;
+                totalsRows[5].querySelector('.amount-col').textContent = `$${finalTotal.toFixed(2)}`;
             }
         }
 
+        // Pay table functionality
         function calculatePayTotals() {
-            let subtotal = 0;
-            let taxTotal = 0;
+            let totalParts = 0;
+            let totalLabour = 0;
 
             const rows = document.querySelectorAll('#pay-table tbody tr');
 
             rows.forEach(row => {
                 const inputs = row.querySelectorAll('input');
-                if (inputs.length >= 6) {
-                    const amount = parseFloat(inputs[2].value) || 0;
-                    const tax = parseFloat(inputs[4].value) || 0;
+                if (inputs.length >= 17) {
+                    const billedParts = parseFloat(inputs[8].value) || 0;
+                    const billedLabour = parseFloat(inputs[15].value) || 0;
 
-                    subtotal += amount;
-                    taxTotal += tax;
+                    totalParts += billedParts;
+                    totalLabour += billedLabour;
                 }
             });
 
-            const deductible = 100;
-            const paymentTotal = subtotal + taxTotal - deductible;
+            // Calculate sales tax as 10% of parts + labour
+            const salesTaxRate = 0.10;
+            const salesTaxAmount = (totalParts + totalLabour) * salesTaxRate;
 
+            const deductible = 100;
+            const finalTotal = totalParts + totalLabour + salesTaxAmount - deductible;
+
+            // Update the totals display in the table
             const totalsRows = document.querySelectorAll('#pay-totals tr');
-            if (totalsRows.length >= 4) {
-                totalsRows[0].querySelector('.amount-col').textContent = `$${subtotal.toFixed(2)}`;
-                totalsRows[1].querySelector('.amount-col').textContent = `$${taxTotal.toFixed(2)}`;
-                totalsRows[3].querySelector('.amount-col').textContent = `$${paymentTotal.toFixed(2)}`;
+            if (totalsRows.length >= 6) {
+                totalsRows[0].querySelector('.amount-col').textContent = `$${totalParts.toFixed(2)}`;
+                totalsRows[1].querySelector('.amount-col').textContent = `$${totalLabour.toFixed(2)}`;
+                totalsRows[3].querySelector('.amount-col').textContent = `$${salesTaxAmount.toFixed(2)}`;
+                totalsRows[5].querySelector('.amount-col').textContent = `$${finalTotal.toFixed(2)}`;
             }
         }
 
@@ -998,21 +987,6 @@
             });
         }
 
-        // Add calculation listeners for pay table
-        function addPayCalculationListeners() {
-            document.querySelectorAll('#pay-table tbody tr').forEach(row => {
-                const inputs = row.querySelectorAll('input');
-                inputs.forEach((input, index) => {
-                    if (index === 2 || index === 3) { // amount, tax rate
-                        input.addEventListener('input', function() {
-                            calculatePayRowTotal(row);
-                            calculatePayTotals();
-                        });
-                    }
-                });
-            });
-        }
-
         // Add calculation listeners for claims table
         function addClaimsCalculationListeners() {
             document.querySelectorAll('#claims-table tbody tr').forEach(row => {
@@ -1024,16 +998,27 @@
             });
         }
 
+        // Add calculation listeners for pay table
+        function addPayCalculationListeners() {
+            document.querySelectorAll('#pay-table tbody tr').forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                inputs.forEach(input => {
+                    input.addEventListener('input', calculatePayTotals);
+                    input.addEventListener('change', calculatePayTotals);
+                });
+            });
+        }
+
         // Initialize all functionality
         document.addEventListener('DOMContentLoaded', function() {
             addDeleteListeners();
             addDealerCalculationListeners();
-            addPayCalculationListeners();
             addClaimsCalculationListeners();
+            addPayCalculationListeners();
 
             // Initial calculations
-            calculateClaimsTotals();
             calculateDealerTotals();
+            calculateClaimsTotals();
             calculatePayTotals();
         });
     </script>
