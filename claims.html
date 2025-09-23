@@ -270,6 +270,11 @@
             flex: 1;
         }
 
+        .authorized-totals {
+            display: flex;
+            justify-content: flex-end;
+        }
+
         .totals-table {
             border-collapse: collapse;
             font-size: 11px;
@@ -682,47 +687,6 @@
         </div>
 
         <div class="totals-section">
-            <div class="totals-container">
-                <div class="dealer-totals">
-                    <table class="totals-table">
-                        <thead>
-                            <tr>
-                                <th>Dealer Total Claim</th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>Description</th>
-                                <th>Totals</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="description-col">Parts Amount</td>
-                                <td class="amount-col">$950.00</td>
-                            </tr>
-                            <tr>
-                                <td class="description-col">Labor Amount</td>
-                                <td class="amount-col">$150.00</td>
-                            </tr>
-                            <tr>
-                                <td class="description-col">Sales Tax Rate</td>
-                                <td class="amount-col">10.00%</td>
-                            </tr>
-                            <tr>
-                                <td class="description-col">Sales Tax Amount</td>
-                                <td class="amount-col">$110.00</td>
-                            </tr>
-                            <tr class="deductible-row">
-                                <td class="description-col">Deductible</td>
-                                <td class="amount-col">-$100.00</td>
-                            </tr>
-                            <tr class="total-row">
-                                <td class="description-col">Dealer Total</td>
-                                <td class="amount-col">$1110.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
                 <div class="authorized-totals">
                     <table class="totals-table">
                         <thead>
@@ -763,7 +727,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
         </div>
 
         <div class="notes-section">
