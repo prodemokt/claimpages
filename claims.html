@@ -542,7 +542,7 @@
                 </div>
 
                 <div class="totals-section">
-                    <table class="totals-table">
+                    <table class="totals-table" >
                         <thead>
                             <tr>
                                 <th>Dealer Total Claim</th>
@@ -624,22 +624,26 @@
             </div>
         </div>
 
-        <div class="table-container">
-            <table id="claims-table">
+         <div class="table-container"  >
+            <table id="claims-table" >
                 <thead>
                     <tr>
                         <th>Part Number</th>
                         <th>Description</th>
                         <th>Quantity</th>
                         <th>Requested Price</th>
+
+                        <th>Verified Quantity</th>
                         <th>Verified Price</th>
+
+                        <th>Part Tax %</th>
                         <th>Auth Price</th>
                         <th>Auth total</th>
                         <th>Requested Labour</th>
                         <th>Verified labour</th>
                         <th>Labour rate</th>
                         <th>Auth labour Total</th>
-                        <th>Tax %</th>
+                        <th>Labour Tax %</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -649,7 +653,9 @@
                         <td><input type="text" class="editable-input" value="Sensor"></td>
                         <td><input type="number" class="editable-input" value="2"></td>
                         <td><input type="number" class="editable-input" value="275"></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
                         <td><input type="number" class="editable-input" value="250"></td>
+                        <td><input type="number" class="editable-input" value="10"></td>
                         <td><input type="number" class="editable-input" value="250"></td>
                         <td><input type="number" class="editable-input" value="500"></td>
                         <td><input type="number" class="editable-input" value="2.5"></td>
@@ -668,7 +674,10 @@
                         <td><input type="text" class="editable-input" value="Clutch"></td>
                         <td><input type="number" class="editable-input" value="1"></td>
                         <td><input type="number" class="editable-input" value="420"></td>
+
+                        <td><input type="number" class="editable-input" value="2"></td>
                         <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="number" class="editable-input" value="10"></td>
                         <td><input type="number" class="editable-input" value="400"></td>
                         <td><input type="number" class="editable-input" value="400"></td>
                         <td><input type="number" class="editable-input" value="1.5"></td>
@@ -676,6 +685,28 @@
                         <td><input type="number" class="editable-input" value="50"></td>
                         <td><input type="number" class="editable-input" value="50"></td>
                         <td><input type="number" class="editable-input" value="10"></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
                         <td>
                             <div class="action-buttons">
                                 <button class="action-btn delete-btn">D</button>
@@ -748,6 +779,158 @@
             <button class="save-claim-btn">Authorize</button>
             </div>
         </div>
+
+         <div class="claim-info" style="margin-top: 100px;">
+            <div class="claim-info-item">
+                <label>Claim No.:</label>
+                <span>2</span>
+            </div>
+            <div class="claim-info-item">
+                <label>Causal Code:</label>
+                <span>B1</span>
+            </div>
+            <div class="claim-info-item">
+                <label>Causal Part:</label>
+                <span>BRAKE SYSTEM - ABS Module</span>
+            </div>
+        </div>
+         <div class="table-container"  >
+            <table id="claims-table" >
+                <thead>
+                    <tr>
+                        <th>Part Number</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Requested Price</th>
+
+                        <th>Verified Quantity</th>
+                        <th>Verified Price</th>
+
+                        <th>Part Tax %</th>
+                        <th>Auth Price</th>
+                        <th>Auth total</th>
+                        <th>Requested Labour</th>
+                        <th>Verified labour</th>
+                        <th>Labour rate</th>
+                        <th>Auth labour Total</th>
+                        <th>Labour Tax %</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="editable-input" value="188972"></td>
+                        <td><input type="text" class="editable-input" value="Sensor"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="275"></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="250"></td>
+                        <td><input type="number" class="editable-input" value="10"></td>
+                        <td><input type="number" class="editable-input" value="250"></td>
+                        <td><input type="number" class="editable-input" value="500"></td>
+                        <td><input type="number" class="editable-input" value="2.5"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="number" class="editable-input" value="100"></td>
+                        <td><input type="number" class="editable-input" value="10"></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="editable-input" value="188973"></td>
+                        <td><input type="text" class="editable-input" value="Clutch"></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="420"></td>
+
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="number" class="editable-input" value="10"></td>
+                        <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="number" class="editable-input" value="1.5"></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="number" class="editable-input" value="10"></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="totals-section">
+                <div class="authorized-totals">
+                    <table class="totals-table">
+                        <thead>
+                            <tr>
+                                <th>Authorized Total Claim</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <th>Totals</th>
+                            </tr>
+                        </thead>
+                        <tbody id="claims-totals">
+                            <tr>
+                                <td class="description-col">Parts Amount</td>
+                                <td class="amount-col">$900.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Labor Amount</td>
+                                <td class="amount-col">$150.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Sales Tax Rate</td>
+                                <td class="amount-col">10.00%</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Sales Tax Amount</td>
+                                <td class="amount-col">$105.00</td>
+                            </tr>
+                            <tr class="deductible-row">
+                                <td class="description-col">Deductible</td>
+                                <td class="amount-col">-$100.00</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td class="description-col">Authorized Total</td>
+                                <td class="amount-col">$1,055.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+
+
         </div>
     </div>
 
