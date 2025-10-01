@@ -464,6 +464,55 @@
         <button style="background-color: #00a8e8; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">View T&Cs</button>
     </div>
     </div>
+
+    <div style="padding-bottom: 20px;">
+        <h2 style="color: #00a8e8; font-size: 18px; font-weight: bold; margin: 0 0 15px 0;  padding-bottom: 5px;">Claim Details</h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 20px;">
+            <div>
+                <div style="display: flex;  align-items: center; margin-bottom: 10px;">
+                    <label style="font-weight: bold; color: #333; min-width: 180px;">Repairing Dealer</label>
+                    <span style="color: #00a8e8; font-weight: bold;">Aswani-DG Aswani SD D0000880</span>
+                </div>
+                <div style="display: flex;  align-items: center; margin-bottom: 10px;">
+                    <label style="font-weight: bold; color: #333; min-width: 180px;">Customer Reported Date</label>
+                    <span style="">30-Sep-2025</span>
+                </div>
+                <div style="display: flex;  align-items: center; margin-bottom: 10px;">
+                    <label style="font-weight: bold; color: #333; min-width: 180px;">Claim Mileage (Miles)</label>
+                    <span style="">9,999,999</span>
+                </div>
+                <div style="display: flex;  align-items: center; margin-bottom: 10px;">
+                    <label style="font-weight: bold; color: #333; min-width: 180px;">RO (repair order)</label>
+                    <span style="">1</span>
+                </div>
+            </div>
+            
+            <div>
+                <div style="display: flex;  align-items: center; margin-bottom: 10px;">
+                    <label style="font-weight: bold; color: #333; min-width: 180px;">&nbsp;</label>
+                    <span style=""></span>
+                </div>
+                <div style="display: flex;  align-items: center; margin-bottom: 10px;">
+                    <label style="font-weight: bold; color: #333; min-width: 280px;">Claim Reported Date</label>
+                    <span style="">30-Sep-2025</span>
+                </div>
+                <div style="display: flex;  align-items: center; margin-bottom: 10px;">
+                    <label style="font-weight: bold; color: #333; min-width: 280px;">Claim Limit - Single / Aggregate</label>
+                    <span style="">200,000</span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-bottom: 10px;">
+            <button style="background-color: #e6f3ff; color: #00a8e8; border: 1px solid #b3d9ff; padding: 8px 12px; border-radius: 3px; cursor: pointer; text-align:left; 14px; font-weight: bold; width: 100%;">Manage Attachments (Max size: 100 MB)</button>
+        </div>
+        
+        <div style="background-color: #f9f9f9; border: 1px solid #e0e0e0; padding: 10px; border-radius: 3px; color: #666; font-style: italic;">
+            No attachments added.
+        </div>
+    </div>
+
     <div class="tab-container">
         <div class="tabs">
             <div class="tab" data-tab="dealer">Dealer View</div>
@@ -621,21 +670,29 @@
             </div>
         </div>
 
-        <div class="claim-info">
-            <div class="claim-info-item">
-                <label>Claim No.:</label>
-                <span>1</span>
+        <section style="border:2px solid yellow; padding: 10px 2px;">
+        <div style="padding-bottom: 20px;">
+        <div style=" color: #00a8e8; font-weight: bold;margin-bottom: 10px;">
+                <span>Under Review Claim</span>
             </div>
-            <div class="claim-info-item">
-                <label>Causal Code:</label>
-                <span>B7</span>
+        <div style="border: 1px solid #d0d0d0; background-color: #f8f8f8; padding: 12px; border-radius: 3px; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+            <div style="display: flex; align-items: center; gap: 8px; color: #00a8e8; font-weight: bold;">
+                <span>Claim No: 1</span>
             </div>
-            <div class="claim-info-item">
-                <label>Causal Part:</label>
-                <span>BRAKE SYSTEM - Caliper Near side rear</span>
+            <div style="display: flex; align-items: center; gap: 5px; min-width: 150px;">
+                <label style="font-weight: bold; color: #333;">Authority Number:</label>
+                 </div>
+            <div style="min-width: 120px;">
+                <span style="font-weight: bold; color: #333;">Status:</span> <span style="color: #00a8e8;">Under Review</span>
+            </div>
+            <div style="min-width: 150px;">
+                <span style="font-weight: bold; color: #333;">Causal Part:</span> <span style="color: #00a8e8;padding-right: 20px;">BRAKE SYSTEM - Caliper Near side rear</span> <span style="font-weight: bold; color: #333;">Causal Code</span> <span style="color: #00a8e8;">B7</span>
+            </div>
+            <div style="min-width: 120px; text-align: right;">
+                <span style="font-weight: bold; color: #333;">Cost (Inc. VAT):</span> <span style="color: #00a8e8;">1055.00</span>
             </div>
         </div>
-
+        </div>
          <div class="table-container"  >
             <table id="claims-table" >
                 <thead>
@@ -776,21 +833,35 @@
                 </div>
         </div>
 
+        </section>
         
-         <div class="claim-info" style="margin-top: 100px;">
-            <div class="claim-info-item">
-                <label>Claim No.:</label>
-                <span>2</span>
+        
+
+        
+        <section style="border:2px solid yellow; padding: 10px 2px; margin-top: 30px;">
+        <div style="padding-bottom: 20px;">
+        <div style=" color: #00a8e8; font-weight: bold;margin-bottom: 10px;">
+                <span>Under Review Claim</span>
             </div>
-            <div class="claim-info-item">
-                <label>Causal Code:</label>
-                <span>B1</span>
+        <div style="border: 1px solid #d0d0d0; background-color: #f8f8f8; padding: 12px; border-radius: 3px; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+            <div style="display: flex; align-items: center; gap: 8px; color: #00a8e8; font-weight: bold;">
+                <span>Claim No: 2</span>
             </div>
-            <div class="claim-info-item">
-                <label>Causal Part:</label>
-                <span>BRAKE SYSTEM - ABS Module</span>
+            <div style="display: flex; align-items: center; gap: 5px; min-width: 150px;">
+                <label style="font-weight: bold; color: #333;">Authority Number:</label>
+                 </div>
+            <div style="min-width: 120px;">
+                <span style="font-weight: bold; color: #333;">Status:</span> <span style="color: #00a8e8;">Under Review</span>
+            </div>
+            <div style="min-width: 150px;">
+                <span style="font-weight: bold; color: #333;">Causal Part:</span> <span style="color: #00a8e8;padding-right: 20px;">BRAKE SYSTEM - ABS Module</span> <span style="font-weight: bold; color: #333;">Causal Code</span> <span style="color: #00a8e8;">B1</span>
+            </div>
+            <div style="min-width: 120px; text-align: right;">
+                <span style="font-weight: bold; color: #333;">Cost (Inc. VAT):</span> <span style="color: #00a8e8;">939.50</span>
             </div>
         </div>
+        </div>
+
          <div class="table-container"  >
             <table id="claims-table" >
                 <thead>
@@ -930,6 +1001,9 @@
                     </table>
                 </div>
         </div>
+        </section>
+        
+        
 
 
         <div class="notes-section">
