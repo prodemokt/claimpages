@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warranty Claim Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-size: 12px;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .tab-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: #4a90e2;
+            border-bottom: none;
+        }
+
+        .tab {
+            background: linear-gradient(to bottom, #4a90e2, #357abd);
+            color: white;
+            padding: 15px 25px;
+            border-right: 1px solid rgba(255,255,255,0.2);
+            cursor: pointer;
+            font-weight: 500;
+            text-align: center;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .tab:last-child {
+            border-right: none;
+        }
+
+        .tab:hover {
+            background: linear-gradient(to bottom, #357abd, #2968a3);
+            transform: translateY(-1px);
+        }
+
+        .tab.active {
+            background: linear-gradient(to bottom, #2968a3, #1e5a8a);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .tab.disabled {
+            background: linear-gradient(to bottom, #666, #444);
+            color: #999;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .tab.disabled:hover {
+            background: linear-gradient(to bottom, #666, #444);
+            transform: none;
+        }
+
+        .home-button {
+            background: linear-gradient(135deg, #5bc0de, #31b0d5);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            width: fit-content;
+        }
+
+        .home-button:hover {
+            background: linear-gradient(135deg, #31b0d5, #269abc);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+
+
+        .container {
+            padding: 25px;
+        }
+
+        .form-section {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 3px;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 12px;
+            width: 200px;
+        }
+
+        .clear-btn {
+            background-color: #5bc0de;
+            color: white;
+            padding: 6px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .add-btn {
+            background-color: #5bc0de;
+            color: white;
+            padding: 6px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: auto;
+        }
+
+        .claim-info {
+            background-color: #f8f8f8;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 3px;
+            display: flex;
+            gap: 40px;
+        }
+
+        .claim-info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .claim-info-item label {
+            font-weight: bold;
+            margin-bottom: 3px;
+            color: #333;
+        }
+
+        .claim-info-item span {
+            color: #666;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            padding: 8px 6px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-weight: bold;
+            font-size: 10px;
+        }
+
+        td {
+            padding: 6px 4px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .editable-input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 11px;
+            padding: 2px;
+        }
+
+        .editable-input:focus {
+            outline: 2px solid #5bc0de;
+            background: #f0f8ff;
+        }
+
+        .editable-select {
+            width: 100%;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 11px;
+            padding: 2px;
+        }
+
+        .editable-select:focus {
+            outline: 2px solid #5bc0de;
+            background: #f0f8ff;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 2px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            width: 18px;
+            height: 18px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            border-radius: 2px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .edit-btn {
+            background-color: #d9534f;
+            color: white;
+        }
+        .copy-btn {
+            background-color: #5cb85c;
+            color: white;
+        }
+        .delete-btn {
+            background-color: #f0ad4e;
+            color: white;
+        }
+
+        .totals-section {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .totals-container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .dealer-totals, .authorized-totals {
+            flex: 1;
+        }
+
+        .authorized-totals {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .totals-table {
+            border-collapse: collapse;
+            font-size: 11px;
+            width: 280px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .totals-table th {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 8px 12px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .totals-table td {
+            padding: 6px 12px;
+            border: 1px solid #dee2e6;
+            background-color: #fff;
+        }
+
+        .totals-table .description-col {
+            text-align: left;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .totals-table .amount-col {
+            text-align: right;
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .totals-table .deductible-row td {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .totals-table .total-row td {
+            background-color: #e3f2fd;
+            font-weight: bold;
+            color: #1976d2;
+            border-top: 2px solid #1976d2;
+        }
+
+        .totals-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .notes-section {
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .notes-section > label {
+            font-weight: bold;
+            color: #5bc0de;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: 30% 70%;
+            gap: 20px;
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 3px;
+        }
+
+        .notes-type-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notes-type-section label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .notes-type-dropdown {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 12px;
+            background-color: white;
+        }
+
+        .notes-content-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notes-content-section label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .notes-textarea {
+            width: 100%;
+            height: 100px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        .save-claim-btn {
+            background-color: #5bc0de;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            position: absolute;
+            bottom: -60px;
+            right: 0;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .save-claim-btn:hover {
+            background-color: #31b0d5;
+        }
+
+        .add-part-btn {
+            background-color: #5bc0de;
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .totals-content {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 3px;
+            min-width: 300px;
+        }
+
+        .totals-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            padding: 2px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .totals-item:last-child {
+            border-bottom: none;
+            border-top: 2px solid #333;
+            padding-top: 8px;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+  
+    <div style="margin-bottom: 30px; margin-top: 10px;">
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 0px 0px;  ">
+        <button style="background-color: #00a8e8; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">View Customer</button>
+        <button style="background-color: #00a8e8; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">View Warranty</button>
+        <button style="background-color: #00a8e8; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Full Claim History</button>
+        <button style="background-color: #00a8e8; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Claim Transaction History</button>
+        <button style="background-color: #00a8e8; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">View T&Cs</button>
+    </div>
+    </div>
+    <div class="tab-container">
+        <div class="tabs">
+            <div class="tab" data-tab="dealer">Dealer View</div>
+            <div class="tab active" data-tab="claims">Claims Team View</div>
+        </div>
+
+        <!-- Dealer Tab Content -->
+        <div id="dealer-content" class="tab-content" style="display: none;">
+            <div class="container">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>Causal Part:</label>
+                        <input type="text" value="B7" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label></label>
+                        <select disabled>
+                            <option>BRAKE SYSTEM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label></label>
+                        <select disabled>
+                            <option>Caliper Near side rear</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="claim-info">
+                    <div class="claim-info-item">
+                        <label>Claim No.:</label>
+                        <span>1</span>
+                    </div>
+                    <div class="claim-info-item">
+                        <label>Causal Code:</label>
+                        <span>B7</span>
+                    </div>
+                    <div class="claim-info-item">
+                        <label>Causal Part:</label>
+                        <span>BRAKE SYSTEM - Caliper Near side rear</span>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Part Number</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Parts Total</th>
+                                <th>Time</th>
+                                <th>Rate</th>
+                                <th>Labour Total</th>
+                                <th>Grand Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div>188972</div></td>
+                                <td><div>Sensor</div></td>
+                                <td><div>2</div></td>
+                                <td><div>275</div></td>
+                                <td><div>550</div></td>
+                                <td><div>2</div></td>
+                                <td><div>50</div></td>
+                                <td><div>100</div></td>
+                                <td><div>650</div></td>
+                            </tr>
+                            <tr>
+                                <td><div>188973</div></td>
+                                <td><div>Clutch</div></td>
+                                <td><div>1</div></td>
+                                <td><div>400</div></td>
+                                <td><div>400</div></td>
+                                <td><div>1</div></td>
+                                <td><div>50</div></td>
+                                <td><div>50</div></td>
+                                <td><div>450</div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="totals-section">
+                    <table class="totals-table" >
+                        <thead>
+                            <tr>
+                                <th>Dealer Total Claim</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <th>Totals</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="description-col">Parts Amount</td>
+                                <td class="amount-col">950.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Labor Amount</td>
+                                <td class="amount-col">150.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Part Tax </td>
+                                <td class="amount-col">10.00%</td>
+                            </tr>
+                             <tr>
+                                <td class="description-col">Labour Tax </td>
+                                <td class="amount-col">10.00%</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Sales Tax Amount</td>
+                                <td class="amount-col">110.00</td>
+                            </tr>
+                            <tr class="deductible-row">
+                                <td class="description-col">Deductible</td>
+                                <td class="amount-col">-100.00</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td class="description-col">Claim Total</td>
+                                <td class="amount-col">1,110.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Claims Tab Content -->
+        <div id="claims-content" class="tab-content">
+            <div class="container">
+        <div class="form-section">
+            <div class="form-group">
+                <label>Causal Part:</label>
+                <input type="text" value="B7">
+            </div>
+            <div class="form-group">
+                <label></label>
+                <select>
+                    <option>BRAKE SYSTEM</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label></label>
+                <select>
+                    <option>Caliper Near side rear</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button class="clear-btn">Clear</button>
+            </div>
+        </div>
+
+        <div class="claim-info">
+            <div class="claim-info-item">
+                <label>Claim No.:</label>
+                <span>1</span>
+            </div>
+            <div class="claim-info-item">
+                <label>Causal Code:</label>
+                <span>B7</span>
+            </div>
+            <div class="claim-info-item">
+                <label>Causal Part:</label>
+                <span>BRAKE SYSTEM - Caliper Near side rear</span>
+            </div>
+        </div>
+
+         <div class="table-container"  >
+            <table id="claims-table" >
+                <thead>
+                    <tr>
+                        <th>Part Number</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Requested Price</th>
+
+                        <th>Verified Quantity</th>
+                        <th>Verified Price</th>
+
+                        <th>Part Tax %</th>
+                        <th>Auth Price</th>
+                        <th>Auth total</th>
+                        <th>Requested Labour</th>
+                        <th>Verified labour</th>
+                        <th>Labour rate</th>
+                        <th>Auth labour Total</th>
+                        <th>Labour Tax %</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="editable-input" value="188972"></td>
+                        <td><input type="text" class="editable-input" value="Sensor"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="275"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="250"></td>
+                        <td><input type="number" class="editable-input" value="10"></td>
+                        <td><input type="number" class="editable-input" value="250"></td>
+                        <td><input type="number" class="editable-input" value="500"></td>
+                        <td><input type="number" class="editable-input" value="2.5"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="number" class="editable-input" value="100"></td>
+                        <td><input type="number" class="editable-input" value="10"></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="editable-input" value="188973"></td>
+                        <td><input type="text" class="editable-input" value="Clutch"></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="420"></td>
+
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="number" class="editable-input" value="10"></td>
+                        <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="number" class="editable-input" value="1.5"></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="number" class="editable-input" value="10"></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="totals-section">
+                <div class="authorized-totals">
+                    <table class="totals-table">
+                        <thead>
+                            <tr>
+                                <th>Authorized Total Claim</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <th>Totals</th>
+                            </tr>
+                        </thead>
+                        <tbody id="claims-total2">
+                            <tr>
+                                <td class="description-col">Parts Amount</td>
+                                <td class="amount-col s">900.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Labor Amount</td>
+                                <td class="amount-col">150.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Part Tax </td>
+                                <td class="amount-col">10.00%</td>
+                            </tr>
+                             <tr>
+                                <td class="description-col">Labour Tax </td>
+                                <td class="amount-col">10.00%</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Sales Tax Amount</td>
+                                <td class="amount-col">105.00</td>
+                            </tr>
+                            <tr class="deductible-row">
+                                <td class="description-col">Deductible</td>
+                                <td class="amount-col">-100.00</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td class="description-col">Authorized Total</td>
+                                <td class="amount-col">1,055.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+
+        
+         <div class="claim-info" style="margin-top: 100px;">
+            <div class="claim-info-item">
+                <label>Claim No.:</label>
+                <span>2</span>
+            </div>
+            <div class="claim-info-item">
+                <label>Causal Code:</label>
+                <span>B1</span>
+            </div>
+            <div class="claim-info-item">
+                <label>Causal Part:</label>
+                <span>BRAKE SYSTEM - ABS Module</span>
+            </div>
+        </div>
+         <div class="table-container"  >
+            <table id="claims-table" >
+                <thead>
+                    <tr>
+                        <th>Part Number</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Requested Price</th>
+
+                        <th>Verified Quantity</th>
+                        <th>Verified Price</th>
+
+                        <th>Part Tax %</th>
+                        <th>Auth Price</th>
+                        <th>Auth total</th>
+                        <th>Requested Labour</th>
+                        <th>Verified labour</th>
+                        <th>Labour rate</th>
+                        <th>Auth labour Total</th>
+                        <th>Labour Tax %</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="editable-input" value="188975"></td>
+                        <td><input type="text" class="editable-input" value="Fuel Tank"></td>
+                        <td><input type="number" class="editable-input" value="3"></td>
+                        <td><input type="number" class="editable-input" value="350"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="340"></td>
+                        <td><input type="number" class="editable-input" value="5"></td>
+                        <td><input type="number" class="editable-input" value="340"></td>
+                        <td><input type="number" class="editable-input" value="680"></td>
+                        <td><input type="number" class="editable-input" value="5"></td>
+                        <td><input type="number" class="editable-input" value="4"></td>
+                        <td><input type="number" class="editable-input" value="20"></td>
+                        <td><input type="number" class="editable-input" value="80"></td>
+                        <td><input type="number" class="editable-input" value="5"></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="editable-input" value="188976"></td>
+                        <td><input type="text" class="editable-input" value="Oil Cap"></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="210"></td>
+
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="200"></td>
+                        <td><input type="number" class="editable-input" value="5"></td>
+                        <td><input type="number" class="editable-input" value="200"></td>
+                        <td><input type="number" class="editable-input" value="200"></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="30"></td>
+                        <td><input type="number" class="editable-input" value="30"></td>
+                        <td><input type="number" class="editable-input" value="5"></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="totals-section">
+                <div class="authorized-totals">
+                    <table class="totals-table">
+                        <thead>
+                            <tr>
+                                <th>Authorized Total Claim</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <th>Totals</th>
+                            </tr>
+                        </thead>
+                        <tbody id="claims-totals3">
+                            <tr>
+                                <td class="description-col">Parts Amount</td>
+                                <td class="amount-col">880.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Labor Amount</td>
+                                <td class="amount-col">110.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Part Tax </td>
+                                <td class="amount-col">5.00%</td>
+                            </tr>
+                             <tr>
+                                <td class="description-col">Labour Tax </td>
+                                <td class="amount-col">5.00%</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Sales Tax Amount</td>
+                                <td class="amount-col">49.50</td>
+                            </tr>
+                            <tr class="deductible-row">
+                                <td class="description-col">Deductible</td>
+                                <td class="amount-col">-100.00</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td class="description-col">Authorized Total</td>
+                                <td class="amount-col">939.50</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+
+
+        <div class="notes-section">
+            <label>Claim Notes:</label>
+            <div class="notes-grid">
+                <div class="notes-type-section">
+                    <label>Notes Type:</label>
+                    <select class="notes-type-dropdown">
+                        <option value="new-claim">Authorize Claim</option>
+                        <option value="update-claim">Update Claim</option>
+                    </select>
+                </div>
+                <div class="notes-content-section">
+                    <label>Add Notes:</label>
+                    <textarea class="notes-textarea" placeholder="Enter claim notes here..."></textarea>
+                </div>
+            </div>
+            <div class="" style="margin-bottom: 50px;">
+            <button class="save-claim-btn">Authorize</button>
+            </div>
+        </div>
+
+
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            // Set claims tab as active by default
+            document.getElementById('claims-content').classList.add('active');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+
+                    // Hide all tab content
+                    tabContents.forEach(content => {
+                        content.style.display = 'none';
+                        content.classList.remove('active');
+                    });
+
+                    // Show selected tab content
+                    const targetContent = document.getElementById(targetTab + '-content');
+                    if (targetContent) {
+                        targetContent.style.display = 'block';
+                        targetContent.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Add functionality to the Add To Claim button (if it exists)
+        const addBtn = document.querySelector('.add-btn');
+        if (addBtn) {
+            addBtn.addEventListener('click', function() {
+                // Collect all table data
+                const rows = document.querySelectorAll('tbody tr');
+                const claimData = [];
+
+                rows.forEach(row => {
+                    const inputs = row.querySelectorAll('input');
+                    if (inputs.length >= 12) {
+                        const rowData = {
+                            partNumber: inputs[0].value,
+                            description: inputs[1].value,
+                            quantity: inputs[2].value,
+                            requestedPrice: inputs[3].value,
+                            verifiedPrice: inputs[4].value,
+                            authPrice: inputs[5].value,
+                            authTotal: inputs[6].value,
+                            requestedLabour: inputs[7].value,
+                            verifiedLabour: inputs[8].value,
+                            labourRate: inputs[9].value,
+                            authLabourTotal: inputs[10].value,
+                            taxPercent: inputs[11].value
+                        };
+                        claimData.push(rowData);
+                    }
+                });
+
+                // Show confirmation
+                alert('Claim data has been processed:\n' + claimData.length + ' parts added to claim');
+
+                // Here you would typically send the data to a server
+                console.log('Claim Data:', claimData);
+            });
+        }
+
+        // Function to add event listeners to row buttons
+        function addRowEventListeners(row) {
+            const deleteBtn = row.querySelector('.delete-btn');
+
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', function() {
+                    if (confirm('Are you sure you want to delete this part?')) {
+                        row.remove();
+                        calculateTotals();
+                    }
+                });
+            }
+        }
+
+        // Function to calculate totals
+        function calculateTotals() {
+            let totalParts = 0;
+            let totalLabour = 0;
+
+            const rows = document.querySelectorAll('#claims-table tbody tr');
+
+            rows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs.length >= 12) {
+                    const authTotal = parseFloat(inputs[6].value) || 0; // Auth total (parts)
+                    const authLabourTotal = parseFloat(inputs[10].value) || 0; // Auth labour Total
+
+                    totalParts += authTotal;
+                    totalLabour += authLabourTotal;
+                }
+            });
+
+            // Calculate sales tax as 10% of parts + labour
+            const salesTaxRate = 0.10;
+            const salesTaxAmount = (totalParts + totalLabour) * salesTaxRate;
+
+            const deductible = 100;
+            const finalTotal = totalParts + totalLabour + salesTaxAmount - deductible;
+
+            // Update the totals display in the table
+            const totalsRows = document.querySelectorAll('#claims-totals tr');
+            if (totalsRows.length >= 6) {
+                totalsRows[0].querySelector('.amount-col').textContent = `$${totalParts.toFixed(2)}`;
+                totalsRows[1].querySelector('.amount-col').textContent = `$${totalLabour.toFixed(2)}`;
+                totalsRows[3].querySelector('.amount-col').textContent = `$${salesTaxAmount.toFixed(2)}`;
+                totalsRows[5].querySelector('.amount-col').textContent = `$${finalTotal.toFixed(2)}`;
+            }
+        }
+
+        // Function to add calculation listeners to inputs
+        function addCalculationListeners(row) {
+            const inputs = row.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('input', calculateTotals);
+                input.addEventListener('change', calculateTotals);
+            });
+        }
+
+        // Initialize event listeners for existing rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            addRowEventListeners(row);
+            addCalculationListeners(row);
+        });
+
+        // Initial calculation
+        calculateTotals();
+    </script>
+</body>
+</html>
