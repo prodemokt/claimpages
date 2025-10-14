@@ -559,138 +559,12 @@
 
     <div class="tab-container">
         <div class="tabs">
-            <div class="tab" data-tab="dealer" style="display:none">Dealer View</div>
-            <div class="tab active" data-tab="claims">Claims Team View</div>
+            <div class="tab" data-tab="dealer" >Claims Team View</div>
+            <div class="tab active" data-tab="claims">Pay View</div>
         </div>
 
         <!-- Dealer Tab Content -->
-        <div id="dealer-content" class="tab-content" style="display: none;">
-            <div class="container">
-                <div class="form-section">
-                    <div class="form-group">
-                        <label>Causal Part:</label>
-                        <input type="text" value="B7" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label></label>
-                        <select disabled>
-                            <option>BRAKE SYSTEM</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label></label>
-                        <select disabled>
-                            <option>Caliper Near side rear</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="claim-info">
-                    <div class="claim-info-item">
-                        <label>Claim No.:</label>
-                        <span>1</span>
-                    </div>
-                    <div class="claim-info-item">
-                        <label>Causal Code:</label>
-                        <span>B7</span>
-                    </div>
-                    <div class="claim-info-item">
-                        <label>Causal Part:</label>
-                        <span>BRAKE SYSTEM - Caliper Near side rear</span>
-                    </div>
-                </div>
-
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Part Number</th>
-                                <th>Description</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th>Parts Total</th>
-                                <th>Time</th>
-                                <th>Rate</th>
-                                <th>Labour Total</th>
-                                <th>Grand Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><div>188972</div></td>
-                                <td><div>Sensor</div></td>
-                                <td><div>2</div></td>
-                                <td><div>275</div></td>
-                                <td><div>550</div></td>
-                                <td><div>2</div></td>
-                                <td><div>50</div></td>
-                                <td><div>100</div></td>
-                                <td><div>650</div></td>
-                            </tr>
-                            <tr>
-                                <td><div>188973</div></td>
-                                <td><div>Clutch</div></td>
-                                <td><div>1</div></td>
-                                <td><div>400</div></td>
-                                <td><div>400</div></td>
-                                <td><div>1</div></td>
-                                <td><div>50</div></td>
-                                <td><div>50</div></td>
-                                <td><div>450</div></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="totals-section">
-                    <table class="totals-table" >
-                        <thead>
-                            <tr>
-                                <th>Dealer Total Claim</th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>Description</th>
-                                <th>Totals</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="description-col">Parts Amount</td>
-                                <td class="amount-col">950.00</td>
-                            </tr>
-                            <tr>
-                                <td class="description-col">Labor Amount</td>
-                                <td class="amount-col">150.00</td>
-                            </tr>
-                            <tr>
-                                <td class="description-col">Part Tax </td>
-                                <td class="amount-col">10.00%</td>
-                            </tr>
-                             <tr>
-                                <td class="description-col">Labour Tax </td>
-                                <td class="amount-col">10.00%</td>
-                            </tr>
-                            <tr>
-                                <td class="description-col">Sales Tax Amount</td>
-                                <td class="amount-col">110.00</td>
-                            </tr>
-                            <tr class="deductible-row">
-                                <td class="description-col">Deductible</td>
-                                <td class="amount-col">-100.00</td>
-                            </tr>
-                            <tr class="total-row">
-                                <td class="description-col">Claim Total</td>
-                                <td class="amount-col">1,110.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Claims Tab Content -->
-        <div id="claims-content" class="tab-content">
+        <div id="dealer-content" class="tab-content">
             <div class="container">
         
                 <div style="padding-bottom: 20px;">
@@ -896,7 +770,7 @@
         </div>
         
         
-                <div style="margin-bottom: 1px; margin-top: 10px; padding:5px;">
+                <div style="margin-bottom: 1px; margin-top: 10px; padding:5px;display:none">
                     <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; padding: 0px 0px;">
                         <button class="edit-parts-btn" data-claim="2" style="background-color: #4a5568; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Edit Parts Details</button>
                         <button style="background-color: #4a5568; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Edit Preliminary Details</button>
@@ -956,16 +830,16 @@
                     <tr>
                         <td><input type="text" class="editable-input" value="188975"></td>
                         <td><input type="text" class="editable-input" value="Fuel Tank"></td>
-                        <td><input type="number" class="editable-input" value="3"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
                         <td><input type="number" class="editable-input" value="350"></td>
-                        <td><input type="number" class="editable-input" value="340"></td>
+                        <td><input type="number" class="editable-input" value="350"></td>
                         <td><input type="number" class="editable-input" value="5"></td>
-                        <td><input type="number" class="editable-input" value="340"></td>
-                        <td><input type="number" class="editable-input" value="680"></td>
+                        <td><input type="number" class="editable-input" value="350"></td>
+                        <td><input type="number" class="editable-input" value="700"></td>
                         <td><input type="number" class="editable-input" value="5"></td>
-                        <td><input type="number" class="editable-input" value="4"></td>
-                        <td><input type="number" class="editable-input" value="20"></td>
-                        <td><input type="number" class="editable-input" value="80"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="number" class="editable-input" value="100"></td>
                         <td><input type="number" class="editable-input" value="5"></td>
                         <td>
                             <div class="action-buttons">
@@ -979,14 +853,14 @@
                         <td><input type="number" class="editable-input" value="1"></td>
                         <td><input type="number" class="editable-input" value="210"></td>
 
-                        <td><input type="number" class="editable-input" value="200"></td>
+                        <td><input type="number" class="editable-input" value="221"></td>
                         <td><input type="number" class="editable-input" value="5"></td>
                         <td><input type="number" class="editable-input" value="200"></td>
-                        <td><input type="number" class="editable-input" value="200"></td>
+                        <td><input type="number" class="editable-input" value="221"></td>
                         <td><input type="number" class="editable-input" value="1"></td>
                         <td><input type="number" class="editable-input" value="1"></td>
-                        <td><input type="number" class="editable-input" value="30"></td>
-                        <td><input type="number" class="editable-input" value="30"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
                         <td><input type="number" class="editable-input" value="5"></td>
                         <td>
                             <div class="action-buttons">
@@ -1035,11 +909,11 @@
                         <tbody id="claims-totals3">
                             <tr>
                                 <td class="description-col">Parts Amount</td>
-                                <td class="amount-col">880.00</td>
+                                <td class="amount-col">921.00</td>
                             </tr>
                             <tr>
                                 <td class="description-col">Labor Amount</td>
-                                <td class="amount-col">110.00</td>
+                                <td class="amount-col">150.00</td>
                             </tr>
                              <tr>
                                 <td class="description-col">Part Tax </td>
@@ -1051,7 +925,7 @@
                             </tr>
                             <tr>
                                 <td class="description-col">Sales Tax Amount</td>
-                                <td class="amount-col">49.50</td>
+                                <td class="amount-col">53.5</td>
                             </tr>
                             <tr class="deductible-row">
                                 <td class="description-col">Deductible</td>
@@ -1059,7 +933,7 @@
                             </tr>
                             <tr class="total-row">
                                 <td class="description-col">Authorized Total</td>
-                                <td class="amount-col">1039.50</td>
+                                <td class="amount-col">1124.50</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1111,7 +985,7 @@
         </div>
         
         
-                <div style="margin-bottom: 1px; margin-top: 10px; padding:5px;">
+                <div style="margin-bottom: 1px; margin-top: 10px; padding:5px; display: none;">
                     <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; padding: 0px 0px;">
                         <button class="edit-parts-btn" data-claim="2" style="background-color: #4a5568; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Edit Parts Details</button>
                         <button style="background-color: #4a5568; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Edit Preliminary Details</button>
@@ -1119,6 +993,489 @@
                         <button style="background-color: #4a5568; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Reject</button>
                         <button style="background-color: #4a5568; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Refer</button>
                         <button style="background-color: #4a5568; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Send Back</button>
+                    </div>
+                </div>
+
+
+        </div>
+        </div>
+
+        <!-- Claims Tab Content -->
+        <div id="claims-content" class="tab-content">
+            <div class="container">
+        
+                <div style="padding-bottom: 20px;">
+                    <div style=" color: #333; font-weight: bold;margin-bottom: 10px;">
+                            <span>Authorized Accepted Claims for Customer</span>
+                        </div>
+                    <div style="border: 1px solid #d0d0d0; background-color: #f8f8f8; padding: 12px; border-radius: 3px; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+                        <div style="display: flex; align-items: center; gap: 8px; color: #333; font-weight: bold;">
+                            <span>Claim No: 1</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 5px; min-width: 150px;">
+                            <label style="font-weight: bold; color: #333;">Authority Number: 00486562</label>
+                             </div>
+                        <div style="min-width: 120px;">
+                            <span style="font-weight: bold; color: #333;">Status:</span> <span style="color: #333;">Authorized Accepted</span>
+                        </div>
+                        <div style="min-width: 150px;">
+                            <span style="font-weight: bold; color: #333;">Causal Part:</span> <span style="color: #333;padding-right: 20px;">BRAKE SYSTEM - Caliper Near side rear</span> 
+                        </div>
+                        <div style="min-width: 120px; text-align: right;">
+                            <span style="font-weight: bold; color: #333;">Payee Group:</span> <span style="color: #333;">Customer</span>
+                        </div>
+                    </div>
+                    </div>
+
+         <div class="table-container"  >
+            <table>
+                <thead>
+                    <tr>
+                        <th>Part Number</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Auth Price</th>
+                        <th>Auth Subtotal</th>
+                        <th>Parts Match</th>
+                        <th>Invoiced Quantity</th>
+                        <th>Invoice Price</th>
+                        <th>Part Tax</th>
+                        <th>Invoice Total Parts</th>
+                        <th>Auth Labour Time</th>
+                        <th>Auth Labour Rate</th>
+                        <th>Auth Labour Total</th>
+                        <th>Labour Match</th>
+                        <th>Invoice Labour Time</th>
+                        <th>Invoice Labour Rate</th>
+                         <th>Labour Tax</th>
+                        <th>Invoice Total Labour</th>
+                       
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="editable-input" value="188972"></td>
+                        <td><input type="text" class="editable-input" value="Sensor"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="250"></td>
+                        <td><input type="number" class="editable-input" value="500"></td>
+                        <td><input type="checkbox"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="490"></td>
+                        <td><input type="number" class="editable-input" value="10"></td>
+                        <td><input type="number" class="editable-input" value="490"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="number" class="editable-input" value="100"></td>
+                        <td><input type="checkbox"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="45"></td>
+                        <td><input type="number" class="editable-input" value="10"></td>
+                        <td><input type="number" class="editable-input" value="90"></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="editable-input" value="188973"></td>
+                        <td><input type="text" class="editable-input" value="Clutch"></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="checkbox" checked></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="number" class="editable-input" value="10"></td>
+                        <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="checkbox" checked></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="number" class="editable-input" value="10"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="totals-section">
+            <div class="authorized-totals">
+                <table class="totals-table">
+                    <thead>
+                        <tr>
+                            <th>Invoice Total Claim</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <th>Totals</th>
+                        </tr>
+                    </thead>
+                    <tbody id="claims-total2">
+                        <tr>
+                            <td class="description-col">Parts Amount</td>
+                            <td class="amount-col s">890.00</td>
+                        </tr>
+                        <tr>
+                            <td class="description-col">Labor Amount</td>
+                            <td class="amount-col">140.00</td>
+                        </tr>
+                        <tr>
+                            <td class="description-col">Part Tax </td>
+                            <td class="amount-col">10.00%</td>
+                        </tr>
+                         <tr>
+                            <td class="description-col">Labour Tax </td>
+                            <td class="amount-col">10.00%</td>
+                        </tr>
+                        <tr>
+                            <td class="description-col">Sales Tax Amount</td>
+                            <td class="amount-col">103.00</td>
+                        </tr>
+                        <tr class="deductible-row">
+                            <td class="description-col">Deductible</td>
+                            <td class="amount-col">-100.00</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td class="description-col">Invoice Total</td>
+                            <td class="amount-col">1,033.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+
+        <div style="padding: 10px;">
+            <h2 style="color: #4a5568; font-size: 18px; font-weight: bold; margin: 0 0 15px 0; padding-bottom: 5px;">Assessment Messages</h2>
+            
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid #d0d0d0; background-color: #f8f8f8; font-size: 14px;">
+                <thead>
+                    <tr>
+                        <th style="background-color: #e8e8e8; border: 1px solid #d0d0d0; padding: 12px; text-align: left; font-weight: bold; color: #333;">Type</th>
+                        <th style="background-color: #e8e8e8; border: 1px solid #d0d0d0; padding: 12px; text-align: left; font-weight: bold; color: #333;">Message</th>
+                        <th style="background-color: #e8e8e8; border: 1px solid #d0d0d0; padding: 12px; text-align: left; font-weight: bold; color: #333;"></th>
+                  
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #d0d0d0; padding: 12px; vertical-align: top;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 20px; height: 20px; background-color: #ffd700; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; color: #333;">→</div>
+                                <span style="font-weight: bold; color: #333;">Refer</span>
+                            </div>
+                        </td>
+                        <td style="border: 1px solid #d0d0d0; padding: 12px; vertical-align: top; text-align: left;">
+                            <span>This Claim has to be manually authorised.</span>
+                        </td>
+                        <td style="border: 1px solid #d0d0d0; padding: 12px; vertical-align: top; text-align: left; min-width: 300px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #d0d0d0; padding: 12px; vertical-align: top;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 20px; height: 20px; background-color: #ffd700; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; color: #333;">○</div>
+                                <span style="font-weight: bold; color: #333;">Advice</span>
+                            </div>
+                        </td>
+                        <td style="border: 1px solid #d0d0d0; padding: 12px; vertical-align: top; text-align: left;">
+                            <span>Claim Total is greater than the Delegated Authority Level set for the Repairing Dealer</span>
+                        </td>
+                        <td style="border: 1px solid #d0d0d0; padding: 12px; vertical-align: top; text-align: left;">
+                            </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        
+              
+        <div style="padding-bottom: 20px;">
+            <div style=" color: #333; font-weight: bold;margin-bottom: 10px;">
+                </div>
+            <div style="border: 1px solid #d0d0d0; background-color: #f8f8f8; padding: 12px; border-radius: 3px; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+                <div style="display: flex; align-items: center; gap: 8px; color: #333; font-weight: bold;">
+                    <span>Claim No: 2</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 5px; min-width: 150px;">
+                    <label style="font-weight: bold; color: #333;">Authority Number: 00486563</label>
+                     </div>
+                <div style="min-width: 120px;">
+                    <span style="font-weight: bold; color: #333;">Status:</span> <span style="color: #333;">Authorized Accepted</span>
+                </div>
+                <div style="min-width: 150px;">
+                    <span style="font-weight: bold; color: #333;">Causal Part:</span> <span style="color: #333;padding-right: 20px;">BRAKE SYSTEM - Caliper Near side rear</span> 
+                </div>
+                <div style="min-width: 120px; text-align: right;">
+                    <span style="font-weight: bold; color: #333;">Payee Group:</span> <span style="color: #333;">Customer</span>
+                </div>
+            </div>
+            </div>
+
+         <div class="table-container"  >
+            <table>
+                <thead>
+                    <tr>
+                        <th>Part Number</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Auth Price</th>
+                        <th>Auth Subtotal</th>
+                        <th>Parts Match</th>
+                        <th>Invoiced Quantity</th>
+                        <th>Invoice Price</th>
+                        <th>Part Tax</th>
+                        <th>Invoice Total Parts</th>
+                        <th>Auth Labour Time</th>
+                        <th>Auth Labour Rate</th>
+                        <th>Auth Labour Total</th>
+                        <th>Labour Match</th>
+                        <th>Invoice Labour Time</th>
+                        <th>Invoice Labour Rate</th>
+                         <th>Labour Tax</th>
+                        <th>Invoice Total Labour</th>
+                       
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="editable-input" value="188972"></td>
+                        <td><input type="text" class="editable-input" value="Sensor"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="250"></td>
+                        <td><input type="number" class="editable-input" value="500"></td>
+                        <td><input type="checkbox"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="480"></td>
+                        <td><input type="number" class="editable-input" value="5"></td>
+                        <td><input type="number" class="editable-input" value="480"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="number" class="editable-input" value="100"></td>
+                        <td><input type="checkbox"></td>
+                        <td><input type="number" class="editable-input" value="2"></td>
+                        <td><input type="number" class="editable-input" value="45"></td>
+                        <td><input type="number" class="editable-input" value="5"></td>
+                        <td><input type="number" class="editable-input" value="90"></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="editable-input" value="188973"></td>
+                        <td><input type="text" class="editable-input" value="Clutch"></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="checkbox" checked></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="number" class="editable-input" value="5"></td>
+                        <td><input type="number" class="editable-input" value="400"></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="checkbox" checked></td>
+                        <td><input type="number" class="editable-input" value="1"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td><input type="number" class="editable-input" value="5"></td>
+                        <td><input type="number" class="editable-input" value="50"></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td><input type="text" class="editable-input" value=""></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn delete-btn">D</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="totals-section">
+                <div class="authorized-totals">
+                    <table class="totals-table">
+                        <thead>
+                            <tr>
+                                <th>Invoice Total Claim</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <th>Totals</th>
+                            </tr>
+                        </thead>
+                        <tbody id="claims-totals3">
+                            <tr>
+                                <td class="description-col">Parts Amount</td>
+                                <td class="amount-col">880.00</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Labor Amount</td>
+                                <td class="amount-col">140.00</td>
+                            </tr>
+                             <tr>
+                                <td class="description-col">Part Tax </td>
+                                <td class="amount-col">5.00%</td>
+                            </tr>
+                             <tr>
+                                <td class="description-col">Labour Tax </td>
+                                <td class="amount-col">5.00%</td>
+                            </tr>
+                            <tr>
+                                <td class="description-col">Sales Tax Amount</td>
+                                <td class="amount-col">51.00</td>
+                            </tr>
+                            <tr class="deductible-row">
+                                <td class="description-col">Deductible</td>
+                                <td class="amount-col">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td class="description-col">Invoice Total</td>
+                                <td class="amount-col">1071.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    
+                </div>
+        </div>
+
+        <div style="border:1px solid gray; padding:5px; width:280px;float: right;">
+            <div><b>Claim Total </b>
+                <span style="float:right;font-weight: 800;">
+                    2104
+                </span>
+                
+            </div>
+            <div>
+
+            </div>
+        </div>
+
+
+        <div style="padding: 10px;">
+            <h2 style="color: #4a5568; font-size: 18px; font-weight: bold; margin: 0 0 15px 0; padding-bottom: 5px;">Assessment Messages</h2>
+            
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid #d0d0d0; background-color: #f8f8f8; font-size: 14px;">
+                <thead>
+                    <tr>
+                        <th style="background-color: #e8e8e8; border: 1px solid #d0d0d0; padding: 12px; text-align: left; font-weight: bold; color: #333;">Type</th>
+                        <th style="background-color: #e8e8e8; border: 1px solid #d0d0d0; padding: 12px; text-align: left; font-weight: bold; color: #333;">Message</th>
+                        <th style="background-color: #e8e8e8; border: 1px solid #d0d0d0; padding: 12px; text-align: left; font-weight: bold; color: #333;"></th>
+                  
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #d0d0d0; padding: 12px; vertical-align: top;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 20px; height: 20px; background-color: #ffd700; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; color: #333;">→</div>
+                                <span style="font-weight: bold; color: #333;">Refer</span>
+                            </div>
+                        </td>
+                        <td style="border: 1px solid #d0d0d0; padding: 12px; vertical-align: top; text-align: left;">
+                            <span>This Claim has to be manually authorised.</span>
+                        </td>
+                        <td style="border: 1px solid #d0d0d0; padding: 12px; vertical-align: top; text-align: left; min-width: 300px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #d0d0d0; padding: 12px; vertical-align: top;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 20px; height: 20px; background-color: #ffd700; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; color: #333;">○</div>
+                                <span style="font-weight: bold; color: #333;">Advice</span>
+                            </div>
+                        </td>
+                        <td style="border: 1px solid #d0d0d0; padding: 12px; vertical-align: top; text-align: left;">
+                            <span>Claim Total is greater than the Delegated Authority Level set for the Repairing Dealer</span>
+                        </td>
+                        <td style="border: 1px solid #d0d0d0; padding: 12px; vertical-align: top; text-align: left;">
+                            </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        
+                <div style="margin-bottom: 1px; margin-top: 10px; padding:5px;">
+                    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; padding: 0px 0px;">
+                        <button class="edit-parts-btn" data-claim="2" style="background-color: #4a5568; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Edit Parts Details</button>
+                        <button style="background-color: #4a5568; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Edit Preliminary Details</button>
+                        <button style="background-color: #4a5568; color: white; border: none; padding: 12px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Pay Claim</button>
                     </div>
                 </div>
 
