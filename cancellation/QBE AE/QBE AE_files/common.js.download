@@ -1,0 +1,368 @@
+	var firstFocusableElementName = null;
+	var pathLevel=0;
+
+	function call(){
+		if($('#j_username'))
+			$('#j_username').focus();
+	}
+
+	var BrowserDetect = {
+		init: function () {
+			this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
+			this.version = this.searchVersion(navigator.userAgent)
+				|| this.searchVersion(navigator.appVersion)
+				|| "an unknown version";
+			this.OS = this.searchString(this.dataOS) || "an unknown OS";
+		},
+		searchString: function (data) {
+			for (var i=0;i<data.length;i++)	{
+				var dataString = data[i].string;
+				var dataProp = data[i].prop;
+				this.versionSearchString = data[i].versionSearch || data[i].identity;
+				if (dataString) {
+					if (dataString.indexOf(data[i].subString) != -1)
+						return data[i].identity;
+				}
+				else if (dataProp)
+					return data[i].identity;
+			}
+		},
+		searchVersion: function (dataString) {
+			var index = dataString.indexOf(this.versionSearchString);
+			if (index == -1) return;
+			return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
+		},
+		dataBrowser: [
+			{
+				string: navigator.userAgent,
+				subString: "Chrome",
+				identity: "Chrome"
+			},
+			{ 	string: navigator.userAgent,
+				subString: "OmniWeb",
+				versionSearch: "OmniWeb/",
+				identity: "OmniWeb"
+			},
+			{
+				string: navigator.vendor,
+				subString: "Apple",
+				identity: "Safari",
+				versionSearch: "Version"
+			},
+			{
+				prop: window.opera,
+				identity: "Opera"
+			},
+			{
+				string: navigator.vendor,
+				subString: "iCab",
+				identity: "iCab"
+			},
+			{
+				string: navigator.vendor,
+				subString: "KDE",
+				identity: "Konqueror"
+			},
+			{
+				string: navigator.userAgent,
+				subString: "Firefox",
+				identity: "Firefox"
+			},
+			{
+				string: navigator.vendor,
+				subString: "Camino",
+				identity: "Camino"
+			},
+			{		// for newer Netscapes (6+)
+				string: navigator.userAgent,
+				subString: "Netscape",
+				identity: "Netscape"
+			},
+			{
+				string: navigator.userAgent,
+				subString: "MSIE",
+				identity: "Explorer",
+				versionSearch: "MSIE"
+			},
+			{
+				string: navigator.userAgent,
+				subString: "Gecko",
+				identity: "Mozilla",
+				versionSearch: "rv"
+			},
+			{ 		// for older Netscapes (4-)
+				string: navigator.userAgent,
+				subString: "Mozilla",
+				identity: "Netscape",
+				versionSearch: "Mozilla"
+			}
+		],
+		dataOS : [
+			{
+				string: navigator.platform,
+				subString: "Win",
+				identity: "Windows"
+			},
+			{
+				string: navigator.platform,
+				subString: "Mac",
+				identity: "Mac"
+			},
+			{
+				string: navigator.userAgent,
+				subString: "iPhone",
+				identity: "iPhone/iPod"
+			},
+			{
+				string: navigator.platform,
+				subString: "Linux",
+				identity: "Linux"
+			}
+		]
+
+	};
+	BrowserDetect.init();
+	//alert(BrowserDetect.browser);
+	//alert(BrowserDetect.version);
+	//alert(BrowserDetect.OS);
+
+	/*function clearFormCommon(formName){//Arguments after formname will be fields that has to be skipped, need not change the method just pass etc parameters as name for eg., 'DateOfBirth' then dob will not be cleared
+		alert('clearFormCommon');
+		var firstFocusableElementNameIndex=-1;
+		var allElements = eval("document."+formName).elements;
+
+		CheckAllElements:
+		for(var i=0; i<allElements.length; i++){
+			if(arguments.length>1){//to skip certain fields without clearing ie., fields which are not disabled or hidden but need to restore the actual value
+				for(var j=1; j<arguments.length; j++){
+					if(arguments[j]==allElements[i].name){
+						continue CheckAllElements;
+					}
+				}
+			}
+			
+			if(allElements[i].disabled==true) continue;//no clearing for disabled fields, if needed implement locally and not here
+			else if(allElements[i].type=='hidden') continue;//no clearing for hidden fields, if needed implement locally and not here
+			else if(allElements[i].type=='button') continue;//no clearing for buttons
+			else if(allElements[i].type=='radio'){ allElements[i].checked = false; if(firstFocusableElementNameIndex==-1) firstFocusableElementNameIndex=i;
+			}else if(allElements[i].type=='select-one') {allElements[i].selectedIndex=0; if(firstFocusableElementNameIndex==-1) firstFocusableElementNameIndex=i;
+			}else if(allElements[i].type=='checkbox') {allElements[i].checked = false; if(firstFocusableElementNameIndex==-1) firstFocusableElementNameIndex=i;
+			}else if(allElements[i].type=='password') {allElements[i].value = ""; if(firstFocusableElementNameIndex==-1) firstFocusableElementNameIndex=i;
+			}else if(allElements[i].type=='text') {allElements[i].value = ""; if(firstFocusableElementNameIndex==-1) firstFocusableElementNameIndex=i;
+			}else if(allElements[i].type=='textarea') {allElements[i].value = ""; if(firstFocusableElementNameIndex==-1) firstFocusableElementNameIndex=i;}
+		}
+
+		for(var x=0;x<document.images.length;x++){
+			if(document.images[x].name=='ErrorMsgIndicator'){
+				if(pathLevel==3) document.images[x].src=FuncblankImg();
+				else document.images[x].src=FuncblankImg();
+				document.images[x].alt='';
+				document.images[x].width='16';
+				document.images[x].height='16';
+			}
+		}
+		allElements[firstFocusableElementNameIndex].focus();
+	}*/
+
+
+
+	//error, any javascript error will go through this
+	function fbitErrorProcess(msg,url,lno){
+		//alert("An error has occured. \nMessage: "+msg+"\nURL: "+url+"\nLine No: "+lno+"\nDocument Title: "+document.title+"\nPlease inform this error to FirstBaseIT Ltd.,"); return true;
+	}
+	window.onerror=fbitErrorProcess;//=null means all errors will get suppressed
+
+	//function for finding empty values. pass the object(this variable) as first parameter and second parameter as whether all are mandatory or one is enough(this can handle only this much for now) and third is blank image name which will be converted to error image if found and then a list of the same form field name for which you require to investigate
+	function isEmpty(){
+		//if empty according to context then returns true else false(text,password,select)
+		// a change in this method is to be done  carefully because it is used commonly by more jsp's or html's
+		// any specific requirements to be met locally
+		if(arguments.length<4) {/*alert(FuncisEmptyAlertMsg());*/ return false;}//minimum requirement check
+		var formObj = arguments[0];//may be we can get values of attribute from the form object itself, document.form.atrr.value not needed. needs to be tested later
+		var allMandatory = "true";
+		if(arguments[1]=="true") allMandatory="true";
+		else if(arguments[1]=="false") allMandatory="false";
+		var attributeValue=null;
+		var nonEmptyValueCount=0;
+		var allFieldNames='';
+		var errorImageName = arguments[2], errorString = '', firstErrorField = '';
+		for(var i=3; i<arguments.length; i++){
+			//attributeValue = eval("document."+formObj.name+"."+arguments[i]).value;
+			var result = Function('"use strict";return (' + "document."+formObj.name+"."+arguments[i] + ')')();
+			attributeValue=result.value;
+			if((attributeValue==null)||(trim(attributeValue)=="")){
+				if(allMandatory=="true"){//if all mandatory and one empty found then stop here
+					errorString = "Enter valid value for field: "+arguments[i]+"\nSpaces not allowed.";
+					displayError(errorImageName, errorString);
+					return true;
+				}
+				if(firstErrorField=='')	firstErrorField = arguments[i];
+				allFieldNames = allFieldNames+"\n"+arguments[i];
+			}else{//calculate number of non empty values
+				nonEmptyValueCount = nonEmptyValueCount+1;
+				allFieldNames = allFieldNames+"\n"+arguments[i];
+			}
+		}
+		//if not all mandatory & all empty then stop here saying enter atleast one.
+		if((allMandatory=="false")&&(nonEmptyValueCount==0)){
+			errorString = "Enter a valid value for atleast one field:"+allFieldNames+".\nSpaces not allowed.";
+			displayError(errorImageName, errorString);
+			return true;
+		}
+		return false;
+	}
+	function displayError(errorImage, errorString){//has a issue no two images with same cannot be present in a document
+		//var imageObj = eval("document."+errorImage)
+		var imageObj = Function('"use strict";return (' +"document."+errorImage + ')')();
+		if(imageObj){
+			MM_swapImage(errorImage,'',FunchelpImg(),1);
+			imageObj.name='ErrorMsgIndicator';
+			imageObj.alt=errorString;
+			imageObj.width='16';
+			imageObj.height='16';
+		}//else alert(errorString);
+	}
+	//function for finding equal values. pass the object(this or form) as first parameter and then a list of the same form field name for which you require to investigate
+	function isValuesEqual(){//if values equals according to context then returns true else false(text,password,select)
+		if(arguments.length<3) {/*alert(FuncisEmptyAlertMsg());*/ return false;}//minimum requirement check
+		var formObj = arguments[0];
+		var attributeValue1=null,attributeValue2=null;
+		/*var nonEqualValueCount=0;*/
+		for(var i=1; i<arguments.length; i++){
+			//attributeValue1 = eval("document."+formObj.name+"."+arguments[i]).value;
+			var result = Function('"use strict";return (' + "document."+formObj.name+"."+arguments[i] + ')')();
+			attributeValue1=result.value;
+			for(var j=i+1; j<arguments.length; j++){
+				//attributeValue2 = eval("document."+formObj.name+"."+arguments[j]).value;
+				var result2 = Function('"use strict";return (' + "document."+formObj.name+"."+arguments[j] + ')')();
+				attributeValue2=result2.value;
+				if(attributeValue1!=attributeValue2) return false;
+			}
+
+		}
+		return true;
+	}
+	//trim function for javascript
+	function ltrim ( s ){	return s.replace( /^\s*/, "" )}
+	function rtrim ( s ){	return s.replace( /\s*$/, "" );}
+	function trim ( s ){	return rtrim(ltrim(s));}
+
+	//MM_preloadImages(FunchelpImg());
+
+	function MM_swapImgRestore() { 
+		var i,x,a=document.MM_sr; 
+		for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+	}
+
+	function MM_preloadImages() { 
+		var d=document; 
+		if(d.images){
+			if(!d.MM_p) d.MM_p=new Array();
+			var i,j=d.MM_p.length,a=MM_preloadImages.arguments; 
+			for(i=0; i<a.length; i++)
+				if (a[i].indexOf("#")!=0){ 
+					d.MM_p[j]=new Image;
+					d.MM_p[j++].src=a[i];
+				}
+		}
+	}
+
+	function MM_findObj(n, d) { 
+		var p,i,x;
+		if(!d) d=document; 
+		if((p=n.indexOf("?"))>0&&parent.frames.length) {
+			d=parent.frames[n.substring(p+1)].document; 
+			n=n.substring(0,p);
+		}
+		if(!(x=d[n])&&d.all) x=d.all[n]; 
+		for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+		for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document); 
+		return x;
+	}
+
+	function MM_swapImage() { 
+		var i,j=0,x,a=MM_swapImage.arguments; 
+		document.MM_sr=new Array; 
+		for(i=0;i<(a.length-2);i+=3)
+			if ((x=MM_findObj(a[i]))!=null){
+				document.MM_sr[j++]=x; 
+				if(!x.oSrc) x.oSrc=x.src; 
+				x.src=a[i+2];
+		}
+	}
+
+	//javascript:window.history.forward(1);
+
+	function right(e) {
+	if (event.button == 2 ){
+		//alert("Sorry, this operation is not allowed");
+		return false;
+	}
+	return true;
+	}
+
+	// document.onmousedown=right;
+
+
+	/*function call(){
+		document.logon.j_username.focus();
+		//parent.content.location.href="../content.jsp";
+	}*/
+	function validate(){
+		if(document.logon.j_username.value==""){
+			//alert("Enter Username");
+			document.logon.j_username.focus();
+			return false;
+		}
+		return true;
+	}
+	function resizeFrame(frameName, offSet)
+	{
+		//var myWidth;
+		var myHeight;
+
+		if( typeof( window.innerWidth ) == 'number' ) { 
+
+		//Non-IE 
+
+		//myWidth = window.innerWidth;
+		myHeight = window.innerHeight; 
+
+		} else if( document.documentElement && 
+
+		( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) { 
+
+		//IE 6+ in 'standards compliant mode' 
+
+		//myWidth = document.documentElement.clientWidth; 
+		myHeight = document.documentElement.clientHeight; 
+
+		} else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) { 
+
+		//IE 4 compatible 
+
+		//myWidth = document.body.clientWidth; 
+		myHeight = document.body.clientHeight;
+
+		}
+		
+		//alert("body width = "+myWidth);
+		//alert("body height ="+myHeight);	
+	//find the height of the internal page
+	//var the_height= document.getElementById('contentFrame').contentWindow.document.body.scrollHeight;
+		var the_height = myHeight-offSet+"px";
+		//alert('initial height = '+myHeight);
+		//alert('after height = '+the_height);
+		//alert('height of '+frameName+' ='+the_height);
+		//alert("frame height = "+the_height);
+	//change the height of the iframe
+		//alert('offset = '+offSet);
+		document.getElementsByName(frameName)[0].height=the_height;
+	}
+	
+	$('.close-jsp-btn-cls').click(function(){
+		closeWindow();
+	});
+	function closeWindow() {
+		top.close();
+	}

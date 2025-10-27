@@ -1,0 +1,1350 @@
+function FsmControler () {
+	
+	this.MACH_NAME = '';
+	this.STATE_NAME = '';
+	this.MACH_PROC_ID = '';
+	this.MACH_AUTH_ID = '';
+	this.MACH_SEQ_NO = '';
+	this.ACTION_NAME = '';
+	this.ON_STATE_CHANGE = '';
+
+	this.localVars = {};
+   
+    this.init = function(machName,stateName,prodID,seqNo, authId, onStateChange) {
+     this.MACH_NAME = machName;
+   	 this.STATE_NAME = stateName;
+   	 this.MACH_PROC_ID = prodID;
+   	 this.MACH_SEQ_NO = seqNo;
+   	 this.MACH_AUTH_ID= authId;
+   	 this.ON_STATE_CHANGE = onStateChange;
+   	};
+    
+   this.setLocalValue=function(name,value){
+		return this.localVars[name]=value;
+	};
+	
+	this.verifyValue = function(value) {
+		if(val != undefined){
+		value = value.replace(/</g, '');
+		value = value.replace(/>/g, '');
+		return this.localVars[name] = value;
+		}
+	};
+	
+   this.getLocalValue=function(name){
+		return this.localVars[name];
+	};
+   
+   this.clearLocalVars=function(){
+	   this.localVars = {};
+	};
+   
+   this.loadPagebyURL = function(url, id) {
+
+	   if(fsmStatus.isWorking())
+    		return false;
+      fsmStatus.startAction();
+	   if(id == undefined)
+		   id = fsmcxt.getRenderer();
+	   var posting = $.post( this._checkURL(url) );
+	   posting.done(function( data ) { 
+		   fsmStatus.endAction();
+		   if(id == undefined)
+			   id = fsmcxt.getRenderer();
+ 		   $('#'+id).html(data);
+ 		   loadScript();
+ 	   });
+   	   posting.fail(function( data ) { 
+     	  fsmStatus.endAction();
+     	  if(url.indexOf("sql_select_hidden") >= 0){
+     	  $('#bodycontent').html("<html><body><div class='alert alert-danger col-md-6 offset-md-3 oops'><i class='fa fa-exclamation-triangle'></i> OOPS!</div></body></html>");
+     	  }
+     	  loadScript();
+   	   });
+	 };
+    
+    this.loadPage = function(id, machname, actionname) {
+    
+    	if(fsmStatus.isWorking())
+    		return false;
+    	fsmStatus.startAction();
+    	var url = 'mc?MACH_NAME='+machname;
+    	if(actionname != null)
+    	 url = 'mc?MACH_NAME='+machname+'&ACTION_NAME='+actionname;
+    	var posting = $.post( this._checkURL(url) );
+    	posting.done(function( data ) { 
+		   fsmStatus.endAction();
+		   if(id == undefined)
+			   id = fsmcxt.getRenderer();
+		   $('#'+id).html(data);
+		   loadScript();
+	   });
+	   posting.fail(function( data ) { 
+		   fsmStatus.endAction();
+		   $('#bodycontent').html("<html><body><div class='alert alert-danger col-md-6 offset-md-3 oops'><i class='fa fa-exclamation-triangle'></i> OOPS!</div></body></html>");
+		   loadScript();
+	   });
+    };
+    
+    this.beginAction = function(machname, actionname, id) {
+    	if(actionname != 'setclient')
+    	 this.fetchFormParams();
+    
+    	if(fsmStatus.isWorking())
+    		return false;
+    	fsmStatus.startAction();
+    	var jsonData = {'MACH_NAME':machname, 'ACTION_NAME':actionname};
+    	var obj = jsonData;
+    	if(actionname != 'clearclient')
+    	 obj = this._prepareadditionalReqParamObject(jsonData);
+    	var posting = $.post( './mc', obj);
+    	posting.done(function( data ) {
+    	
+    	  fsmStatus.endAction();
+    	  if(id == undefined)
+    		  id = fsmcxt.getRenderer();
+  		  $('#'+id).html(data);
+  		  loadScript();
+  		});
+    	posting.fail(function( data ) {
+    			  fsmStatus.endAction();
+      	 
+      	  if(( $("#Client").length >= 1 || $('#clientName').length >= 1) &&  ($("#Client").val() == "" || $('#clientName').val() == undefined)){
+      		$('#bodycontent').html("<html><body><div class='alert alert-danger col-md-6 offset-md-3 oops'><i class='fa fa-exclamation-triangle'></i> Please select client</div></body></html>");
+      	  }     	 
+      	  
+      	  loadScript();
+    	});
+    };
+    
+    this.loginAction1 = function (formid){
+      	if(fsmStatus.isWorking())
+    		return false;
+    	fsmStatus.startAction();    	
+		var jsonData = {};
+		 jsonData['j_username'] = $("#j_username").val();
+		 jsonData['j_password'] = '';
+		 jsonData['recaptchaToken'] = $('#recaptcha-response-token').val();
+		// jsonData.j_username = decodeURIComponent(jsonData.j_username);
+		// jsonData.j_password = decodeURIComponent(jsonData.j_password);
+		 var url = "j_security_check";
+		var posting = $.post( this._checkURL(url), jsonData );
+		posting.done(function( data ) { 
+		  fsmStatus.endAction();
+		  $('#container').html(data);
+		  var url=  window.location.href;
+      	  url=url.split("auth_redirect")[0]+"#";
+          window.location.href=url;
+			  loadScript();
+			});
+		posting.fail(function( data ) { 
+	      	  fsmStatus.endAction();
+	      	 if(( $("#Client").length >= 1 || $('#clientName').length >= 1 ) && ($("#Client").val() == "" || $('#clientName').val() == undefined )){
+	       		$('#bodycontent').html("<html><body><div class='alert alert-danger col-md-6 offset-md-3 oops'><i class='fa fa-exclamation-triangle'></i> Please select client</div></body></html>");
+	       	  }else{
+	      	  $('#bodycontent').html("<html><body><div class='alert alert-danger col-md-6 offset-md-3 oops'><i class='fa fa-exclamation-triangle'></i> OOPS!</div></body></html>");
+	       	  }
+	      		  
+	   	      	  loadScript();
+	    	});
+	};
+	this.loginAction = function (formid){
+    	if(fsmStatus.isWorking())
+    		return false;
+    	fsmStatus.startAction();    	
+    	/*var json =  'j_username='+$("#j_username").val()+'&j_password='+$("#j_password").val();*/
+		// var mydata = $("#"+formid).serialize();
+		var jsonData = {};
+		 jsonData['j_username'] = $("#j_username").val();
+		 jsonData['j_password'] = $("#j_password").val();
+		 jsonData['recaptchaToken'] = $('#recaptcha-response-token').val();
+		// jsonData.j_username = decodeURIComponent(jsonData.j_username);
+		// jsonData.j_password = decodeURIComponent(jsonData.j_password);
+		var url = $('#'+formid).attr('action');
+		var posting = $.post( this._checkURL(url), jsonData );
+		posting.done(function( data ) { 
+		  fsmStatus.endAction();
+		  $('#container').html(data);
+		  loadScript();
+		});
+		posting.fail(function( data ) { 
+	      	  fsmStatus.endAction();
+	      	 if(( $("#Client").length >= 1 || $('#clientName').length >= 1 ) && ($("#Client").val() == "" || $('#clientName').val() == undefined )){
+	       		$('#bodycontent').html("<html><body><div class='alert alert-danger col-md-6 offset-md-3 oops'><i class='fa fa-exclamation-triangle'></i> Please select client</div></body></html>");
+	       	  }else{
+	      	  $('#bodycontent').html("<html><body><div class='alert alert-danger col-md-6 offset-md-3 oops'><i class='fa fa-exclamation-triangle'></i> OOPS!</div></body></html>");
+	       	  }
+	      	  loadScript();
+	    	});
+	};
+
+    
+    this.formSubmit = function (formid, id){
+    	this.fetchFormParams();
+    	if(fsmStatus.isWorking())
+    		return false;
+    	fsmStatus.startAction();
+    	var jsonData = this.prepareReqParamObject();
+		var url = $('#'+formid).attr('action');
+		var posting = $.post( this._checkURL(url), this._prepareadditionalReqParamObject(jsonData));
+		posting.done(function( data ) { 
+			fsmStatus.endAction();
+			if(id == null)
+	    		  id = fsmcxt.getRenderer();
+			$('#'+id).html(data);
+		});
+	};
+	
+	this.formSubmitForUpload = function (formid, id,action){
+		$("#table").html("");
+//		$("#tile").html("");
+		$("#tile").hide();
+		$("#buttons").html("");
+		$("#buttons").hide();
+		$("#tile:first").hide();
+		
+	    	this.fetchFormParams();
+    	if(fsmStatus.isWorking())
+    		return false;
+    	fsmStatus.startAction();
+    	var jsonData = this.prepareReqParamObject();
+    	jsonData.ACTION_NAME = action;
+		var url = $('#'+formid).attr('action');
+		var posting = $.post( this._checkURL(url), this._prepareadditionalReqParamObject(jsonData));
+		posting.done(function( data ) { 
+			fsmStatus.endAction();
+			if(id == null)
+	    		  id = fsmcxt.getRenderer();
+			$('#'+id).html(data);
+		});
+	};
+	this.sesformSubmit = function (id){
+    	this.fetchFormParams();
+    	if(fsmStatus.isWorking())
+    		return false;
+    	fsmStatus.startAction();
+    	var jsonData = this.prepareReqParamObject();
+		var url = './servlet/AjaxServlet';
+		var posting = $.post( this._checkURL(url), this._prepareadditionalReqParamObject(jsonData));
+		posting.done(function( data ) { 
+			fsmStatus.endAction();
+			if(id == null)
+	    		  id = fsmcxt.getRenderer();
+			$('#'+id).html(data);
+		});
+	};
+    
+    this.prepareReqParamObject = function(name, value){
+    	var paramObj = { 'ACTION_NAME': this.ACTION_NAME, 'MACH_NAME': this.MACH_NAME, 'STATE_NAME': this.STATE_NAME, 'MACH_PROC_ID':this.MACH_PROC_ID, 'MACH_SEQ_NO':this.MACH_SEQ_NO, 'MACH_AUTH_ID':this.MACH_AUTH_ID};
+    	return paramObj;
+    };
+    
+    
+    this._prepareadditionalReqParamObject = function(jsonData){
+    	for (var varInfo in this.localVars) {
+    		var value = this.localVars[varInfo];
+			if(value==undefined)
+			  continue;
+			jsonData[varInfo] = value;
+		}
+		return jsonData;
+    };
+  
+
+    this.performAction = function(name, id) {
+    	this.fetchFormParams();
+    	if(fsmStatus.isWorking())
+    		return false;
+    	fsmStatus.startAction();
+        this.ACTION_NAME=name;
+        var jsonData = this.prepareReqParamObject();
+    	var posting = $.post( './mc',  this._prepareadditionalReqParamObject(jsonData));
+    	posting.done(function( data ) { 
+    		fsmStatus.endAction();
+    		if(id == null)
+    		  id = fsmcxt.getRenderer();
+  		  $('#'+id).html(data);
+  		  loadScript();
+  		});
+    	posting.fail(function( data ) { 
+        	  fsmStatus.endAction();        	 
+        	  if(( $("#Client").length >= 1 || $('#clientName').length >= 1 ) &&  ( $("#Client").val() == "" || $('#clientName').val() == undefined )){
+        		$('#bodycontent').html("<html><body><div class='alert alert-danger col-md-6 offset-md-3 oops'><i class='fa fa-exclamation-triangle'></i> Please select client</div></body></html>");
+        	  } 
+    	});
+       
+    };
+    
+    this.performSorting = function(name, id,altid) {
+    	this.fetchFormParams();
+    	if(fsmStatus.isWorking())
+    		return false;
+    	fsmStatus.startAction();
+        this.ACTION_NAME=name;
+        var jsonData = this.prepareReqParamObject();
+    	var posting = $.post( './mc',  this._prepareadditionalReqParamObject(jsonData));
+    	posting.done(function( data ) { 
+    		fsmStatus.endAction();
+  		  $('#'+altid).html(data);
+  		  loadScript();
+  		});
+       
+    };
+    
+    this.uploadAction =  function(id, action, fileid){    
+    	this.fetchFormParams();
+    	if(fsmStatus.isWorking())
+    		return false;
+    	fsmStatus.startAction();
+        this.ACTION_NAME=action;
+        var jsonData = this.prepareReqParamObject();
+    	   if( typeof FormData == 'undefined'){    		   
+    		   var object = new Date().getTime();    		     	      
+                $("body").append($('<iframe name="postiframe'+object+'" id="postiframe'+object+'" style="display: none"></iframe>'));
+                var form = $("#upload_form");
+                form.attr("action", this._checkURL('./mc?'+jQuery.param( this._prepareadditionalReqParamObject(jsonData) )));
+                form.attr("method", "post");
+                form.attr("encoding", "multipart/form-data");
+                form.attr("enctype", "multipart/form-data");
+                form.attr("target", "postiframe"+object);
+                form.attr(this.getLocalValue("FileDataKey"), $('#'+fileid).val());
+                form.submit();
+                this.MACH_SEQ_NO=parseInt(jsonData.MACH_SEQ_NO) +1;
+                this.MACH_AUTH_ID=parseInt(jsonData.MACH_AUTH_ID);
+                $("#postiframe"+object).load(function () {
+                    var iframeContents = this.contentWindow.document.body.innerHTML;                  
+                    fsmStatus.endAction();
+	   				id = fsmcxt.getRenderer();
+	   				$('#upload_form').html(iframeContents);
+	   			    var div = document.getElementById("errordiv");
+	   			     if(div != null && div != 'undefined'){
+	   			        fsmCont.MACH_SEQ_NO=parseInt(jsonData.MACH_SEQ_NO);
+	   			        fsmCont.MACH_AUTH_ID=parseInt(jsonData.MACH_AUTH_ID);
+	   			     }
+	   				loadScript();
+	   	  		    $("#postiframe"+object).remove();
+	   	  	    });     	 
+             
+    	   }else{
+    	   var formData = new FormData($("#upload_form")[0]);
+    	   formData.append(this.getLocalValue("FileDataKey"),$('#'+fileid)[0].files[0]);
+    	   	$.ajax({
+    	   			url: this._checkURL('./mc?'+jQuery.param( this._prepareadditionalReqParamObject(jsonData) )),
+    	   			type: 'POST',
+    	   			data: formData,
+    	   			async: true,
+    	   			cache: false,
+    	   			contentType: false,
+    	   			processData: false,
+    	   			success: function (data) {
+    	   				fsmStatus.endAction();
+    	   				id = fsmcxt.getRenderer();
+    	   				$('#'+id).html(data);
+    	   	  		    loadScript();
+    	   			},
+    	   			error: function(){
+    	   				fsmStatus.endAction();
+    	   			}
+    	   	});   
+    	   }    	       	   
+    };
+    
+    this.multipleFilesUploadAction =  function(id, action, fileid){    
+    	this.fetchFormParams();
+    	if(fsmStatus.isWorking())
+    		return false;
+    	
+        // Show progress modal
+        showUploadProgress();
+        
+    	fsmStatus.startAction();
+        this.ACTION_NAME=action;
+        var jsonData = this.prepareReqParamObject();
+    	   if( typeof FormData == 'undefined'){    		   
+    		   var object = new Date().getTime();    		     	      
+                $("body").append($('<iframe name="postiframe'+object+'" id="postiframe'+object+'" style="display: none"></iframe>'));
+                var form = $("#upload_form");
+                form.attr("action", this._checkURL('./mc?'+jQuery.param( this._prepareadditionalReqParamObject(jsonData) )));
+                form.attr("method", "post");
+                form.attr("encoding", "multipart/form-data");
+                form.attr("enctype", "multipart/form-data");
+                form.attr("target", "postiframe"+object);
+                form.attr(this.getLocalValue("FileDataKey"), $('#'+fileid).val());
+                form.submit();
+                this.MACH_SEQ_NO=parseInt(jsonData.MACH_SEQ_NO) +1;
+                this.MACH_AUTH_ID=parseInt(jsonData.MACH_AUTH_ID);
+                $("#postiframe"+object).load(function () {
+                    var iframeContents = this.contentWindow.document.body.innerHTML;                  
+                    fsmStatus.endAction();
+	   				id = fsmcxt.getRenderer();
+	   				$('#upload_form').html(iframeContents);
+	   			    var div = document.getElementById("errordiv");
+	   			     if(div != null && div != 'undefined'){
+	   			        fsmCont.MACH_SEQ_NO=parseInt(jsonData.MACH_SEQ_NO);
+	   			        fsmCont.MACH_AUTH_ID=parseInt(jsonData.MACH_AUTH_ID);
+	   			     }
+	   				loadScript();
+	   	  		    $("#postiframe"+object).remove();
+	   	  	    });     	 
+             
+    	   }else{
+    	   var formData = new FormData($("#upload_form")[0]);
+    	   formData.append(this.getLocalValue("FileDataKey"),formData.get("selectedAttachmentsMeta"));
+    	 
+    	   	$.ajax({
+    	   			url: this._checkURL('./mc?'+jQuery.param( this._prepareadditionalReqParamObject(jsonData) )),
+    	   			type: 'POST',
+    	   			data: formData,
+    	   			async: true,
+    	   			cache: false,
+    	   			contentType: false,
+    	   			processData: false,
+    	   			xhr: function() {
+    	                var xhr = new XMLHttpRequest();
+    	                xhr.upload.addEventListener('progress', function(e) {
+    	                    if(e.lengthComputable) {
+    	                    	let percent = Math.min(97, (e.loaded / e.total) * 100);
+    	                        updateProgress(percent);
+    	                    }
+    	                }, false);
+    	                return xhr;
+    	            },
+    	            success: function(data) {
+    	                fsmStatus.endAction();
+    	                updateProgress(100);
+    	                setTimeout(function() {
+    	                    id = fsmcxt.getRenderer();
+    	                    $('#'+id).html(data);
+    	                    hideUploadProgress();
+    	                    loadScript();
+    	                }, 500);
+    	            },
+    	            error: function(xhr, status, error) {
+    	                if (status !== 'abort') {
+    	                	//$('.file-preview-row').remove();
+    	                	//$('#UpdateFile').val('');
+    	                	//window.selectedAttachments = [];
+    	                    //window.existingFiles = [];
+    	                    fsmStatus.endAction();
+    	                    showUploadError();
+    	                } else {
+    	                    fsmStatus.endAction();
+    	                }
+    	            }
+    	   	});   
+    	   }    	       	   
+    };
+    
+    this.validateField = function(fieldName) {
+   
+    };
+    
+    this.processFieldValidation= function(response){
+      
+    };
+    
+    this._convertArrayToJsonObject = function (data){
+		var jsonData = {};
+		var inputs = data.split('&');
+		for(var i=0; i< inputs.length; i++)
+			jsonData[inputs[i].split('=')[0]] = inputs[i].split('=')[1];
+		return jsonData;
+	};
+    
+    this.downloadFile = function (url){
+    	 if($("#Client").val() == "" ){
+       		$('#bodycontent').html("<html><body><div class='alert alert-danger col-md-6 offset-md-3 oops'><i class='fa fa-exclamation-triangle'></i> Please select client</div></body></html>");
+       	  } else{
+       		var result = {};
+       	  }
+      	url.split("&").forEach(function(part) {
+      	    var item = part.split("=");
+      	    result[item[0]] = decodeURIComponent(item[1]);
+      	  });
+      	var form = document.createElement("form");
+          form.setAttribute("method", "post");
+          form.setAttribute("action", "mc");
+          form.setAttribute("style", "display: none");
+          for (var i in result)
+          {
+          	if(i == "")
+          		continue;
+            if (result.hasOwnProperty(i))
+            {
+              var input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = i;
+              input.value = result[i];
+              form.appendChild(input);
+            }
+          } 
+         
+          document.body.appendChild(form);
+        //  window.open("", target , "resizable=YES,status=YES,fullscreen=NO,scrollbars=YES,width=1250px,height=860px,left=50px");
+          window.location.href = this._checkURL("");
+          form.submit();
+    	   
+    };
+    
+    this.openPopup = function (url, load){
+    	
+   	if(load == 'load'){
+   				var result = {};
+   			 var currentUrl="?url="+url.split("?")[0];
+    		 var  splitUrl=url.split("?")[1];
+    		 splitUrl.split("&").forEach(function(part) {
+        	 var item = part.split("=");
+        	    result[item[0]] = decodeURIComponent(item[1]);
+    		 });
+        	var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "indexForPopup.jsp"+currentUrl);
+            form.setAttribute("target", "NewFile");
+            // form.setAttribute("enctype",
+			// "application/x-www-form-urlencoded");
+            for (var i in result)
+            {
+              if (result.hasOwnProperty(i))
+              {
+                var input = document.createElement('input');
+                input.type = 'hidden';	
+                input.name = i;
+                input.value = result[i];
+                localStorage.setItem(i, result[i]);
+                form.appendChild(input);	
+              }
+            }           
+            document.body.appendChild(form);
+            window.open("", "NewFile", "resizable=YES,status=YES,fullscreen=NO,scrollbars=YES,width=1250px,height=860px,left=50px");  
+            form.submit();      
+   			 	// window.open("indexForPopup.jsp?url="+url,"","location=no,addressbar=no,resizable=YES,status=YES,fullscreen=NO,scrollbars=YES,width=1250px,height=860px,left=50px");
+    	}	
+    else if(load == 'loadfornfus'){
+    		window.open(url,"DIALOG","resizable=YES,status=YES,fullscreen=NO,scrollbars=YES,width=1200px,height=860px,left=50px");    
+    }
+    else
+    	 this.maskPdfUrl(url, "NewFile");   
+    	// window.open("indexForPopup.jsp?url="+"mc?"+url,"DIALOG","resizable=YES,status=YES,fullscreen=NO,scrollbars=YES,width=1200px,height=860px,left=50px");
+   };
+    
+   
+   
+    this.openModal = function (url){
+    	var posting = $.post( this._checkURL(url) );
+    	posting.done(function( data ) {  
+    		var id = fsmcxt.getRenderer();
+    		$("#"+ id).html(data);
+    		$('#myModal').modal('show');
+    		loadScript();
+    	});    	
+    };
+    this.openModalPdf = function (url){ 
+    	 
+    	 this.maskPdfUrl(url, "NewFile");
+    	
+    	// window.open(this._checkURL("mc?"+url),"DIALOG","resizable=YES,status=YES,fullscreen=NO,scrollbars=YES,width=1200px,height=860px,left=50px");
+    };
+    
+    this.maskPdfUrl = function (url,target){  
+    	var actionValue;
+    	if(url.indexOf("CUSTOMER") != -1||url.indexOf("policy") != -1||url.indexOf("VIEWNOTES") != -1||url.indexOf("ADDCLAIMNOTES") != -1){
+    		if(url.indexOf("pdf") != -1)
+        		actionValue="mc";
+    		else{
+    			actionValue="indexForPopup.jsp?url=mc";
+    		}
+    	}
+    	else
+    		actionValue="mc";
+    	var result = {};
+    	url.split("&").forEach(function(part) {
+    	    var item = part.split("=");
+    	    result[item[0]] = decodeURIComponent(item[1]);
+    	  });
+    	var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", actionValue);
+        form.setAttribute("target", target);
+        for (var i in result)
+        {
+        	if(i == "")
+        		continue;
+          if (result.hasOwnProperty(i))
+          {
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = i;
+            input.value = result[i];
+            form.appendChild(input);
+          }
+        } 
+       
+        document.body.appendChild(form);
+        window.open("", target , "resizable=YES,status=YES,fullscreen=NO,scrollbars=YES,width=1250px,height=860px,left=50px");
+        form.submit();
+	};
+    
+	this.openViewer = function (url){    	
+		window.open('Viewer?'+url, "_blank");
+	};
+    
+	this.fetchFormParams = function (){
+		this._setTextValuesToJson();
+		this._setHiddenValuesToJson();
+		this._setRadioValuesToJson();
+		this._setPasswordValuesToJson();
+		this._setCheckboxValuesToJson();
+		this._setSelectTagValuesToJson();
+		this._setTextareaTagValuesToJson();
+	};
+	
+	this._setTextValuesToJson = function(){
+		var renderer = fsmcxt.getRenderer();
+		var rendererToGetValue = renderer;		
+		if(renderer != ""){
+			renderer ="#"+renderer+" :";
+			rendererToGetValue = "#"+rendererToGetValue+" ";
+		}
+		
+		$(renderer+"input[type=text]").each(function() {
+			var id = $(this).attr("id");			
+			var val = $(rendererToGetValue+"[id='" + id + "']").val();
+			if(val != undefined && ( (val.indexOf("<") > -1) || (val.indexOf(">") > -1) ) ){
+				//val = val.replace(/</g, '&lt;');
+				//val = val.replace(/>/g, '&gt;');
+			}
+			if(val != undefined && ( (val.indexOf("DD/MM/YYYY") > -1) || (val.indexOf("MM/DD/YYYY") > -1) ) )
+				val = "";
+				fsmCont.setLocalValue(id, val);			
+		});
+		
+	};
+	
+	this._setHiddenValuesToJson = function(){
+		$("input[type=hidden]").each(function() {
+			var id = $(this).attr("id");
+	    	fsmCont.setLocalValue(id, $("[id='" + id + "']").val());
+		});
+	};
+	
+	this._setRadioValuesToJson = function(){
+		$("input[type=radio]").each(function() {
+		    var id = $(this).attr("id");
+		    fsmCont.setLocalValue(id,$('[name='+id+']:checked').val());
+		});
+	};
+	
+	this._setPasswordValuesToJson = function(){
+		$("input[type=password]").each(function() {
+		    var id = $(this).attr("id");
+		    fsmCont.setLocalValue(id, $("[id='" + id + "']").val());
+		});
+	};
+	
+	this._setCheckboxValuesToJson = function(){
+		
+		$("input[type=checkbox]:checked").each(function() {
+			var id = $(this).attr("id");
+			var value = $(this).val();
+			var oldvalue =fsmCont.getLocalValue(id);
+		    if(typeof oldvalue === 'undefined'){
+		    	fsmCont.setLocalValue(id,value);
+		    }else if(oldvalue==value){
+		    	return;
+		    }else{
+		    	if(typeof oldvalue === 'string'){
+		    		var checkBoxVals = [];
+		    		checkBoxVals.push(oldvalue);
+					checkBoxVals.push(value);
+					fsmCont.setLocalValue(id,checkBoxVals);
+		    	}else{
+		    		oldvalue.push(value);
+		    	}
+		    }
+		});
+	};
+	
+	this._setTextareaTagValuesToJson = function(){
+		/*var date = new Array();*/
+		$("textarea").each(function() {
+		    var id = $(this).attr("id");
+		    if (((id) && id !== "")) {
+		    	fsmCont.setLocalValue(id, $("[id='" + id + "']").val());
+		    }
+		});
+	};
+	
+	this._setSelectTagValuesToJson = function(){
+		$("select").each(function() {
+		    var id = $(this).attr("id");
+		    if (((id) && id !== "")) {
+		    	fsmCont.setLocalValue(id, $("[id='" + id + "']").val());
+		    }
+		});
+	};	
+	
+	this._checkURL = function(url){
+		return url.replace(/<script.*?>([\s\S]*?)<\/script>/gmi,'');
+	};
+	this.incompleteRemoveperformAction = function(name, id) {
+		this.fetchFormParams();
+		if(fsmStatus.isWorking())
+			return false;
+		fsmStatus.startAction();
+	    this.ACTION_NAME=name;
+	    var jsonData = this.prepareReqParamObject();
+		var posting = $.post( './mc',  this._prepareadditionalReqParamObject(jsonData));
+		posting.done(function( data ) { 		 
+			fsmStatus.endAction();		
+			if (data.includes("Incomplete Claim Removed Successfully")) {
+				id="planContentFrame"; 
+			 }else{
+				 id = fsmcxt.getRenderer();
+			 }
+			  $('#'+id).html(data);
+			  loadScript();
+			});
+		posting.fail(function( data ) { 
+	    	  fsmStatus.endAction();        	 
+	    	  if(( $("#Client").length >= 1 || $('#clientName').length >= 1 ) &&  ( $("#Client").val() == "" || $('#clientName').val() == undefined )){
+	    		$('#bodycontent').html("<html><body><div class='alert alert-danger col-md-6 offset-md-3 oops'><i class='fa fa-exclamation-triangle'></i> Please select client</div></body></html>");
+	    	  } 
+		});
+	   
+	};
+
+}
+
+var noEmail = 0;
+function loadScript(){
+
+var emailAddressCount = 0;
+var fsmContr = new FsmControler();
+$('.submit').click(function(e){
+	 fsmContr.beginAction('welcome', 'takeHome', 'container');
+});
+
+$('.forgotpwd').click(function(e){
+	var id = e.currentTarget.id;
+	var action = $('#'+id).data('action');
+	fsmCont.performAction(action, 'bodycontent	');
+});
+
+$('.login').click(function(e){
+	 var id = e.currentTarget.id;
+	 var formid = $('#'+id).data('form');
+	 fsmContr.loginAction(formid);
+});
+
+$('.loadpopup').click(function(e){
+	$('#customerEmailAlert').modal('hide');
+	var onStateChange = fsmCont.ON_STATE_CHANGE;
+	if(onStateChange=="interrupt" && emailAddressCount == 0 && noEmail ==0) {
+		leavePageWarning();
+		noEmail ++;
+		return false;
+	}
+	 $('#customerEmailAlert').modal('hide');
+	 var id = e.currentTarget.id;
+	 var url = $('#'+id).data('url');
+	 var renderer = $('#'+id).data('cxtrenderer');
+		if(renderer != null )
+		  fsmcxt.setRenderer(renderer);
+	 fsmCont.loadPagebyURL('./'+url);
+	 emailAddressCount = 0;
+});
+
+$('.load').click(function(e){
+	 var id = e.currentTarget.id;
+	 var url = $('#'+id).data('url');
+	 var renderer = $('#'+id).data('cxtrenderer');
+		if(renderer != null )
+		  fsmcxt.setRenderer(renderer);
+	 fsmCont.loadPagebyURL('./'+url);
+});
+
+$('.headerlinkpopup').click(function(e){
+	$('#customerEmailAlert').modal('hide');
+	var onStateChange = fsmCont.ON_STATE_CHANGE;
+	if(onStateChange=="interrupt" && emailAddressCount ==0 && noEmail ==0) {
+		leavePageWarning();
+		return false;
+	}
+	 $('#customerEmailAlert').modal('hide');
+	fsmcxt.setRenderer('bodycontent');
+	var id = e.currentTarget.id;
+	var action = $('#'+id).data('action');
+	var mach = $('#'+id).data('mach');
+	var key = $('#'+id).data('key');	
+	var value = $('#'+id).data('value');
+	 indexfsmCont.setLocalValue(key, value);
+	indexfsmCont.beginAction(mach ,action);
+	emailAddressCount = 0;
+	
+});
+$('.headerlinkpopupsignout').click(function(e){
+	$('#customerEmailAlert').modal('hide');
+	var onStateChange = fsmCont.ON_STATE_CHANGE;
+	if(onStateChange=="interrupt" && emailAddressCount ==0 && noEmail ==0) {
+		leavePageWarning();
+		return false;
+	}
+	 $('#customerEmailAlert').modal('hide');
+	fsmcxt.setRenderer('bodycontent');
+	var id = e.currentTarget.id;
+	var action = $('#'+id).data('action');
+	var mach = $('#'+id).data('mach');
+	var key = $('#'+id).data('key');	
+	var value = $('#'+id).data('value');
+	 indexfsmCont.setLocalValue(key, value);
+	indexfsmCont.beginAction(mach ,action);
+	emailAddressCount = 0;
+	
+});
+
+$('.headerlink').click(function(e){
+	fsmcxt.setRenderer('bodycontent');
+	var id = e.currentTarget.id;
+	var action = $('#'+id).data('action');
+	var mach = $('#'+id).data('mach');
+	var key = $('#'+id).data('key');	
+	var value = $('#'+id).data('value');
+	 indexfsmCont.setLocalValue(key, value);
+	indexfsmCont.beginAction(mach ,action);
+});
+
+function leavePageWarning() {
+	$('#customerEmailAlert').modal('show');
+	emailAddressCount ++;
+}
+
+function emailCount() {
+	emailAddressCount ++;
+}
+
+$('.hasemail').click(function(e){
+	noEmail = 0;
+	 $('#customerEmailAlert').modal('hide');
+});
+
+$('.noemail').click(function(e){
+	emailCount();
+	noEmail = 1;
+	 $('#customerEmailAlert').modal('hide');
+});
+
+$('#user').click(function(e){
+	autoFill();
+});
+
+$('.switchclient').click(function(e) {
+	$('#customerEmailAlert').modal('hide');
+	var onStateChange = fsmCont.ON_STATE_CHANGE;
+	if(onStateChange=="interrupt" && emailAddressCount==0 && noEmail ==0) {
+		leavePageWarning(); 
+		return false;
+	}
+	$('#customerEmailAlert').modal('hide');
+	var id = e.currentTarget.id;
+	var key = $(this).data('key');
+	var value = $(this).data('value');
+	fsmCont.clearLocalVars();
+	fsmCont.setLocalValue(key, value);
+	fsmCont.beginAction('welcome', 'setclient', 'container');
+	emailAddressCount = 0;
+});
+
+$('.menulinkpopup').click(function(e){
+	$('#customerEmailAlert').modal('hide');
+	var onStateChange = fsmCont.ON_STATE_CHANGE;
+	if(onStateChange=="interrupt" && emailAddressCount==0 && noEmail ==0) {
+		leavePageWarning(); 
+		return false;
+	}
+	 $('#customerEmailAlert').modal('hide');
+	fsmcxt.setRenderer('bodycontent');
+	var id = e.currentTarget.id;
+	var mach = $('#'+id).data('mach');
+	var action = $('#'+id).data('action');
+	 var key = $('#'+id).data('key');	
+	 var value = $('#'+id).data('value');
+	 indexfsmCont.setLocalValue(key, value);
+	indexfsmCont.beginAction(mach,action);
+	emailAddressCount = 0;
+});
+
+$('.menulink').click(function(e){
+	fsmcxt.setRenderer('bodycontent');
+	var id = e.currentTarget.id;
+	var mach = $('#'+id).data('mach');
+	var action = $('#'+id).data('action');
+	 var key = $('#'+id).data('key');	
+	 var value = $('#'+id).data('value');
+	 indexfsmCont.setLocalValue(key, value);
+	indexfsmCont.beginAction(mach,action);
+});
+
+$('.performAction').click(function(e){
+	 var id = e.currentTarget.id;
+	 var action = $('#'+id).data('action');
+	 var key = $('#'+id).data('key');
+	 var value = $('#'+id).data('value');
+	 var renderer = $('#'+id).data('cxtrenderer');
+	 var validation = $('#'+id).data('validate');
+	 var boolean = true;
+	 if(validation != null){
+		 if (typeof window[validation] === 'function'){
+			 boolean = window[validation]();
+		 }
+	 }	
+	if(boolean){
+	 fsmCont.setLocalValue(key, value);
+	 var json = $('#'+id).data('json');
+	 if(json!=null){
+		addJson(json);
+	 }
+	 if(renderer != null)
+	    fsmcxt.setRenderer(renderer);
+	 fsmCont.performAction(action);
+	}
+});
+
+$('.beginAction').click(function(e){
+	 var id = e.currentTarget.id;
+	 var mach = $('#'+id).data('mach');
+	 var action = $('#'+id).data('action');
+	 var key = $('#'+id).data('key');
+	 var value = $('#'+id).data('value');
+	 var renderer = $('#'+id).data('cxtrenderer');
+	 if(renderer != null)
+		 fsmcxt.setRenderer(renderer);
+	 
+	 fsmCont.setLocalValue(key, value);
+	 fsmCont.beginAction(mach, action);
+});
+
+$('.back').click(function(e){
+	var id = e.currentTarget.id;
+    var action = $('#'+id).data('action');
+    fsmCont.performAction(action);
+});
+
+$('.viewpage').click(function(e){
+	var id = e.currentTarget.id;
+	var mach = $('#'+id).data('mach');
+    var action = $('#'+id).data('action');
+	var key = $('#'+id).data('key');
+	var value = $('#'+id).data('value');
+	var renderer = $('#'+id).data('cxtrenderer');
+	 var validation = $('#'+id).data('validate');
+	 var boolean = true;
+	 if(validation != null){
+		 if (typeof window[validation] === 'function'){
+			 boolean = window[validation]();
+		 }
+	 }	
+	if(boolean){
+		if(renderer != null ){	
+		fsmcxt.setRenderer(renderer);
+		}
+    fsmCont.setLocalValue(key, value);
+    if(mach != null)
+      fsmCont.beginAction(mach,action);
+    else
+      fsmCont.performAction(action);
+	}
+	
+});
+
+$('.onchange').change(function(e){
+    var id = e.currentTarget.id;
+    var action = $('#'+id).data('action');
+    fsmCont.performAction(action);
+});
+
+$('.popupwindow').click(function(e){
+	var id = e.currentTarget.id;
+	var url = $('#'+id).data('url');
+	var tweak = (new Date()).getTime();
+	url = url + "&__tweak=" + tweak;
+	window.showModalDialog("./modal_opener.jsp?"+url,window.top,"dialogTop:200px; dialogHeight:100px; dialogLeft:600px; dialogWidth:600px;  status:yes; scrollbars:yes; resizable:yes;");
+});
+
+$('.openwindow').click(function(e){
+	var id = e.currentTarget.id;
+	var url = $('#'+id).data('url');
+	var load = $('#'+id).data('load');
+	fsmCont.openPopup(url, load);
+});
+
+$('.openmodal').click(function(e){
+	if(fsmcxt.isModelOpen())
+		return;
+	fsmcxt.setModelStatus(true);
+	fsmcxt.updateObj(fsmCont.prepareReqParamObject());
+	var id = e.currentTarget.id;
+	var url = $('#'+id).data('url');
+	fsmcxt.updateoldrenderer(fsmcxt.getRenderer());
+	fsmcxt.setRenderer('modal-bodycontent');
+	fsmCont.openModal(url);
+});
+
+$('.openpdf').click(function(e){	
+	var id = e.currentTarget.id;
+	var url = $('#'+id).data('url');	
+	fsmCont.openModalPdf(url);
+});
+
+$('.download').click(function(e){
+	var id = e.currentTarget.id;
+	var url = $('#'+id).data('url');
+	fsmCont.downloadFile(url);
+});
+
+$('.sort').click(function(e){
+	var id = e.currentTarget.id;
+    var action = $('#'+id).data('action');
+    var order = $('#'+id).data('order');
+    var colInd=$('#'+id).data('colind');
+    var renderer = $('#'+id).data('cxtrenderer');	
+	 if(renderer != null)
+	    fsmcxt.setRenderer(renderer);
+    if(colInd != undefined){
+    	fsmCont.setLocalValue("ColumnIndex", colInd);
+    }
+    if(order != undefined){
+    	fsmCont.setLocalValue("order", order);
+    }
+    fsmCont.performAction(action);
+});
+
+$('.checkboxinfo').click(function(e){
+	 var id = e.currentTarget.id;
+	 var name = $('#'+id).data('name');
+	 var action = $('#'+id).data('action');
+	 var selectedIDs = [];
+		var itemSelected = false;
+		for(i=0; i < document.getElementsByName(name).length ; i++){
+			if(document.getElementsByName(name)[i].checked){
+				itemSelected = true;
+				selectedIDs[selectedIDs.length] = document.getElementsByName(name)[i].value;
+			}
+		}
+		if(itemSelected){
+			var val = "";
+			for(var i=0;i<selectedIDs.length;i++)
+				val+=selectedIDs[i]+",";
+				
+			 fsmCont.setLocalValue('removeItemIDs', val);
+		}else{
+			$('#myModalNewsList').modal();
+			return;
+		}
+	 
+	 fsmCont.performAction(action);
+});
+
+$('.click').change(function(e){
+	var prodCode = e.currentTarget.checked;
+	var id = e.currentTarget.id;
+	if(prodCode){
+		$("[id='row_" + id + "']").show();
+	}else{
+		$("[id='row_" + id + "']").hide();
+	}
+});
+
+function addJson(json){
+	var jobj =json.split(",");
+	for(var i=0;i<jobj.length;i++){
+		var keyvalue=jobj[i].split("=");
+        fsmCont.setLocalValue(keyvalue[0], keyvalue[1]);
+	}
+}
+
+$('.showhide').click(function(e) {
+	  var id = e.currentTarget.id;
+	  var tableId = $('#'+id).data('tabid');
+	  if ($('#'+tableId).css('display') == "none") {
+		  $('#'+tableId).css('display', '');
+	  	  $('#'+id).removeClass('no-red');
+	  	  $('#'+id).addClass('yes-green');	
+	  	  
+	  	  $('#'+id).removeClass('far fa-plus-square font-weight-normal');
+	  	  $('#'+id).addClass('far fa-minus-square');
+	  }
+    else {
+  	  $('#'+tableId).css('display', 'none');
+      $('#'+id).removeClass('yes-green');
+	  $('#'+id).addClass('no-red');
+	  
+	  $('#'+id).removeClass('far fa-minus-square');
+	  $('#'+id).addClass('far fa-plus-square font-weight-normal');
+	}
+});
+
+
+$('.multifileattach').click(function(e){
+	 var id = e.currentTarget.id;	 	
+	 var action = $('#'+id).data('action');
+	 var fileid = $('#'+id).data('file');
+	 var enctype = $('#'+id).data('enctype');
+	 var renderer = $('#'+id).data('cxtrenderer');
+	 var json = $('#'+id).data('json');
+	 if(json!=null){
+		addJson(json);
+	 }		
+	 if(renderer != null)
+	    fsmcxt.setRenderer(renderer);
+	 fsmCont.setLocalValue("ClientKey", $('select[name="Client"]').val());
+	 fsmCont.setLocalValue("encoding", enctype);
+	 var claimNo = $('.display_'+fsmCont.getLocalValue('AttachmentDisplayName')).val();
+	if(claimNo !=  undefined ) {
+		if(claimNo == ""){
+	 	$('#'+fsmCont.getLocalValue('AttachmentDisplayName')).html('<i class="fas fa-exclamation-triangle error-msg" title="please select"></i> please select');
+	 	return;
+	 }else{
+	 	fsmCont.setLocalValue("belongsToInnerClaimNo",claimNo);	 
+	 }
+	}else if($('#belongsToInnerClaimNo')[0] && fsmCont.getLocalValue('belongsToInnerClaimNo') == undefined || fsmCont.getLocalValue('belongsToInnerClaimNo') =="" ){
+		$('#belongsToInnerClaimNo').html('<i class="fas fa-exclamation-triangle error-msg" title="please select"></i> please select');
+		return;
+	}
+		 fsmCont.uploadAction(id, action , fileid);	
+	 	 
+});
+
+
+$('.showclaimdiv').click(function(e){
+	 var id = e.currentTarget.id;
+	 var group = $('#'+id).data('group');
+	 var tdElmArr= document.getElementsByTagName("div");
+	  for(var i=0;i<tdElmArr.length;i++){
+	    if(tdElmArr[i].id=='')
+	      continue;
+	    var elmId = new String(tdElmArr[i].id);
+	    if(group != " "){
+	     if(elmId.indexOf('div_claim_')!=-1){
+	    	if(elmId.indexOf('div_claim_'+group)!=-1)
+	    		tdElmArr[i].style.display='block';
+	    	else
+	    		tdElmArr[i].style.display='none'; 
+	    }
+	   }else{
+		   if(elmId.indexOf('div_claim_')!=-1)
+	    	tdElmArr[i].style.display='block';
+	    	}
+	    
+	   }
+	});
+$('#modalClosedirect').click(function(e){
+	fsmcxt.setModelStatus(false);
+	fsmcxt.rollbackObj();
+	fsmcxt.rollbackoldrenderer();
+	$('#myModal').modal('hide');
+	$( "body" ).addClass("overflow-auto"); 
+	// Ensure `modal-xl` is removed and reset to `modal-lg` when modal is closed
+	var modalDialog = document.querySelector('#myModal .modal-dialog');
+	modalDialog.classList.remove('modal-xl');
+	modalDialog.classList.add('modal-lg');
+});
+$('.toggleDispalyClaim').click(function(e){
+	var id = e.currentTarget.id;
+	var claimNo =$('#'+id).data('value');
+	if($('#div_'+claimNo).css('display') != 'none'){
+		$('#div_'+claimNo).css('display','none');
+	}else{
+		$('#div_'+claimNo).css('display','block');
+	} 
+});
+
+/* 
+------------------------------------
+ tooltip only on ellipsis starts
+------------------------------------
+ */
+/*$(function () {
+    $('.elptool').each(function(i) {
+        if (isEllipsisActive(this)) {
+            $(this).attr("data-original-title", $(this).text());
+        }
+    });
+});*/
+$(window).on("resize",function(e){
+	$('.elptool').each(function(i) {
+        if (isEllipsisActive(this)) {
+            $(this).attr("data-bs-original-title", $(this).text());
+        }else{
+        	$(this).removeAttr("data-bs-original-title");
+        }
+    });
+});
+
+$( ".elptool" ).mouseover(function() {
+	$('.elptool').each(function(i) {
+        if (isEllipsisActive(this)) {
+            $(this).attr("data-bs-original-title", $(this).text());
+        }else{
+        	$(this).removeAttr("data-bs-original-title");
+        }
+    });
+});
+function isEllipsisActive(e) {
+    return (e.offsetWidth <  e.scrollWidth);
+}
+/* 
+------------------------------------
+ tooltip only on ellipsis end
+------------------------------------
+ */
+
+$(document).keypress(function(e) {
+	if(e.target.type != "button"  &&  e.target.type != "" && e.which == 13){
+		  var type = $(document.activeElement)[0].type;
+		  var defaultRenderer = fsmcxt.getRenderer();		
+		if(defaultRenderer!="" && type != 'select-one' && type != 'textarea'){
+			//var classList = $('#'+defaultRenderer).find('.enterkey')[0].classList;
+			//var action = $('#'+defaultRenderer).find('.enterkey')[0].dataset.action;
+			var key = $('#'+defaultRenderer).find('.enterkey')[0].dataset.key;
+			var value = $('#'+defaultRenderer).find('.enterkey')[0].dataset.value;			
+			 fsmCont.setLocalValue(key, value);
+			 var json = $('#'+defaultRenderer).find('.enterkey')[0].dataset.json;
+			 if(json!=null){
+				addJson(json);
+			 }
+			 var renderer = $('#'+defaultRenderer).find('.enterkey')[0].dataset.cxtrenderer;
+			 if(renderer != null)
+			    fsmcxt.setRenderer(renderer);			 				 
+			 $('#'+defaultRenderer).find(".enterkey").trigger("click");
+		}
+	  }
+});
+
+$(".downloadfile").click(function(e){
+	var id = e.currentTarget.id;
+	var url = $('#'+id).data('url');
+	window.open(url,'Downlaod','v');
+	});
+
+//this is for notes 
+$('.showhidefornotes').click(function(e) {
+	var noteid = e.currentTarget.id;	
+	 var tableId = $('#'+noteid).data('tabid');
+	  if($('#notetext_short_'+tableId).css('display') == 'none'){
+		  $('#notetext_short_'+tableId).css('display','block');
+	      $('#notetext_full_'+tableId).css('display','none');	         	     
+	  }else{
+		  $('#notetext_full_'+tableId).css('display','block');
+		  $('#notetext_short_'+tableId).css('display','none');		  		 
+	  }
+	});
+
+$('.viewer').click(function(e){
+	var id = e.currentTarget.id;
+	//var url = $('#'+id).data('url');
+	var json = $('#'+id).data('json');
+	fsmCont.openViewer(encrptJson(json));
+});
+
+function encrptJson(json){
+	var queryString = "";
+	var params =json.split(",");
+	for(var i=0;i<params.length;i++){
+		var keyvalue=params[i].split("=");
+		if(i == 0)
+			queryString = queryString + keyvalue[0] +'='+ encodeURIComponent("/"+keyvalue[1]+"/");
+		else
+			queryString = queryString +'&'+ keyvalue[0] +'='+ encodeURIComponent("/"+keyvalue[1]+"/");
+	}
+	return queryString;
+}
+
+
+$(".table-recordfix").scroll(function(){
+	var w = $(this).find("table").width();
+	$(".tbl-records").css("width",w);
+});
+$('.multifileattachgapclaim').click(function(e){
+	 var id = e.currentTarget.id;	 	
+	 var action = $('#'+id).data('action');
+	 var fileid = $('#'+id).data('file');
+	 var enctype = $('#'+id).data('enctype');
+	 var renderer = $('#'+id).data('cxtrenderer');
+	 var json = $('#'+id).data('json');
+	 if(json!=null){
+		addJson(json);
+	 }		
+	 if(renderer != null)
+	    fsmcxt.setRenderer(renderer);
+	 fsmCont.setLocalValue("ClientKey", $('select[name="Client"]').val());
+	 fsmCont.setLocalValue("encoding", enctype);
+	 var claimNo = $('#belongsToInnerClaimNoToDisplay :selected').text();
+	if(claimNo !=  undefined ) {
+		if(claimNo == ""){
+	 	$('#'+fsmCont.getLocalValue('AttachmentDisplayName')).html('<i class="fas fa-exclamation-triangle error-msg" title="please select"></i> please select');
+	 	return;
+	 }else{
+	 	fsmCont.setLocalValue("belongsToInnerClaimNo",claimNo);	 
+	 }
+	}else if($('#belongsToInnerClaimNo')[0] && fsmCont.getLocalValue('belongsToInnerClaimNo') == undefined || fsmCont.getLocalValue('belongsToInnerClaimNo') =="" ){
+		$('#belongsToInnerClaimNo').html('<i class="fas fa-exclamation-triangle error-msg" title="please select"></i> please select');
+		return;
+	}
+		 fsmCont.uploadAction(id, action , fileid);	
+	 	 
+});
+$('#logout').click(function(e){
+	var url = window.location.href;
+	$(location).attr('href', url); 
+	
+});
+$('.performActionforAssesments').click(function(e){
+	 var id = e.currentTarget.id;
+	 var action = $('#'+id).data('action');
+	 var key = $('#'+id).data('key');
+	 var value = $('#'+id).data('value');
+	 var renderer = $('#'+id).data('cxtrenderer');
+	 var validation = $('#'+id).data('validate');
+	 var boolean = true;
+	 if(validation != null){
+		 if (typeof window[validation] === 'function'){
+			 boolean = window[validation]();
+		 }
+	 }	
+	if(boolean){
+	 fsmCont.setLocalValue(key, value);
+	 var json = $('#'+id).data('json');
+	 if(json!=null){
+		addJson(json);
+	 }
+	 if(renderer != null)
+	    fsmcxt.setRenderer(renderer);
+	 fsmCont.performAction(action);
+	}
+});
+$('.performActionOuter').click(function(e){
+	 var id = e.currentTarget.id;
+	 var action = $('#'+id).data('action');
+	 var key = $('#'+id).data('key');
+	 var value = $('#'+id).data('value');
+	 var renderer = $('#'+id).data('cxtrenderer');
+	 var validation = $('#'+id).data('validate');
+	 var boolean = true;
+	 if(validation != null){
+		 if (typeof window[validation] === 'function'){
+			 boolean = window[validation]();
+		 }
+	 }	
+	if(boolean){
+	 fsmCont.setLocalValue(key, value);
+	 var json = $('#'+id).data('json');
+	 if(json!=null){
+		addJson(json);
+	 }
+	 if(renderer != null)
+	    fsmcxt.setRenderer(renderer);
+	 fsmCont.performAction(action);
+	}
+});
+
+}

@@ -1,0 +1,643 @@
+	/*function autoFill(){
+		$('#C_FirstName').val('James');
+		$('#C_LastName').val('Bond');
+		$('#C_Extra1').val('James');
+		$('#C_Extra2').val('James');
+		$('#C_Address1').val('Address1');
+		$('#C_Address2').val('Address1');
+		$('#C_Address3').val('James');
+		$('#C_Address4').val('James');
+		$('#C_PostZip').val('122555');
+		$('#C_DayPhone').val('020550555');
+		$('#C_MobPhone').val('0778545455');
+		$('#C_Email').val('name@company.com');
+		$('#C_Occupation').val('Detective');
+		$('#C_CompanyName').val('No one knows');
+		//$('#C_Extra3_Select').val('Address1');
+		$('#').val('1');
+		$('input:radio[name=C_VatReg][value=yes]').attr('checked', true);
+	}*/
+
+function autoFill(){
+	$('#P_CoverAmount').val('1234');
+	$('#P_Product').val('product.DGID');
+	$('#P_State').val('state.australiancapitalterritory');
+	$('#P_DealerComm').val('dealercomm.0');
+	$('#V_SoldPrice').val('9090');
+	var today = new Date();
+	$('#StartDate_Day').val(today.getDate());
+	$('#StartDate_Month').val(today.getMonth()+1);
+	$('#StartDate_Year').val(today.getFullYear());
+	$('#StartDate').val($('#StartDate_Day').val()+"/"+$('#StartDate_Month').val()+"/"+$('#StartDate_Year').val());
+	
+	$('#V_RegDate_Day').val(today.getDate());
+	$('#V_RegDate_Month').val(today.getMonth()+1);
+	$('#V_RegDate_Year').val(today.getFullYear());
+	$('#V_RegDate').val($('#V_RegDate_Day').val()+"/"+$('#V_RegDate_Month').val()+"/"+$('#V_RegDate_Year').val());
+	
+	$('#P_PolicySoldDate_Day').val(today.getDate());
+	$('#P_PolicySoldDate_Month').val(today.getMonth()+1);
+	$('#P_PolicySoldDate_Year').val(today.getFullYear());
+	$('#P_PolicySoldDate').val($('#P_PolicySoldDate_Day').val()+"/"+$('#P_PolicySoldDate_Day').val()+"/"+$('#P_PolicySoldDate_Year').val());
+	
+	$('#V_ManuWarStartDate_Day').val(today.getDate());
+	$('#V_ManuWarStartDate_Month').val(today.getMonth()+1);
+	$('#V_ManuWarStartDate_Year').val(today.getFullYear());
+	$('#V_ManuWarStartDate').val($('#V_ManuWarStartDate_Day').val()+"/"+$('#V_ManuWarStartDate_Month').val()+"/"+$('#V_ManuWarStartDate_Year').val());
+	
+	$('#V_Mileage').val('123');
+	$('#V_CC').val('1500');
+	
+	
+	$('#V_SoldDate_Day').val(today.getDate());
+	$('#V_SoldDate_Month').val(today.getMonth()+1);
+	$('#V_SoldDate_Year').val(today.getFullYear());
+	$('#V_SoldDate').val($('#V_SoldDate_Day').val()+"/"+$('#V_SoldDate_Month').val()+"/"+$('#V_SoldDate_Year').val());
+	
+	$('#P_DateExtra1_Day').val(today.getDate());
+	$('#P_DateExtra1_Month').val(today.getMonth()+1);
+	$('#P_DateExtra1_Year').val(today.getFullYear());
+	$('#P_DateExtra1').val($('#P_DateExtra1_Day').val()+"/"+$('#P_DateExtra1_Month').val()+"/"+$('#P_DateExtra1_Year').val());
+	
+	
+	$('#V_OverrideDateErrors').prop('checked', true);
+	$('#P_Reference').val('123');
+	$('#V_OverrideReferenceErrors').prop('checked', true);
+	$('#V_VinNo').val('22222222222222222');
+	$('#V_RegNo').val('A123AS');
+	$('#V_OverrideVinErrors').prop('checked', true);
+}
+	
+   function calculateProductList(){
+		/*var elementList = $('.Selected_Product').val();*/
+		var Products = [];
+		$("input:checkbox[class=Selected_Product]").each(function () {
+			if($(this).is(":checked")){
+				if($(this).val() != '')
+					Products.push($(this).val());
+			}
+       });
+		fsmCont.setLocalValue('Products', Products.toString());
+	}
+	
+	function changeProduct(item){
+		var proType = getProductType(item);
+		var selSchemeId = $('#'+proType+'_SchemeID').val();
+		if(selSchemeId=='')
+		  return;
+		var elmArr= document.getElementsByTagName('div');
+		var showinput=true;
+		for(var i =0;i<elmArr.length;i++){
+			if(elmArr[i].id=='')
+			  continue;
+			var strid = elmArr[i].id;
+			if(strid == (selSchemeId+'_productvalidation')){
+				elmArr[i].style.display='';
+				showinput=false;
+			} else {
+				var arr = $('#'+proType+'_SchemeID')[0];
+				arr = arr.options;
+				for(var j = 0;j<arr.length;j++){
+					if(strid == (arr[j].value+'_productvalidation')){
+						elmArr[i].style.display='none';
+					}
+				}
+			}
+		}
+		if(showinput){
+			clearSelection(item);
+			$('#div_'+proType).css("display", "");
+		}else{
+			$('#div_'+proType).css("display", "none");
+		}
+	}
+	
+	function getProductType(item){
+		  var itName= new String(item);
+		  if(item.name != undefined)
+			  itName= new String(item.name);
+		  if( itName.indexOf('_') == -1){
+		  	 return itName;	 			
+		  }	  
+		  return itName.substring(0,itName.indexOf('_'));
+		}	
+		
+	$(document).on('click', '.prelim-prod-clear', function() {
+		clearSelection(this);
+	});	
+	
+	function clearSelection(item){
+		var proType = getProductType(item);
+		var pol_form = $('#policy_form')[0];
+		for(var i=0; i<pol_form.length; i++){
+			var itemName = new String(policy_form[i].name);
+			if(itemName.indexOf(proType)==-1)
+			  continue;
+
+			if(itemName.indexOf("_SchemeID")!=-1)
+			  continue;
+	 
+			if(policy_form.elements[i].type=='select-one')
+				policy_form[i].selectedIndex=0;
+			else if(policy_form[i].type=='text'){
+			  if(itemName.indexOf("Date")==-1) // Big Hack. We don't want to reset date. As date is complex object
+				  policy_form[i].value='';
+			}
+		}
+		if(document.getElementById("InstallmentAmount_amount")!=null && $('#'+proType+'_CoverAmount').val()===''){
+			document.getElementById("Installment").value ='';
+			document.getElementById("InstallmentAmount_amount").value='';
+		}
+		var selectedSchemeID = 	$('#'+proType+'_SchemeID').val();
+		//Reload only if a product is selected.
+		if( selectedSchemeID != "" )
+			reloadProducts(item);
+	}
+	
+	$(document).on('click', '.prelim-prod-checkbox', function(){
+		activateProduct($(this).attr('id'));
+		reloadProducts(this);
+	});
+	$(document).on('click', '.home-product-cls', function(){
+		return false;
+	});
+	
+	$(document).on('change', '.prelim-product-select-cls', function() {
+			changeProduct(this);
+	});
+	
+	$(document).on('change', '.prelim-covertype-select-cls', function() {
+			reloadProducts(this);
+	});
+	$(document).on('change', '.prelim-saletype-select-cls', function() {
+		reloadProducts(this);
+});
+	$(document).on('change', '.prelim-salecode-select-cls', function() {
+		reloadProducts(this);
+});
+	$(document).on('change', '.prelim-TermMnths-select-cls', function() {
+			reloadProducts(this);
+	});
+	
+	$(document).on('change', '.prelim-TermMileage-select-cls', function() {
+			reloadProducts(this);
+	});
+	
+	$(document).on('change', '.prelim-purchasetype-select-cls', function() {
+			reloadProducts(this);
+	});
+	
+	$(document).on('change', '.prelim-claimlimitband-select-cls', function() {
+			reloadProducts(this);
+	});
+	
+	$(document).on('change', '.cover-amt-cls', function() {
+			reloadProducts(this);
+	});
+	
+
+	$(document).on('change', '.suggest-cover-amt-cls', function() {
+		reloadProducts(this);
+	});
+	
+	$(document).on('change', '.prelim-claim-excess-band-cls', function() {
+		reloadProducts(this);
+	});
+	$(document).on('change', '.prelim-cover-period-band-cls', function() {
+		reloadProducts(this);
+	});
+	
+	
+	function reloadProducts(item){
+		var proType = getProductType(item);
+		if(item.value==''){	
+			clearCoverAmountAndSuggestedPrice(proType);
+		}
+	  	
+		setReloadSchemeId(proType);
+		if( $('#ReloadSchemeId').val() == ''){
+			return;
+		}	
+		activateButtons(true);
+		fsmCont.fetchFormParams();
+		fsmCont.performAction('getproductsinfo', 'Worker');
+		$('#policy_form MACH_SEQ_NO').val(parseInt($('#policy_form MACH_SEQ_NO').val())+1);
+		$('#main_form MACH_SEQ_NO').val(parseInt($('#main_form MACH_SEQ_NO').val())+1);
+	}
+	
+	function setReloadSchemeId(proType){
+		$('#ReloadSchemeId').val($('#'+proType+'_SchemeID').val());
+	}
+	
+	function activateButtons(status){
+		var elmArr= document.getElementsByTagName('input');
+		for(var i =0;i<elmArr.length;i++){
+			if(elmArr[i].id=='')
+			  continue;
+			if(elmArr[i].type!='button')
+				continue;
+			elmArr[i].disabled=status;	  
+		}	  
+	}
+	
+	function activateProduct(proType){
+		if($('#'+proType)[0]){
+			if(($('#'+proType)[0]).checked){
+				changeProd(proType,true);
+			}else{
+				changeProd(proType,false);
+			}
+		}
+		
+	}
+
+	function changeProd(proType,status){
+		if($('#'+proType)[0]){
+		($('#'+proType)[0]).checked=status;
+		$('[id^="'+proType+'_"]').prop('disabled', !status);
+		}
+	}
+	
+	function setWarningMsg(item,msg){
+		var proType = getProductType(item);
+		//var elmLabel= window.document.getElementById(proType);		
+		$('#'+proType+'_error').html('<i class="fas fa-exclamation-triangle"></i> '+msg);
+	}
+	function clearWarningMsg(item){
+		var proType = getProductType(item);
+		//var elmLabel= window.document.getElementById('proType');
+		//document.getElementById(proType+'error').innerHTML='';
+		$('#'+proType+'_error').html('');
+	}
+
+	function clearCoverAmountAndSuggestedPrice(proType){
+		// when ever user selects "please select" from drop down we need to clear cover amount and sugg amount values.
+		for(var i=0; i<policy_form.elements.length; i++){
+			var itemName = new String(policy_form.elements[i].name);
+			if(itemName.indexOf(proType)==-1)
+			  continue;
+
+			if(itemName.indexOf("_SchemeID")!=-1)
+			  continue;
+
+			if((itemName.indexOf("_CoverAmount")>=0)||(itemName.indexOf("_SuggestedCoverAmount")>=0))
+				policy_form.elements[i].value='';
+			}	
+		}
+
+
+
+
+
+
+	function reloadProductsComplete(){
+			activateButtons(false);
+		//working.style.display='none';
+		//alert(policy_form.STATE_NAME.value+' ## '+policy_form.MACH_PROC_ID.value+' ## '+policy_form.MACH_SEQ_NO.value);
+	}
+
+
+	function dealAdjuster(item){
+	  var proType = getProductType(item);
+	  setReloadSchemeId(proType);
+	  var surl= 'jsp/DealAdjuster.jsp?MACH_PROC_ID='+policy_form.MACH_PROC_ID.value+'&ProType='+proType+'&ReloadSchemeId='+policy_form.ReloadSchemeId.value;
+	  window.showModalDialog(surl,this,'dialogHeight:300px;dialogWidth:400px');
+	}
+	function acceptDeal(proType,dealAmt){
+		//var covAmt=eval('policy_form.'+proType+'_CoverAmount');
+		var result = '';
+		result = result.concat('policy_form.', proType,'_CoverAmount');
+        var covAmt=  window[ result];
+		covAmt.value=dealAmt;
+		reloadProducts(covAmt);
+	}
+	function  rejectDeal(){
+		//alert('reject');
+	}
+	function setErrorMsg(proType,input,msg){
+		if(msg===null)
+		   return;
+		//var elm= document.getElementById(proType+'_'+input+'_error');
+		$('#'+proType+'_'+input+'_error').html('<i class="fas fa-exclamation-triangle"></i> '+msg);
+	}
+	function clearErrorMsg(proType,input){
+		var elm= document.getElementById(proType+'_'+input+'_error');
+		elm.innerHTML='';
+	}
+	function updatePlanPrices(prices){
+		if($('#Plan_NetPrice'))
+			$('#Plan_NetPrice').val(prices[0]);
+		if($('#Plan_Tax'))	
+			$('#Plan_Tax').val(prices[1]);
+		if($('#Plan_CoverAmount')){
+			($('#Plan_CoverAmount')).val(prices[2]);
+		}
+		if($('#DealerCommission'))
+			($('#DealerCommission')).val(prices[3]);	
+	}
+	function updateInstallments(prices){
+		if(document.getElementById("Installment")!=null && document.getElementById("InstallmentAmount_amount")!=null){
+			 if(document.getElementById("Installment").value ===""){
+				 document.getElementById("Installment").value="Instalments";
+			 }
+			 if (document.getElementById("Installment").value === "One off payment") {
+				    var t =$('#Plan_CoverAmount').val();
+				    document.getElementById("InstallmentAmount_amount").value=t;
+				    document.getElementById("InstallmentAmount_amount").readOnly=true;	
+		    } else if (document.getElementById("Installment").value === "Instalments"){
+		    	  var t1 =$('#Plan_CoverAmount').val();
+				    document.getElementById("InstallmentAmount_amount").value=(t1/12).toFixed(2);	
+		        document.getElementById("InstallmentAmount_amount").readOnly=true;
+		    }
+		}
+	}
+	
+	
+	  function updateFsmState(){
+		    if(parent.policy_form){
+		  		parent.reloadProductsComplete();
+		  		updateMainForm();
+		  	}
+		  }
+	  
+	  function setInputItem(proType,input,val){
+			$('#'+proType+'_'+input).val(val);
+		}
+		function setSummaryItem(proType,input,val){
+			$('#'+proType+'_'+input).html(val);
+		}
+		function setInputDateItem(proType,input,val){
+			//eval(proType+'_'+input+'setDate("'+val+'")');
+			
+			var result = '';
+			result = result.concat(proType, '_',input,'setDate("'+val+'")');
+	        var covAmt=  window[ result ];
+		}	
+		function setProType(proType){
+			var elm= $('#'+proType);	
+			elm.prop('checked',true);
+		}
+	  
+	  
+	  function loadViewFrames(url,id){
+		  var fsmCont1 = new FsmControler();
+		  fsmStatus.endAction();
+		  fsmCont1.loadPagebyURL(url,id);
+	  }
+	  
+	  function emailCount() {
+		  fsmCont.emailAddressCount ++;
+		}
+	  
+	  function getActions(){		  
+		    var actiongroup = $('#ActionGroup').val();
+			var opt=0;
+			var i;
+			var indr =$('#PolicyAction option:selected').index();
+			var sValue=$('#PolicyAction option:selected').val();
+			var found=false;
+			if(indr == -1) {
+				indr = 0;
+				sValue=$('#PolicyAction option:selected').val();
+			}
+			$('#PolicyAction')[0].options.length=0;
+			if(actiongroup){
+				var option = new Option('All','All');
+				
+			}
+			if(option!=null){
+			if(sValue==option.value){
+				indr=opt;
+				found=true;
+			}
+			}
+			$('#PolicyAction')[0].options[opt++]=option;
+			for(i=0;i<actionGroupsData.length;i++){
+				if(actionGroupsData[i][2]=='All' || actionGroupsData[i][2]=='ALL' || actionGroupsData[i][2]=='Please Select'  ){
+					//var doNothing =1;
+				}
+				else{
+					var ind = actionGroupsData[i][1].indexOf(actiongroup);
+					if(ind==-1)
+						continue;
+					option = new Option(actionGroupsData[i][2],actionGroupsData[i][0]);
+					if(sValue==option.value){
+						indr=opt;
+						found=true;
+					}
+				
+					$('#PolicyAction')[0].options[opt++]=option;
+				}
+			}	
+			if(found)
+				$('#PolicyAction').prop('selectedIndex', indr);
+			else{
+				$('#PolicyAction').prop('selectedIndex', 0);
+			}			
+	  }	
+	  
+	  function activateNotes(keyCount){
+		  var checkBox = document.getElementById('CustRentensionInfo_checkBoxValue_'+keyCount);
+			if(checkBox.checked == true){ 
+			document.getElementById("CustRentensionInfo_notes_"+keyCount).disabled = false;
+			}else{
+				document.getElementById("CustRentensionInfo_notes_"+keyCount).disabled = true;
+			}
+			
+		}
+	
+	$(document).on('click', '.close-btn-cls', function(){
+        window.open('','_parent',''); 
+        window.close(); 
+   });
+	$(document).on('click', '.banner-logonsite-cls', function() {
+		goLogoSite();
+});
+	$(document).on('click', '.change-password-clearfields-cls', function() {
+		clearFields();
+});
+	$(document).on('click', '.update-version-details-cls', function() {
+		UpdateVersionDetails();
+});	
+	$(document).on('click', '.new-emp-client-claim-auth-cls', function() {
+		clientClaimAuthValues();
+});		
+	$(document).on('click', '.inner-claim-refresh-casual-cls', function() {
+		refreshCasualCode();
+});	
+	
+	$(document).on('click', '.inner-claim-goback-cls', function() {
+		goBack();
+});	
+	
+	$(document).on('click', '.inner-claim-skip-cls', function() {
+		skip();
+});
+	
+	$(document).on('click', '.admin-i18n-delete-cls', function() {
+		bindAdmin();
+});	
+	
+	$(document).on('click', '.accept-import-excel-cls', function() {
+		ImportExcel();
+});
+	
+	$(document).on('click', '.accept-import-excel-xsl-cls', function() {
+		ViewData();
+});	
+	
+	$(document).on('click', '.accept-import-excel-static-upload-cls', function() {
+		ImportExcel();
+});	
+	$(document).on('click', '.refresh-page-btn-cls', function(){
+		window.location.reload(); 
+   });
+	$(document).on('click', '.warn-change-pass-cls', function(){
+		call(); 
+   });
+	$(document).on('click', '.claim-cls', function(){
+		confirmEditDialog(); 
+   });
+	$(document).on('click', '.current-claim-new-cls', function(){
+		sortData(1); 
+   });
+	$(document).on('click', '.disb-rules-input-cls', function(){
+		move('SaveTemplate'); 
+   });
+	$(document).on('click', '.engno-input-cls', function(){
+		goEngineSearch(); 
+   });
+	$(document).on('click', '.fordparts-input-causalitem-cls', function(){
+		addCausalItem(); 
+   });
+	$(document).on('click', '.fordparts-input-partitem-cls', function(){
+		addPartItem(); 
+   });
+	$(document).on('click', '.fordparts-input-labouritem-cls', function(){
+		addLabourItem(); 
+   });
+	$(document).on('click', '.fordparts-input-partlaboritem-cls', function(){
+		addPartLabourItem(); 
+   });
+	$(document).on('click', '.staticupload-schemlist-input-cls', function(){
+		var values =$(this).attr("rel");
+		includeThis(values); 
+   });
+	$(document).on('click', '.staticupload-schemlist-input-clientcode-cls', function(){
+		var values =$(this).attr("rel");
+		includeThis(values); 
+   });
+	
+	$(document).on('click', '.inner-claim-add-to-claim-cls', function() {
+		addToClaim();
+});	
+	
+	$(document).on('click', '.customer-exception-report-save-msg-cls', function() {
+		saveMsgShow();
+});	
+	
+	$(document).on('click', '.customer-exception-report-generate-excel-cls', function() {
+		generateExcel();
+});	
+	
+	$(document).on('click', '.esbol-test-values-cls', function() {
+		setValues();
+});	
+	$(document).on('click', '.header-claim-counts-cls', function() {
+		checkgo();
+});	
+	
+	$(document).on('click', '.plan-cancellation-info-renderer-cls', function() {
+		var values =$(this).attr("rel");
+		cancelActivateProduct(values);
+});		
+	 $(document).on('click', '.claim-claimdialog-cls', function(){
+			claimDialog(); 
+	   });
+	 $(document).on('click', '.engno-input-engine-cls', function(){
+		 var values =$(this).attr("rel");
+		 goEngineSearch2(values); 
+	   });
+	 
+	 $(document).on('click', '.render-single-product-details-flip-cls', function() {
+			var value =$(this).attr("rel");
+			flip(this,'disbursments_'+value);
+	});	
+	 $(document).on('click', '.plan-actnspopp-centr-cls', function() {
+			var value =$(this).attr("rel");
+			PoppCenter(value);
+	});	
+	 $(document).on('click', '.render-single-product-cls', function() {
+			var value =$(this).attr("rel");
+			flip(value);
+	});	
+			 $(document).on('click', '.pol-claim-ser-hist-cls', function() {
+					var value =$(this).attr("rel");
+					serviceDialog(value);
+			});
+			 $(document).on('click', '.pol-data-cap-cls', function() {
+					calPrice();
+			});
+			 $(document).on('click', '.pol-data-cap-goback-cls', function() {
+					goBack();
+			});
+			 $(document).on('click', '.pol-data-cap-submit-cls', function() {
+				 var value =$(this).attr("rel");
+					goSubmit(value);
+			});
+			 $(document).on('click', '.quote-content-cls', function() {
+					var value =$(this).attr("rel");
+					PoppCenter(value);
+			});
+			 $(document).on('click', '.quote-reg-cls', function() {
+					takeupQuote();
+			});
+			 $(document).on('click', '.quote-reg-pop-cls', function() {
+					var value =$(this).attr("rel");
+					PoppCenter(value);
+			});
+			 $(document).on('click', '.reg-warning-cls', function() {
+					goBack();
+			});
+			 $(document).on('click', '.van-warning-cls', function() {
+					goBack();
+			});
+			 $(document).on('click', '.view-fullplan-popp-cls', function() {
+					var value =$(this).attr("rel");
+					PoppCenter(value);
+			});
+			 $(document).on('click', '.banner-cls-autofill', function() {
+					autoFill();
+			});
+			 $(document).on('click', '.update-version-dtls-cls', function() {
+					UpdateVersionDetails();
+			});
+			 $(document).on('click', '.download-complete-link-cls', function() {
+					var value =$(this).attr("rel");
+					linkit(value);
+			});
+			 $(document).on('click', '.accs-imprt-excl-cls', function() {
+					ImportExcel();
+			});
+			 $(document).on('click', '.dialog-close-window-cls', function() {
+				 window.close();
+			});	
+			 
+			 $(document).on('click', '.rapid-repair-items-inner-claim-cls', function(){
+				 var value =$(this).attr("rel");
+					 editInnerClaim(value); 
+			   });
+			 
+			 $(document).on('click', '.user-list-nextpage-cls', function() {
+				 nextPage();
+			});	
+			 
+
+			 $(document).on('click', '.user-list-previous-cls', function() {
+				 previousPage();
+			});	
+			 
+			 
+			 $(document).on('click', '.inception-clear-btn-cls', function() {
+				 clearData();
+			});	 
